@@ -11,9 +11,9 @@
         <ul class="nav">
             <li class="nav-header"><span class="nav-label">Dashboard</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="/home/admin"><span class="shape1"></span><span class="shape2"></span><i class="ti-home sidemenu-icon"></i><span class="sidemenu-label">Dashboard</span></a>
+                <a class="nav-link" href="/admin/home"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Dashboard</span></a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-wallet sidemenu-icon"></i><span class="sidemenu-label">Crypto Currencies</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
@@ -76,21 +76,15 @@
                         <a class="nav-sub-link" href="viewmail.html">View-Mail</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-write sidemenu-icon"></i><span class="sidemenu-label">Apps</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Employee</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="chat.html">Chat</a>
+                        <a class="nav-sub-link" href="/admin/list-employee">List Emplyee</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="cards.html">Cards</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="calendar.html">Calendar</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="contacts.html">Contacts</a>
+                        <a class="nav-sub-link" href="/admin/add-employee">Cards</a>
                     </li>
                 </ul>
             </li>

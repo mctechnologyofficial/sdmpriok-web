@@ -20,3 +20,12 @@ Route::get('/', function () {
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
 });
+Route::get('/admin/list-employee', function(){
+    return view('layouts.admin.employee.list');
+});
+Route::get('/admin/add-employee', function(){
+    return view('layouts.admin.employee.add');
+});
+Route::get('/admin/edit-employee', function(){
+    return view('layouts.admin.employee.edit');
+});

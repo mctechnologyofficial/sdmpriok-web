@@ -186,10 +186,10 @@
                     <i class="fe fe-align-right header-icons"></i>
                 </a>
             </div>
-            <button class="navbar-toggler navresponsive-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+            {{-- <button class="navbar-toggler navresponsive-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                 aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fe fe-more-vertical header-icons navbar-toggler-icon"></i>
-            </button><!-- Navresponsive closed -->
+            </button> --}}
         </div>
     </div>
 </div>

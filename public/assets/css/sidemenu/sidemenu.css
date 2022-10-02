@@ -504,7 +504,7 @@
 }
 
 .main-sidebar-body .nav-sub .nav-sub-link:before {
-  content: '\e048';
+  content: '\27A4';
   font-family: 'typicons';
   font-style: normal;
   font-weight: normal;
