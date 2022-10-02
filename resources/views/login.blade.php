@@ -4,12 +4,12 @@
 
 		<meta charset="utf-8">
 		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-		<meta name="description" content="Spruha -  Admin Panel HTML Dashboard Template">
-		<meta name="author" content="Spruko Technologies Private Limited">
-		<meta name="keywords" content="admin,dashboard,panel,bootstrap admin template,bootstrap dashboard,dashboard,themeforest admin dashboard,themeforest admin,themeforest dashboard,themeforest admin panel,themeforest admin template,themeforest admin dashboard,cool admin,it dashboard,admin design,dash templates,saas dashboard,dmin ui design">
+		<meta name="description" content="Indonesia Power Dashboard - Login">
+		<meta name="author" content="PT Indonesia Power">
+		<meta name="keywords" content="sdmpriok, indonesianpower">
 
 		<!-- Favicon -->
-		<link rel="icon" href="{{ asset('assets/img/brand/favicon.ico') }}" type="image/x-icon"/>
+		<link rel="icon" href="{{ asset('assets/img/brand/logo-pln.png') }}" type="image/x-icon"/>
 
 		<!-- Title -->
 		<title>Indonesia Power Dashboard - Login</title>
@@ -49,7 +49,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="row row-sm">
-							<div class="col-lg-6 col-xl-5 d-none d-lg-block text-center bg-primary details">
+							<div class="col-lg-6 col-xl-5 d-none d-lg-block text-center details">
 								<div class="mt-5 pt-4 p-2 pos-absolute">
 									<img src="{{ asset('assets/img/brand/logo-ip.png') }}" class="header-brand-img mb-4 w-75" alt="logo">
 									<div class="clearfix"></div>
