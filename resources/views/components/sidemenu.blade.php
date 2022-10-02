@@ -84,7 +84,7 @@
                         <a class="nav-sub-link" href="/admin/list-employee">List Emplyee</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/admin/add-employee">Cards</a>
+                        <a class="nav-sub-link" href="/admin/add-employee">Add Employee</a>
                     </li>
                 </ul>
             </li>

@@ -12,7 +12,7 @@
 		<link rel="icon" href="{{ asset('assets/img/brand/logo-pln.png') }}" type="image/x-icon"/>
 
 		<!-- Title -->
-		<title>Indonesian Power Dashboard - @yield('title')</title>
+		<title>Indonesia Power Dashboard - @yield('title')</title>
 
 		@include('components.css')
 	</head>
