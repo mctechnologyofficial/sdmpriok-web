@@ -33,11 +33,37 @@
                                 <td>Supervisor Operator</td>
                                 <td>Team A</td>
                                 <td>
-                                    <a href="#" class="btn btn-danger">Delete</a>
+                                    {{-- <a href="#" class="btn btn-danger">Delete</a> --}}
+                                    <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- Modal effects -->
+                    <div class="modal" id="modaldemo8">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content modal-content-demo">
+                                <div class="modal-header">
+                                    <h6 class="modal-title">Delete User Data</h6>
+                                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body tx-center pd-y-20 pd-x-20">
+                                    {{-- <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i> --}}
+                                    <i class="fas fa-exclamation-triangle tx-100 tx-warning lh-1 mg-t-20 d-inline-block"></i>
+                                    <h4 class="tx-warning tx-semibold mg-b-20">Warning</h4>
+                                    <p class="mg-b-20 mg-x-20">Are you sure want to delete this user data?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn ripple btn-primary" type="button">Delete</button>
+                                    <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal effects-->
                 </div>
             </div>
         </div>
