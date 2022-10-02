@@ -9,7 +9,7 @@
 		<meta name="keywords" content="sdmpriok, indonesianpower">
 
 		<!-- Favicon -->
-		<link rel="icon" href="assets/img/brand/logo-pln.png" type="image/x-icon"/>
+		<link rel="icon" href="{{ asset('assets/img/brand/logo-pln.png') }}" type="image/x-icon"/>
 
 		<!-- Title -->
 		<title>@yield('title')</title>
