@@ -8,7 +8,7 @@
             <div class="card-body">
                 <div class="card-header border-bottom-0 pt-0 pl-0 pr-0 d-flex">
                     <div>
-                        <label class="main-content-label mb-2">Tasks</label> <span class="d-block tx-12 mb-3 text-muted">A task is accomplished by a set deadline, and must contribute toward work-related objectives.</span>
+                        <label class="main-content-label mb-2">List Employee</label>
                     </div>
                     <div class="ml-auto">
                         <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
@@ -22,19 +22,19 @@
                         <thead>
                             <tr>
                                 <th class="wd-20p">Name</th>
-                                <th class="wd-25p">Position</th>
-                                <th class="wd-20p">Office</th>
-                                <th class="wd-15p">Age</th>
-                                <th class="wd-20p">Salary</th>
+                                <th class="wd-20p">Position</th>
+                                <th class="wd-20p">Team</th>
+                                <th class="wd-5p">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>$320,800</td>
+                                <td>Fawwaz Hudzalfah Saputra</td>
+                                <td>Supervisor Operator</td>
+                                <td>Team A</td>
+                                <td>
+                                    <a href="#" class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
