@@ -29,3 +29,12 @@ Route::get('/admin/add-employee', function(){
 Route::get('/admin/edit-employee', function(){
     return view('layouts.admin.employee.edit');
 });
+Route::get('/admin/list-competency', function(){
+    return view('layouts.admin.utilities.competency.list');
+});
+Route::get('/admin/add-competency', function(){
+    return view('layouts.admin.utilities.competency.add');
+});
+Route::get('/admin/edit-competency', function(){
+    return view('layouts.admin.utilities.competency.edit');
+});
