@@ -4,7 +4,7 @@
 
 		<meta charset="utf-8">
 		<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-		<meta name="description" content="Indonesia Power Dashboard - Login">
+		<meta name="description" content="Indonesia Power Dashboard">
 		<meta name="author" content="PT Indonesia Power">
 		<meta name="keywords" content="sdmpriok, indonesianpower">
 
