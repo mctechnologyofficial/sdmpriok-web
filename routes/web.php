@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
 });
@@ -30,8 +34,13 @@ Route::get('/admin/edit-employee', function(){
     return view('layouts.admin.employee.edit');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 require __DIR__.'/auth.php';
+Route::get('/admin/list-competency', function(){
+    return view('layouts.admin.utilities.competency.list');
+});
+Route::get('/admin/add-competency', function(){
+    return view('layouts.admin.utilities.competency.add');
+});
+Route::get('/admin/edit-competency', function(){
+    return view('layouts.admin.utilities.competency.edit');
+});

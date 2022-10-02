@@ -89,40 +89,24 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-face-smile sidemenu-icon"></i><span class="sidemenu-label">Icons</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-wrench sidemenu-icon"></i><span class="sidemenu-label">Utilities</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons.html">Font Awesome</a>
+                        <a class="nav-sub-link with-sub" href="#"></span><span class="sidemenu-label">Slider</span><i class="angle fe fe-chevron-right"></i></a>
+                        <ul class="nav-sub">
+                            <li class="nav-sub-item">
+                                <a class="nav-sub-link" href="#">Row 1</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a class="nav-sub-link" href="#">Row 2</a>
+                            </li>
+                            <li class="nav-sub-item">
+                                <a class="nav-sub-link" href="#">Row 3</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons2.html">Material Design Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons3.html">Simple Line Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons4.html">Feather Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons5.html">Ionic Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons6.html">Flag Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons7.html">Pe7 Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons8.html">Themify Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons9.html">Typicons Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons10.html">Weather Icons</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="icons11.html">Material Icons</a>
+                        <a class="nav-sub-link" href="/admin/list-competency">Competency</a>
                     </li>
                 </ul>
             </li>
