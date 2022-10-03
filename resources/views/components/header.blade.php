@@ -12,7 +12,8 @@
         <div class="main-header-right">
             <div class="dropdown main-profile-menu">
                 <a class="d-flex" href="">
-                    <span class="main-img-user" ><img alt="avatar" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></span>
+                    <span class="main-img-user"><img alt="avatar"
+                            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></span>
                 </a>
                 <div class="dropdown-menu">
                     <div class="header-navheading">
@@ -34,13 +35,20 @@
                     <a class="dropdown-item" href="profile.html">
                         <i class="fe fe-compass"></i> Activity
                     </a>
-                    <a class="dropdown-item" href="signin.html">
+                    {{-- <a class="dropdown-item" href="{{route('logout')}}">
                         <i class="fe fe-power"></i> Sign Out
-                    </a>
+                    </a> --}}
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="dropdown-item">
+                            <i class="fe fe-power"> Sign Out
+                            </i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    </div>'
 </div>
 <div class="mobile-main-header">
     <div class="mb-1 navbar navbar-expand-lg  nav nav-item  navbar-nav-right responsive-navbar navbar-dark  ">
@@ -48,7 +56,8 @@
             <div class="d-flex order-lg-2 ml-auto">
                 <div class="dropdown main-profile-menu">
                     <a class="d-flex" href="#">
-                        <span class="main-img-user" ><img alt="avatar" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></span>
+                        <span class="main-img-user"><img alt="avatar"
+                                src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="header-navheading">
