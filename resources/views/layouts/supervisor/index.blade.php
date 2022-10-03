@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card custom-card mg-b-20">
-                <div class="card custom-card">
+                <div class="card custom-card" id="animate">
                     <div class="card-body">
                         <div class="row m-3">
                             <div class="col-lg-3">
@@ -104,6 +104,19 @@
                                     <a class="carousel-control-next" href="#carouselExample2" role="button" data-slide="next">
                                         <i class="fa fa-angle-right fs-30" aria-hidden="true"></i>
                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row m-3">
+                            <div class="col-lg-12">
+                                <h4 class="mb-2">Competency Progress (Personal)</h4>
+                                <div class="progress mg-b-10">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
+                                </div>
+                                <h4 class="mt-3 mb-2">Competency Progress (Team)</h4>
+                                <div class="progress mg-b-10">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
                                 </div>
                             </div>
                         </div>

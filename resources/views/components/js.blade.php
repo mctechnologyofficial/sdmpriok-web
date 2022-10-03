@@ -102,5 +102,11 @@
     });
     // bar chart progress-chart.blade.php //
 
-    
+    $("tbody tr").on("mouseover", function () {
+        $(".no-hover").css('background-color', '#fff');
+        $(this).css('cursor','pointer');
+    });
+    $('tbody tr').on('click', function(){
+        $('#exampleModalCenter').modal('show');
+    });
 </script>

@@ -51,31 +51,46 @@
             </li>
             <li class="nav-header"><span class="nav-label">Supervisor</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="/spv/home"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-map-alt sidemenu-icon"></i><span class="sidemenu-label">Maps</span><span class="badge badge-secondary side-badge">2</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="map-mapel.html">Mapel Maps</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="map-vector.html">Vector Maps</a>
+                        <a class="nav-sub-link" href="/spv/sistem-proteksi">Sistem Proteksi</a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-agenda sidemenu-icon"></i><span class="sidemenu-label">Tables</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="table-basic.html">Basic Tables</a>
+                        <a class="nav-sub-link" href="#">Assessment Chart (Personal)</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="table-data.html">Data Tables</a>
+                        <a class="nav-sub-link" href="#">Assessment Chart (Team)</a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-header"><span class="nav-label">Components</span></li>
+            <li class="nav-header"><span class="nav-label">Operator</span></li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
+                <ul class="nav-sub">
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="#">Sistem Proteksi</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
+            </li>
+            {{-- <li class="nav-header"><span class="nav-label">Components</span></li>
             <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-package sidemenu-icon"></i><span class="sidemenu-label">Elements</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
@@ -340,7 +355,7 @@
                         </ul>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>
