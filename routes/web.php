@@ -31,6 +31,7 @@ Route::get('/admin/add-employee', function(){
 Route::get('/admin/edit-employee', function(){
     return view('layouts.admin.employee.edit');
 });
+
 Route::get('/admin/list-competency', function(){
     return view('layouts.admin.utilities.competency.list');
 });
@@ -40,6 +41,7 @@ Route::get('/admin/add-competency', function(){
 Route::get('/admin/edit-competency', function(){
     return view('layouts.admin.utilities.competency.edit');
 });
+
 Route::get('/admin/list-slider', function(){
     return view('layouts.admin.utilities.slider.list');
 });
@@ -49,6 +51,27 @@ Route::get('/admin/add-slider', function(){
 Route::get('/admin/edit-slider', function(){
     return view('layouts.admin.utilities.slider.edit');
 });
+
+Route::get('/admin/list-team', function(){
+    return view('layouts.admin.team.list');
+});
+Route::get('/admin/add-team', function(){
+    return view('layouts.admin.team.add');
+});
+Route::get('/admin/edit-team', function(){
+    return view('layouts.admin.team.edit');
+});
+
+Route::get('/admin/list-role', function(){
+    return view('layouts.admin.role.list');
+});
+Route::get('/admin/add-role', function(){
+    return view('layouts.admin.role.add');
+});
+Route::get('/admin/edit-role', function(){
+    return view('layouts.admin.role.edit');
+});
+
 Route::get('/admin/progress-chart', function(){
     return view('layouts.admin.monitoring-chart.progress-chart');
 });

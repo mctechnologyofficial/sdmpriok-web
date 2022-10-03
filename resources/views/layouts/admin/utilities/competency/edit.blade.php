@@ -18,7 +18,7 @@
                                     <label class="mg-b-0">Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" placeholder="Enter full name" type="text">
+                                    <input class="form-control" placeholder="Enter competency name" type="text">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end mb-0">

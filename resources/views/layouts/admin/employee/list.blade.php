@@ -13,7 +13,7 @@
                     <div class="ml-auto">
                         <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/admin/edit-employee">Edit Employee</a>
+                            <a class="dropdown-item" href="/admin/add-employee">Add Employee</a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                                 <td>Supervisor Operator</td>
                                 <td>Team A</td>
                                 <td>
-                                    {{-- <a href="#" class="btn btn-danger">Delete</a> --}}
+                                    <a class="btn btn-outline-primary btn-block" href="/admin/edit-employee">Edit</a>
                                     <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
                                 </td>
                             </tr>

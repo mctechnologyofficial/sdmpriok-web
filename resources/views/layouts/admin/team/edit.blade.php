@@ -1,14 +1,13 @@
 @extends('layouts.master')
-@section('title', 'Competency')
+@section('title', 'Team')
 
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card custom-card mg-b-20">
+    <div class="row">
+        <div class="col-lg-12">
             <div class="card custom-card">
                 <div class="card-body">
                     <div>
-                        <h6 class="main-content-label mb-1">Add Competency</h6>
+                        <h6 class="main-content-label mb-1">Edit Team</h6>
                         {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}
                     </div>
                     <div class="">
@@ -18,7 +17,7 @@
                                     <label class="mg-b-0">Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" placeholder="Enter competency name" type="text">
+                                    <input class="form-control" placeholder="Enter team name" type="text">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end mb-0">
@@ -32,5 +31,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

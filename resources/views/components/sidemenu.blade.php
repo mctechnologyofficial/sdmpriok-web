@@ -17,10 +17,13 @@
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Employee</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/admin/list-employee">List Emplyee</a>
+                        <a class="nav-sub-link" href="/admin/list-employee">List Employee</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/admin/add-employee">Add Employee</a>
+                        <a class="nav-sub-link" href="/admin/list-team">List Team</a>
+                    </li>
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="/admin/list-role">List Role</a>
                     </li>
                 </ul>
             </li>
