@@ -5,8 +5,8 @@
         </div>
         <div class="main-header-center">
             <div class="responsive-logo">
-                <a href="index.html"><img src="{{ asset('assets/img/brand/logo-ip.png') }}" class="mobile-logo" alt="logo"></a>
-                <a href="index.html"><img src="{{ asset('assets/img/brand/logo-ip.png') }}" class="mobile-logo-dark" alt="logo"></a>
+                <a href="/admin/home"><img src="{{ asset('assets/img/brand/logo-ip-dark.png') }}" class="mobile-logo w-75" alt="logo"></a>
+                <a href="/admin/home"><img src="{{ asset('assets/img/brand/logo-ip-dark.png') }}" class="mobile-logo-dark w-75" alt="logo"></a>
             </div>
         </div>
         <div class="main-header-right">

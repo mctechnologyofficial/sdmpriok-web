@@ -51,6 +51,9 @@
             </li>
             <li class="nav-header"><span class="nav-label">Supervisor</span></li>
             <li class="nav-item">
+                <a class="nav-link" href="/spv/home"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-map-alt sidemenu-icon"></i><span class="sidemenu-label">Maps</span><span class="badge badge-secondary side-badge">2</span></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">

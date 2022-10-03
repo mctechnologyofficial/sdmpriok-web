@@ -17,11 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('login');
 });
+
+// Admin //
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
 });
 
-// Admin //
 Route::get('/admin/list-employee', function(){
     return view('layouts.admin.employee.list');
 });
@@ -76,3 +77,9 @@ Route::get('/admin/progress-chart', function(){
     return view('layouts.admin.monitoring-chart.progress-chart');
 });
 // End Admin //
+
+// Supervisor //
+Route::get('/spv/home', function(){
+    return view('layouts.supervisor.index');
+});
+// End Supervisor //
