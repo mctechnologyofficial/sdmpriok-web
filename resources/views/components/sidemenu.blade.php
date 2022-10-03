@@ -9,74 +9,10 @@
     </div>
     <div class="main-sidebar-body">
         <ul class="nav">
-            <li class="nav-header"><span class="nav-label">Dashboard</span></li>
+            <li class="nav-header"><span class="nav-label">Admin</span></li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin/home"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Dashboard</span></a>
             </li>
-            {{-- <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-wallet sidemenu-icon"></i><span class="sidemenu-label">Crypto Currencies</span><i class="angle fe fe-chevron-right"></i></a>
-                <ul class="nav-sub">
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="crypto-dashbaord.html">Dashboard</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="crypto-market.html">Marketcap</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="crypto-currency-exchange.html">Currency exchange</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="crypto-buy-sell.html">Buy & Sell</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="crypto-wallet.html">Wallet</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="crypto-transcations.html">Transcations</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-shopping-cart-full sidemenu-icon"></i><span class="sidemenu-label">E-Commerce</span><i class="angle fe fe-chevron-right"></i></a>
-                <ul class="nav-sub">
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-dashboard.html">Dashboard</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-products.html">Products</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-product-details.html">Product Details</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-cart.html">Cart</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-checkout.html">Checkout</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-orders.html">Orders</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="ecommerce-account.html">Account</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-header"><span class="nav-label">Applications</span></li>
-            <li class="nav-item">
-                <a class="nav-link" href="widgets.html"><span class="shape1"></span><span class="shape2"></span><i class="ti-server sidemenu-icon"></i><span class="sidemenu-label">Widgets</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-email sidemenu-icon"></i><span class="sidemenu-label">Mail</span><span class="badge badge-warning side-badge">2</span></a>
-                <ul class="nav-sub">
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="mail-inbox.html">Mail-Inbox</a>
-                    </li>
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="viewmail.html">View-Mail</a>
-                    </li>
-                </ul>
-            </li> --}}
             <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Employee</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
@@ -89,27 +25,28 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Mentoring</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i class="angle fe fe-chevron-right"></i></a>
+                <ul class="nav-sub">
+                    <li class="nav-sub-item">
+                        <a class="nav-sub-link" href="/admin/progress-chart">Monitoring Progress Chart</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-wrench sidemenu-icon"></i><span class="sidemenu-label">Utilities</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link with-sub" href="#"></span><span class="sidemenu-label">Slider</span><i class="angle fe fe-chevron-right"></i></a>
-                        <ul class="nav-sub">
-                            <li class="nav-sub-item">
-                                <a class="nav-sub-link" href="#">Row 1</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a class="nav-sub-link" href="#">Row 2</a>
-                            </li>
-                            <li class="nav-sub-item">
-                                <a class="nav-sub-link" href="#">Row 3</a>
-                            </li>
-                        </ul>
+                        <a class="nav-sub-link" href="/admin/list-slider">Slider</a>
                     </li>
                     <li class="nav-sub-item">
                         <a class="nav-sub-link" href="/admin/list-competency">Competency</a>
                     </li>
                 </ul>
             </li>
+            <li class="nav-header"><span class="nav-label">Supervisor</span></li>
             <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="ti-map-alt sidemenu-icon"></i><span class="sidemenu-label">Maps</span><span class="badge badge-secondary side-badge">2</span></a>
                 <ul class="nav-sub">

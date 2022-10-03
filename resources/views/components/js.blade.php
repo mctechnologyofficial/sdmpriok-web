@@ -56,3 +56,51 @@
 
 <!-- Modal JS -->
 <script src="{{ asset('assets/js/modal.js') }}"></script>
+
+<!-- Chart JS -->
+<script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/chart.chartjs.js') }}"></script>
+
+<!-- Editable Script -->
+<script>
+    // bar chart progress-chart.blade.php //
+    var marksCanvas = document.getElementById("chartBar");
+
+    var marksData = {
+        labels: ["Team A", "Team B", "Team C", "Team D"],
+        datasets: [
+            {
+                label: 'Team Competency Progress',
+                data: [65, 59, 80, 81],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 99, 132)',
+                ],
+                borderWidth: 1
+            }
+        ]
+    };
+
+    var radarChart = new Chart(marksCanvas, {
+        type: 'bar',
+        data: marksData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    });
+    // bar chart progress-chart.blade.php //
+
+    
+</script>

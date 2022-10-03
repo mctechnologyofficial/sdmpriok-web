@@ -20,6 +20,8 @@ Route::get('/', function () {
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
 });
+
+// Admin //
 Route::get('/admin/list-employee', function(){
     return view('layouts.admin.employee.list');
 });
@@ -38,3 +40,16 @@ Route::get('/admin/add-competency', function(){
 Route::get('/admin/edit-competency', function(){
     return view('layouts.admin.utilities.competency.edit');
 });
+Route::get('/admin/list-slider', function(){
+    return view('layouts.admin.utilities.slider.list');
+});
+Route::get('/admin/add-slider', function(){
+    return view('layouts.admin.utilities.slider.add');
+});
+Route::get('/admin/edit-slider', function(){
+    return view('layouts.admin.utilities.slider.edit');
+});
+Route::get('/admin/progress-chart', function(){
+    return view('layouts.admin.monitoring-chart.progress-chart');
+});
+// End Admin //
