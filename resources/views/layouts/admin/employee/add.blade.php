@@ -12,7 +12,7 @@
                         {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}
                     </div>
                     <div class="">
-                        <form action="" method="POST">
+                        <form action="{{route('employee.store')}}" method="POST">
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
                                     <label class="mg-b-0">Full Name</label>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,14 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+/** Admin Routes */
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
+// });
+Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
+
+
 
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
