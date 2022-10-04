@@ -78,6 +78,29 @@
                                     <input class="form-control" placeholder="Enter password" type="password">
                                 </div>
                             </div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="mg-b-0">Picture</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <div class="input-group file-browser">
+                                        <input type="text" class="form-control border-right-0 browse-file" placeholder="choose" readonly>
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-primary">
+                                                Browse <input type="file" style="display: none;" multiple>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="mg-b-0"></label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <img src="https://static.vecteezy.com/system/resources/thumbnails/001/984/880/small/abstract-colorful-geometric-overlapping-background-and-texture-free-vector.jpg" alt="..." class="img-thumbnail">
+                                </div>
+                            </div>
                             <div class="form-group row justify-content-end mb-0">
                                 <div class="col-md-8 pl-md-2">
                                     <button class="btn ripple btn-primary pd-x-30 mg-r-5">Save</button>

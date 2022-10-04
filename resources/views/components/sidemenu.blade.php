@@ -54,7 +54,7 @@
                 <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
+                <a class="nav-link" href="/spv/coaching-mentoring"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
@@ -68,10 +68,10 @@
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="#">Assessment Chart (Personal)</a>
+                        <a class="nav-sub-link" href="/spv/chart-personal">Assessment Chart (Personal)</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="#">Assessment Chart (Team)</a>
+                        <a class="nav-sub-link" href="/spv/chart-team">Assessment Chart (Team)</a>
                     </li>
                 </ul>
             </li>
@@ -83,12 +83,12 @@
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="#">Sistem Proteksi</a>
+                        <a class="nav-sub-link" href="/operator/sistem-proteksi">Sistem Proteksi</a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
             </li>
             {{-- <li class="nav-header"><span class="nav-label">Components</span></li>
             <li class="nav-item">

@@ -85,7 +85,25 @@ Route::get('/admin/progress-chart', function(){
 Route::get('/spv/home', function(){
     return view('layouts.supervisor.index');
 });
+Route::get('/spv/coaching-mentoring', function(){
+    return view('layouts.supervisor.mentoring.list');
+});
+Route::get('/spv/detail-mentoring', function(){
+    return view('layouts.supervisor.mentoring.detail');
+});
 Route::get('/spv/sistem-proteksi', function(){
     return view('layouts.supervisor.competency.content');
 });
+Route::get('/spv/chart-personal', function(){
+    return view('layouts.supervisor.assessment-chart.personal');
+});
+Route::get('/spv/chart-team', function(){
+    return view('layouts.supervisor.assessment-chart.team');
+});
 // End Supervisor //
+
+// Operator //
+Route::get('/operator/sistem-proteksi', function(){
+    return view('layouts.operator.competency.content');
+});
+// End Operator //

@@ -1,12 +1,12 @@
 <!-- Jquery js-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
 <!-- Bootstrap js-->
 <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 
 <!-- Internal Chart.Bundle js-->
-<script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script> --}}
 
 <!-- Peity js-->
 <script src="{{ asset('assets/plugins/peity/jquery.peity.min.js') }}"></script>
@@ -24,12 +24,12 @@
 <script src="{{ asset('assets/plugins/sidebar/sidebar.js') }}"></script>
 
 <!-- Internal Morris js -->
-<script src="{{ asset('assets/plugins/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/morris.js/morris.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/plugins/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/morris.js/morris.min.js') }}"></script> --}}
 
 <!-- Circle Progress js-->
-<script src="{{ asset('assets/js/circle-progress.min.js') }}"></script>
-<script src="{{ asset('assets/js/chart-circle.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/circle-progress.min.js') }}"></script>
+<script src="{{ asset('assets/js/chart-circle.js') }}"></script> --}}
 
 <!-- Internal Dashboard js-->
 <script src="{{ asset('assets/js/index.js') }}"></script>
@@ -53,14 +53,13 @@
 <script src="{{ asset('assets/plugins/datatable/fileexport/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatable/fileexport/buttons.colVis.min.js') }}"></script>
 <script src="{{ asset('assets/js/table-data.js') }}"></script>
-{{-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> --}}
 
 <!-- Modal JS -->
 <script src="{{ asset('assets/js/modal.js') }}"></script>
 
 <!-- Chart JS -->
-<script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/chart.chartjs.js') }}"></script>
+{{-- <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- Editable Script -->
 <script>
@@ -101,15 +100,75 @@
             }
         },
     });
-    // bar chart progress-chart.blade.php //
 
-    $("tbody tr").on("mouseover", function () {
-        $(".no-hover").css('background-color', '#fff');
-        $(this).css('cursor','pointer');
-    });
-    $('tbody tr').on('click', function(){
-        $('#exampleModalCenter').modal('show');
+    // var personalChart = document.getElementById("personalChart");
+    var personalChart = $('#personalChart')[0];
+    var personalData = {
+        labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
+        datasets: [
+            {
+                label: "Sistem Proteksi",
+                backgroundColor: "rgba(200,0,0,0.2)",
+                data: [65, 75, 70, 80, 60]
+            },
+            {
+                label: "Pengaturan Daya Dan Eksitasi",
+                backgroundColor: "rgba(0,0,200,0.2)",
+                data: [54, 65, 60, 70, 70]
+            },
+            {
+                label: "Perencanaan Dan Pengendalian Operasi",
+                backgroundColor: "rgba(76,255,0, 0.2)",
+                data: [20, 50, 80, 90, 10]
+            },
+            {
+                label: "Optimalisasi Operasi PLTGU",
+                backgroundColor: "rgba(255,180,0,0.2)",
+                data: [15, 40, 20, 40, 90]
+            },
+            {
+                label: "Analisa Air Pembangkit",
+                backgroundColor: "rgba(255,600,0,0.2)",
+                data: [15, 40, 20, 40, 90]
+            },
+        ]
+    };
+
+    var radarPersonalChart = new Chart(personalChart, {
+        type: 'radar',
+        data: personalData
     });
 
-    $('#example1').DataTable();
+    // var teamChart = document.getElementById("teamCanvasChart");
+    var teamChart = $('#teamChart')[0];
+    var teamData = {
+        labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
+        datasets: [
+            {
+                label: "Fawwaz Hudzalfah Saputra",
+                backgroundColor: "rgba(200,0,0,0.2)",
+                data: [65, 75, 70, 80, 60]
+            },
+            {
+                label: "Agus Wijayanto",
+                backgroundColor: "rgba(0,0,200,0.2)",
+                data: [54, 65, 60, 70, 70]
+            },
+            {
+                label: "Udin Syarifudin",
+                backgroundColor: "rgba(76,255,0, 0.2)",
+                data: [20, 50, 80, 90, 10]
+            },
+            {
+                label: "Jonathan Hasyim",
+                backgroundColor: "rgba(255,180,0,0.2)",
+                data: [15, 40, 20, 40, 90]
+            },
+        ]
+    };
+
+    var radarTeamChart = new Chart(teamChart, {
+        type: 'radar',
+        data: teamData
+    });
 </script>
