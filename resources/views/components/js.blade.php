@@ -53,6 +53,7 @@
 <script src="{{ asset('assets/plugins/datatable/fileexport/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatable/fileexport/buttons.colVis.min.js') }}"></script>
 <script src="{{ asset('assets/js/table-data.js') }}"></script>
+{{-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> --}}
 
 <!-- Modal JS -->
 <script src="{{ asset('assets/js/modal.js') }}"></script>
@@ -109,4 +110,6 @@
     $('tbody tr').on('click', function(){
         $('#exampleModalCenter').modal('show');
     });
+
+    $('#example1').DataTable();
 </script>
