@@ -40,7 +40,7 @@ class TeamController extends Controller
         Team::create(
             $request->except(['_token'])
         );
-        return redirect()->route('role.index')->with(['success' => 'Role Data Has Been Saved!']);
+        return redirect()->route('team.index')->with(['success' => 'Team Data Has Been Saved!']);
     }
 
     /**
@@ -62,7 +62,8 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
-        //
+        $team = Team::find($id);
+        return view('layouts.admin.team.edit', compact(['team']));
     }
 
     /**
@@ -74,7 +75,9 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $team = Team::find($id);
+        $team->update($request->except(['_token', '_method']));
+        return redirect()->route('team.index')->with(['success' => 'Team Data Has Been Updated!']);
     }
 
     /**
@@ -85,6 +88,8 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $team = Team::find($id);
+        $team->delete();
+        return redirect()->route('team.index')->with(['success' => 'Team Data Has Been Deleted!']);
     }
 }

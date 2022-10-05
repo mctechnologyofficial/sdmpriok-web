@@ -30,8 +30,13 @@
                                     <tr>
                                         <td>{{ $data->name }}</td>
                                         <td>
-                                            <a class="btn btn-outline-primary btn-block" href="/admin/team/{{ $data->id }}">Edit</a>
+                                            <a class="btn btn-outline-primary btn-block" href="/admin/team/{{ $data->id }}/edit">Edit</a>
                                             {{-- <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a> --}}
+                                            <form action="/admin/team/{{ $data->id }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-outline-danger btn-block">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
