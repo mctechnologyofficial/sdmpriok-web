@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('lo
-    gin');
+    return view('login');
 });
 
 Route::get('/dashboard', function () {
@@ -42,6 +42,13 @@ Route::post('/admin/team', [TeamController::class, 'store'])->name('team.store')
 Route::get('/admin/team/{id}/edit', [TeamController::class, 'edit'])->name('team.edit');
 Route::put('/admin/team/{id}', [TeamController::class, 'update'])->name('team.update');
 Route::delete('/admin/team/{id}', [TeamController::class, 'destroy'])->name('team.destroy');
+
+Route::get('/admin/slider', [SliderController::class, 'index'])->name('slider.index');
+Route::get('/admin/slider/create', [SliderController::class, 'create'])->name('slider.create');
+Route::post('/admin/slider', [SliderController::class, 'store'])->name('slider.store');
+Route::get('/admin/slider/{id}/edit', [SliderController::class, 'edit'])->name('slider.edit');
+Route::put('/admin/slider/{id}', [SliderController::class, 'update'])->name('slider.update');
+Route::delete('/admin/slider/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
 
 
 Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
@@ -73,15 +80,15 @@ Route::get('/admin/edit-competency', function(){
     return view('layouts.admin.utilities.competency.edit');
 });
 
-Route::get('/admin/list-slider', function(){
-    return view('layouts.admin.utilities.slider.list');
-});
-Route::get('/admin/add-slider', function(){
-    return view('layouts.admin.utilities.slider.add');
-});
-Route::get('/admin/edit-slider', function(){
-    return view('layouts.admin.utilities.slider.edit');
-});
+// Route::get('/admin/list-slider', function(){
+//     return view('layouts.admin.utilities.slider.list');
+// });
+// Route::get('/admin/add-slider', function(){
+//     return view('layouts.admin.utilities.slider.add');
+// });
+// Route::get('/admin/edit-slider', function(){
+//     return view('layouts.admin.utilities.slider.edit');
+// });
 
 // Route::get('/admin/list-team', function(){
 //     return view('layouts.admin.team.list');

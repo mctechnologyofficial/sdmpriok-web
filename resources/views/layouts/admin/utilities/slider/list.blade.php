@@ -13,8 +13,7 @@
                     <div class="ml-auto">
                         <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/admin/add-slider">Add Slider</a>
-                            {{-- <a class="dropdown-item" href="/admin/edit-competency">Edit </a>? --}}
+                            <a class="dropdown-item" href="{{ route('slider.create') }}">Add Slider</a>
                         </div>
                     </div>
                 </div>
@@ -23,61 +22,27 @@
                         <thead>
                             <tr>
                                 <th class="wd-15p">Picture</th>
-                                <th class="wd-15p">Type</th>
                                 <th class="wd-20p">Filename</th>
+                                <th class="wd-15p">Type</th>
                                 <th class="wd-10p">Row</th>
                                 <th class="wd-5p">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" alt="..." class="img-fluid w-75">
-                                </td>
-                                <td>Picture</td>
-                                <td>1.jpg</td>
-                                <td>Row 1</td>
-                                <td>
-                                    <a class="btn btn-outline-primary btn-block" href="/admin/edit-slider">Edit</a>
-                                    <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <img src="https://static.vecteezy.com/system/resources/thumbnails/001/984/880/small/abstract-colorful-geometric-overlapping-background-and-texture-free-vector.jpg" alt="..." class="img-fluid w-75">
-                                </td>
-                                <td>Slider 1</td>
-                                <td>1.jpg</td>
-                                <td>Row 1</td>
-                                <td>
-                                    <a class="btn btn-outline-primary btn-block" href="/admin/edit-slider">Edit</a>
-                                    <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <img src="https://static.vecteezy.com/system/resources/thumbnails/001/984/880/small/abstract-colorful-geometric-overlapping-background-and-texture-free-vector.jpg" alt="..." class="img-fluid w-75">
-                                </td>
-                                <td>Slider 2</td>
-                                <td>2.jpg</td>
-                                <td>Row 1</td>
-                                <td>
-                                    <a class="btn btn-outline-primary btn-block" href="/admin/edit-slider">Edit</a>
-                                    <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <img src="https://static.vecteezy.com/system/resources/thumbnails/001/984/880/small/abstract-colorful-geometric-overlapping-background-and-texture-free-vector.jpg" alt="..." class="img-fluid w-75">
-                                </td>
-                                <td>Slider 3</td>
-                                <td>3.jpg</td>
-                                <td>Row 1</td>
-                                <td>
-                                    <a class="btn btn-outline-primary btn-block" href="/admin/edit-slider">Edit</a>
-                                    <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                </td>
-                            </tr>
+                            @foreach ($slider as $data)
+                                <tr>
+                                    <td class="text-center">
+                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" alt="..." class="img-fluid w-75">
+                                    </td>
+                                    <td>{{ $data->name }}</td>
+                                    <td>{{ $data->type }}</td>
+                                    <td>{{ $data->row }}</td>
+                                    <td>
+                                        <a class="btn btn-outline-primary btn-block" href="/admin/slider/{{ $data-> id }}/edit">Edit</a>
+                                        {{-- <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a> --}}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 

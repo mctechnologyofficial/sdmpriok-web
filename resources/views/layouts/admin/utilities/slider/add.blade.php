@@ -9,17 +9,16 @@
                 <div class="card-body">
                     <div>
                         <h6 class="main-content-label mb-1">Add Slider</h6>
-                        {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}
                     </div>
                     <div class="">
-                        <form action="" method="POST">
+                        <form action="{{ route('slider.store') }}" method="POST">
+                            @csrf
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
                                     <label class="mg-b-0">Type</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    {{-- <input class="form-control" placeholder="Enter full name" type="text"> --}}
-                                    <select name="" class="form-control">
+                                    <select name="type" class="form-control">
                                         <option value="" selected disabled>Choose type</option>
                                         <option value="Picture">Picture</option>
                                         <option value="Slider Picture">Slider Picture</option>
@@ -31,9 +30,8 @@
                                     <label class="mg-b-0">Row</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    {{-- <input class="form-control" placeholder="Enter full name" type="text"> --}}
                                     <select name="" class="form-control">
-                                        <option value="" selected disabled>Choose row</option>
+                                        <option value="row" selected disabled>Choose row</option>
                                         <option value="Row 1">Row 1</option>
                                         <option value="Row 2">Row 2</option>
                                         <option value="Row 3">Row 3</option>
@@ -46,7 +44,7 @@
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
                                     <div class="input-group file-browser">
-                                        <input type="text" class="form-control border-right-0 browse-file" placeholder="choose" readonly>
+                                        <input type="text" class="form-control border-right-0 browse-file" placeholder="choose" readonly name='name'>
                                         <label class="input-group-btn">
                                             <span class="btn btn-primary">
                                                 Browse <input type="file" style="display: none;" multiple>
