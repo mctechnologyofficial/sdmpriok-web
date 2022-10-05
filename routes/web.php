@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('lo
+    gin');
 });
 
 Route::get('/dashboard', function () {
@@ -26,7 +29,22 @@ Route::get('/dashboard', function () {
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
 // });
-Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
+Route::get('/admin/role', [RoleController::class, 'index'])->name('role.index');
+Route::get('/admin/role/create', [RoleController::class, 'create'])->name('role.create');
+Route::post('/admin/role', [RoleController::class, 'store'])->name('role.store');
+Route::get('/admin/role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
+Route::put('/admin/role/{id}', [RoleController::class, 'update'])->name('role.update');
+Route::delete('/admin/role/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+Route::get('/admin/team', [TeamController::class, 'index'])->name('team.index');
+Route::get('/admin/team/create', [TeamController::class, 'create'])->name('team.create');
+Route::post('/admin/team', [TeamController::class, 'store'])->name('team.store');
+Route::get('/admin/team/{id}/edit', [TeamController::class, 'edit'])->name('team.edit');
+Route::put('/admin/team/{id}', [TeamController::class, 'update'])->name('team.update');
+Route::delete('/admin/team/{id}', [TeamController::class, 'destroy'])->name('team.destroy');
+
+
+Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
 
 
 
@@ -37,9 +55,9 @@ Route::get('/admin/home', function(){
 Route::get('/admin/list-employee', function(){
     return view('layouts.admin.employee.list');
 });
-Route::get('/admin/add-employee', function(){
-    return view('layouts.admin.employee.add');
-});
+// Route::get('/admin/add-employee', function(){
+//     return view('layouts.admin.employee.add');
+// });
 Route::get('/admin/edit-employee', function(){
     return view('layouts.admin.employee.edit');
 });
@@ -65,25 +83,25 @@ Route::get('/admin/edit-slider', function(){
     return view('layouts.admin.utilities.slider.edit');
 });
 
-Route::get('/admin/list-team', function(){
-    return view('layouts.admin.team.list');
-});
-Route::get('/admin/add-team', function(){
-    return view('layouts.admin.team.add');
-});
-Route::get('/admin/edit-team', function(){
-    return view('layouts.admin.team.edit');
-});
+// Route::get('/admin/list-team', function(){
+//     return view('layouts.admin.team.list');
+// });
+// Route::get('/admin/add-team', function(){
+//     return view('layouts.admin.team.add');
+// });
+// Route::get('/admin/edit-team', function(){
+//     return view('layouts.admin.team.edit');
+// });
 
-Route::get('/admin/list-role', function(){
-    return view('layouts.admin.role.list');
-});
-Route::get('/admin/add-role', function(){
-    return view('layouts.admin.role.add');
-});
-Route::get('/admin/edit-role', function(){
-    return view('layouts.admin.role.edit');
-});
+// Route::get('/admin/list-role', function(){
+//     return view('layouts.admin.role.list');
+// });
+// Route::get('/admin/add-role', function(){
+//     return view('layouts.admin.role.add');
+// });
+// Route::get('/admin/edit-role', function(){
+//     return view('layouts.admin.role.edit');
+// });
 
 Route::get('/admin/progress-chart', function(){
     return view('layouts.admin.monitoring-chart.progress-chart');

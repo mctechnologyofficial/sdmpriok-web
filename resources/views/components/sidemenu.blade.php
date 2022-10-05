@@ -20,10 +20,10 @@
                         <a class="nav-sub-link" href="/admin/list-employee">List Employee</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/admin/list-team">List Team</a>
+                        <a class="nav-sub-link" href="{{ route('team.index') }}">List Team</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/admin/list-role">List Role</a>
+                        <a class="nav-sub-link" href="{{ route('role.index') }}">List Role</a>
                     </li>
                 </ul>
             </li>
@@ -88,7 +88,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
             </li>
             {{-- <li class="nav-header"><span class="nav-label">Components</span></li>
             <li class="nav-item">

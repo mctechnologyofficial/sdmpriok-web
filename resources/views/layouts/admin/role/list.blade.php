@@ -13,7 +13,7 @@
                         <div class="ml-auto">
                             <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/admin/add-role">Add Role</a>
+                                <a class="dropdown-item" href="{{ route('role.create') }}">Add Role</a>
                             </div>
                         </div>
                     </div>
@@ -26,39 +26,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Supervisor Senior</td>
-                                    <td>
-                                        <a class="btn btn-outline-primary btn-block" href="/admin/edit-role">Edit</a>
-                                        <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Supervisor</td>
-                                    <td>
-                                        <a class="btn btn-outline-primary btn-block" href="/admin/edit-role">Edit</a>
-                                        <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Supervisor Operator</td>
-                                    <td>
-                                        <a class="btn btn-outline-primary btn-block" href="/admin/edit-role">Edit</a>
-                                        <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Operator Senior Control Room</td>
-                                    <td>
-                                        <a class="btn btn-outline-primary btn-block" href="/admin/edit-role">Edit</a>
-                                        <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                    </td>
-                                </tr>
+                                @foreach ($role as $data)
+                                    <tr>
+                                        <td>{{ $data->name }}</td>
+                                        <td>
+                                            <a class="btn btn-outline-primary btn-block" href="/admin/role/{{ $data->id }}/edit">Edit</a>
+                                            {{-- <a class="btn btn-outline-danger btn-block" href="#">Delete</a> --}}
+                                            <form action="/admin/role/{{ $data->id }}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-outline-danger btn-block">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
-    
                         <!-- Modal effects -->
-                        <div class="modal" id="modaldemo8">
+                        {{-- <div class="modal" id="modaldemo8">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content modal-content-demo">
                                     <div class="modal-header">
@@ -68,7 +53,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body tx-center pd-y-20 pd-x-20">
-                                        {{-- <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i> --}}
+                                        <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i>
                                         <i class="fas fa-exclamation-triangle tx-100 tx-warning lh-1 mg-t-20 d-inline-block"></i>
                                         <h4 class="tx-warning tx-semibold mg-b-20">Warning</h4>
                                         <p class="mg-b-20 mg-x-20">Are you sure want to delete this role data?</p>
@@ -79,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- End Modal effects-->
                     </div>
                 </div>
