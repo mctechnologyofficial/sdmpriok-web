@@ -45,7 +45,7 @@
                         <a class="nav-sub-link" href="{{ route('slider.index') }}">Slider</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/admin/list-competency">Competency</a>
+                        <a class="nav-sub-link" href="{{ route('competency.index') }}">Competency</a>
                     </li>
                 </ul>
             </li>

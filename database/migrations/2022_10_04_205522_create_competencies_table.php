@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('competencies', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            // $table->string('type');
+            // $table->string('role');
             $table->timestamps();
         });
     }

@@ -10,7 +10,7 @@
                         <h6 class="main-content-label mb-1">Edit Team</h6>
                     </div>
                     <div class="">
-                        <form action="/admin/team/{{ $team->id }}" method="POST">
+                        <form action="{{ route('team.edit', $team->id) }}" method="POST">
                             @method('put')
                             @csrf
                             <div class="row row-xs align-items-center mg-b-20">

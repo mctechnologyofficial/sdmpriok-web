@@ -12,13 +12,14 @@
                         {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}
                     </div>
                     <div class="">
-                        <form action="" method="POST">
+                        <form action="{{ route('competency.store') }}" method="POST">
+                            @csrf
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
                                     <label class="mg-b-0">Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <input class="form-control" placeholder="Enter competency name" type="text">
+                                    <input class="form-control" placeholder="Enter competency name" type="text" name="name">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end mb-0">

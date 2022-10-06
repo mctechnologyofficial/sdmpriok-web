@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CompetencyController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
@@ -50,6 +51,12 @@ Route::get('/admin/slider/{id}/edit', [SliderController::class, 'edit'])->name('
 Route::put('/admin/slider/{id}', [SliderController::class, 'update'])->name('slider.update');
 Route::delete('/admin/slider/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
 
+Route::get('/admin/competency', [CompetencyController::class, 'index'])->name('competency.index');
+Route::get('/admin/competency/create', [CompetencyController::class, 'create'])->name('competency.create');
+Route::post('/admin/competency', [CompetencyController::class, 'store'])->name('competency.store');
+Route::get('/admin/competency/{id}/edit', [CompetencyController::class, 'edit'])->name('competency.edit');
+Route::put('/admin/competency/{id}', [CompetencyController::class, 'update'])->name('competency.update');
+Route::delete('/admin/competency/{id}', [CompetencyController::class, 'destroy'])->name('competency.destroy');
 
 Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
 
@@ -70,49 +77,6 @@ Route::get('/admin/edit-employee', function(){
 });
 
 require __DIR__.'/auth.php';
-Route::get('/admin/list-competency', function(){
-    return view('layouts.admin.utilities.competency.list');
-});
-Route::get('/admin/add-competency', function(){
-    return view('layouts.admin.utilities.competency.add');
-});
-Route::get('/admin/edit-competency', function(){
-    return view('layouts.admin.utilities.competency.edit');
-});
-
-// Route::get('/admin/list-slider', function(){
-//     return view('layouts.admin.utilities.slider.list');
-// });
-// Route::get('/admin/add-slider', function(){
-//     return view('layouts.admin.utilities.slider.add');
-// });
-// Route::get('/admin/edit-slider', function(){
-//     return view('layouts.admin.utilities.slider.edit');
-// });
-
-// Route::get('/admin/list-team', function(){
-//     return view('layouts.admin.team.list');
-// });
-// Route::get('/admin/add-team', function(){
-//     return view('layouts.admin.team.add');
-// });
-// Route::get('/admin/edit-team', function(){
-//     return view('layouts.admin.team.edit');
-// });
-
-// Route::get('/admin/list-role', function(){
-//     return view('layouts.admin.role.list');
-// });
-// Route::get('/admin/add-role', function(){
-//     return view('layouts.admin.role.add');
-// });
-// Route::get('/admin/edit-role', function(){
-//     return view('layouts.admin.role.edit');
-// });
-
-Route::get('/admin/progress-chart', function(){
-    return view('layouts.admin.monitoring-chart.progress-chart');
-});
 // End Admin //
 
 // Supervisor //

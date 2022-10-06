@@ -15,7 +15,8 @@ class CompetencyController extends Controller
      */
     public function index()
     {
-        //
+        $competency = Competency::all();
+        return view('layouts.admin.utilities.competency.list', compact(['competency']));
     }
 
     /**
@@ -25,7 +26,7 @@ class CompetencyController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.admin.utilities.competency.add');
     }
 
     /**
@@ -36,16 +37,19 @@ class CompetencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Competency::create(
+            $request->except(['_token'])
+        );
+        return redirect()->route('competency.index')->with(['success' => 'Competency has been created successfully.']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Competency  $competency
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Competency $competency)
+    public function show($id)
     {
         //
     }
@@ -53,33 +57,36 @@ class CompetencyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Competency  $competency
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Competency $competency)
+    public function edit($id)
     {
-        //
+        $competency = Competency::find($id);
+        return view('layouts.admin.utilities.competency.edit', compact(['competency']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Competency  $competency
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Competency $competency)
+    public function update(Request $request, $id)
     {
-        //
+        $competency = Competency::find($id);
+        $competency->update($request->except(['_token', '_method']));
+        return redirect()->route('competency.index')->with(['success' => 'Competency has been updated successfully.']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Competency  $competency
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Competency $competency)
+    public function destroy($id)
     {
         //
     }
