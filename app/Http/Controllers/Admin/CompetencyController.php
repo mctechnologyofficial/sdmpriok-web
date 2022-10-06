@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
+use App\Models\Competency;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class CompetencyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $role = Role::all();
-        return view('layouts.admin.role.list', compact(['role']));
+        //
     }
 
     /**
@@ -26,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.role.add');
+        //
     }
 
     /**
@@ -37,20 +36,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        Role::create(
-            $request->except(['_token'])
-        );
-        return redirect()->route('role.index')->with(['success' => 'Role has been created successfully.']);
-        // dd($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Competency  $competency
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Competency $competency)
     {
         //
     }
@@ -58,39 +53,34 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Competency  $competency
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Competency $competency)
     {
-        $role = Role::find($id);
-        return view('layouts.admin.role.edit', compact(['role']));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Competency  $competency
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Competency $competency)
     {
-        $role = Role::find($id);
-        $role->update($request->except(['_token', '_method']));
-        return redirect()->route('role.index')->with(['success' => 'Role has been updated successfully.']);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Competency  $competency
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Competency $competency)
     {
-        $role = Role::find($id);
-        $role->delete();
-        return redirect()->route('role.index')->with(['success' => 'Role has been deleted successfully.']);
+        //
     }
 }

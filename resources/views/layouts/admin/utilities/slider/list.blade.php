@@ -21,8 +21,8 @@
                     <table class="table" id="example1">
                         <thead>
                             <tr>
-                                <th class="wd-15p">Picture</th>
-                                <th class="wd-20p">Filename</th>
+                                <th class="wd-15p">Image</th>
+                                {{-- <th class="wd-20p">Filename</th> --}}
                                 <th class="wd-15p">Type</th>
                                 <th class="wd-10p">Row</th>
                                 <th class="wd-5p">Action</th>
@@ -32,14 +32,18 @@
                             @foreach ($slider as $data)
                                 <tr>
                                     <td class="text-center">
-                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" alt="..." class="img-fluid w-75">
+                                        <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">
                                     </td>
-                                    <td>{{ $data->name }}</td>
+                                    {{-- <td>{{ $data->name }}</td> --}}
                                     <td>{{ $data->type }}</td>
                                     <td>{{ $data->row }}</td>
                                     <td>
-                                        <a class="btn btn-outline-primary btn-block" href="/admin/slider/{{ $data-> id }}/edit">Edit</a>
-                                        {{-- <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a> --}}
+                                        <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('slider.edit', $data->id) }}">Edit</a>
+                                        <form action="{{ route('slider.destroy', $data->id) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-outline-danger btn-block">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -47,7 +51,7 @@
                     </table>
 
                     <!-- Modal effects -->
-                    <div class="modal" id="modaldemo8">
+                    {{-- <div class="modal" id="modaldemo8">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content modal-content-demo">
                                 <div class="modal-header">
@@ -57,7 +61,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body tx-center pd-y-20 pd-x-20">
-                                    {{-- <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i> --}}
+                                    <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i>
                                     <i class="fas fa-exclamation-triangle tx-100 tx-warning lh-1 mg-t-20 d-inline-block"></i>
                                     <h4 class="tx-warning tx-semibold mg-b-20">Warning</h4>
                                     <p class="mg-b-20 mg-x-20">Are you sure want to delete this slider data?</p>
@@ -68,11 +72,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Modal effects-->
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+{{-- {!! $slider->links() !!} --}}
 @endsection

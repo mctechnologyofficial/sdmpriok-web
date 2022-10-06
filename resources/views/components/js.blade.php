@@ -1,9 +1,11 @@
 <!-- Jquery js-->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
 <!-- Bootstrap js-->
 <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script> --}}
 
 <!-- Internal Chart.Bundle js-->
 {{-- <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script> --}}
@@ -170,5 +172,12 @@
     var radarTeamChart = new Chart(teamChart, {
         type: 'radar',
         data: teamData
+    });
+
+
+    $('#fileSlider').on('change', function(){
+        var value = $(this).val().replace(/C:\\fakepath\\/i, '');
+
+        $('#textFileSlider').val(value).trigger('change');
     });
 </script>

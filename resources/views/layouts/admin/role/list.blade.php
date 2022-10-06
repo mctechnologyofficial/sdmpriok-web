@@ -30,9 +30,8 @@
                                     <tr>
                                         <td>{{ $data->name }}</td>
                                         <td>
-                                            <a class="btn btn-outline-primary btn-block" href="/admin/role/{{ $data->id }}/edit">Edit</a>
-                                            {{-- <a class="btn btn-outline-danger btn-block" href="#">Delete</a> --}}
-                                            <form action="/admin/role/{{ $data->id }}" method="POST">
+                                            <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('role.edit', $data->id) }}">Edit</a>
+                                            <form action="{{ route('role.destroy', $data->id) }}" method="POST">
                                                 @csrf
                                                 @method('delete')
                                                 <button type="submit" class="btn btn-outline-danger btn-block">Delete</button>

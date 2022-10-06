@@ -40,7 +40,7 @@ class TeamController extends Controller
         Team::create(
             $request->except(['_token'])
         );
-        return redirect()->route('team.index')->with(['success' => 'Team Data Has Been Saved!']);
+        return redirect()->route('team.index')->with(['success' => 'Team has been created successfully.']);
     }
 
     /**
@@ -77,7 +77,7 @@ class TeamController extends Controller
     {
         $team = Team::find($id);
         $team->update($request->except(['_token', '_method']));
-        return redirect()->route('team.index')->with(['success' => 'Team Data Has Been Updated!']);
+        return redirect()->route('team.index')->with(['success' => 'Team has been updated successfully.']);
     }
 
     /**
@@ -90,6 +90,6 @@ class TeamController extends Controller
     {
         $team = Team::find($id);
         $team->delete();
-        return redirect()->route('team.index')->with(['success' => 'Team Data Has Been Deleted!']);
+        return redirect()->route('team.index')->with(['success' => 'Team has been deleted successfully.']);
     }
 }
