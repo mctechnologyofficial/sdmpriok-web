@@ -12,7 +12,7 @@
                         {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}
                     </div>
                     <div class="">
-                        <form action="{{ route('slider.update', $slider->id) }}" method="POST">
+                        <form action="{{ route('slider.update', $slider->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="row row-xs align-items-center mg-b-20">

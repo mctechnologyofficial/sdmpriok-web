@@ -43,9 +43,15 @@ class SliderController extends Controller
             'row'   => 'required|string',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-        if($attrs['type'] == 'Slider Picture')
+        if($attrs['type'] == 'Slider Picture' && $attrs['row'] == 'Row 1')
         {
-            $image_path = $request->file('image')->store('public/images/slider');
+            $image_path = $request->file('image')->store('public/images/slider/row1');
+        }
+        elseif($attrs['type'] == 'Slider Picture' && $attrs['row'] == 'Row 2'){
+            $image_path = $request->file('image')->store('public/images/slider/row2');
+        }
+        elseif($attrs['type'] == 'Slider Picture' && $attrs['row'] == 'Row 3'){
+            $image_path = $request->file('image')->store('public/images/slider/row3');
         }
         elseif($attrs['type'] == 'Picture'){
             $image_path = $request->file('image')->store('public/images/picture');
@@ -92,24 +98,31 @@ class SliderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $attrs = $request->validate([
             'type'  => 'required|string',
             'row'   => 'required|string',
         ]);
 
         $slider = Slide::find($id);
-
-        // $oldphoto = $slider->image;
-        // Storage::delete($oldphoto);
+        Storage::delete($slider->image);
 
         if($request->hasFile('image')){
             $request->validate([
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
 
-            if($request->type == "Slider Picture"){
-                $path = $request->file('image')->store('public/images/slider');
-            }elseif($request->type == "Picture"){
+            if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
+                $path = $request->file('image')->store('public/images/slider/row1');
+            }
+            elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 2')
+            {
+                $path = $request->file('image')->store('public/images/slider/row2');
+            }
+            elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 3')
+            {
+                $path = $request->file('image')->store('public/images/slider/row3');
+            }
+            elseif($attrs['type'] == "Picture"){
                 $path = $request->file('image')->store('public/images/picture');
             }
 

@@ -30,61 +30,13 @@
                                 </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="carousel slide carousel-fade" data-ride="carousel" id="carouselExample2">
-                                    <ol class="carousel-indicators">
-                                        <li class="active" data-slide-to="0" data-target="#carouselExample3"></li>
-                                        <li data-slide-to="1" data-target="#carouselExample3"></li>
-                                        <li data-slide-to="2" data-target="#carouselExample3"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        @foreach ($home as $key => $slider1)
-                                            @if ($slider1->type == "Slider Picture" && $slider1->row == "Row 1")
-                                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                    <img alt="img" class="d-block w-100" src="{{ Storage::url($slider1->image) }}">
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExample2" role="button" data-slide="prev">
-                                        <i class="fa fa-angle-left fs-30" aria-hidden="true"></i>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExample2" role="button" data-slide="next">
-                                        <i class="fa fa-angle-right fs-30" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+                                @include('layouts.supervisor.components.slider1')
                             </div>
                         </div>
                         <hr>
                         <div class="row m-3">
                             <div class="col-lg-9">
-                                <div class="carousel slide carousel-fade" data-ride="carousel" id="carouselExample2">
-                                    <ol class="carousel-indicators">
-                                        <li class="active" data-slide-to="0" data-target="#carouselExample3"></li>
-                                        <li data-slide-to="1" data-target="#carouselExample3"></li>
-                                        <li data-slide-to="2" data-target="#carouselExample3"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        @foreach ($home as $key => $slider2)
-                                            @if ($slider2->type == "Slider Picture" && $slider2->row == "Row 2")
-                                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                    <img alt="img" class="d-block w-100" src="{{ Storage::url($slider2->image) }}">
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                        {{-- <div class="carousel-item">
-                                            <img alt="img" class="d-block w-100" src="https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-4-full.jpg">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img alt="img" class="d-block w-100" src="https://images7.alphacoders.com/341/341225.jpg">
-                                        </div> --}}
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExample2" role="button" data-slide="prev">
-                                        <i class="fa fa-angle-left fs-30" aria-hidden="true"></i>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExample2" role="button" data-slide="next">
-                                        <i class="fa fa-angle-right fs-30" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+                                @include('layouts.supervisor.components.slider2')
                             </div>
                             <div class="col-lg-3">
                                 <div class="d-flex justify-content-center">
@@ -108,34 +60,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="carousel slide carousel-fade" data-ride="carousel" id="carouselExample2">
-                                    <ol class="carousel-indicators">
-                                        <li class="active" data-slide-to="0" data-target="#carouselExample3"></li>
-                                        <li data-slide-to="1" data-target="#carouselExample3"></li>
-                                        <li data-slide-to="2" data-target="#carouselExample3"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        @foreach ($home as $key => $slider3)
-                                            @if ($slider3->type == "Slider Picture" && $slider3->row == "Row 3")
-                                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                                    <img alt="img" class="d-block w-100" src="{{ Storage::url($slider3->image) }}">
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                        {{-- <div class="carousel-item">
-                                            <img alt="img" class="d-block w-100" src="https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-4-full.jpg">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img alt="img" class="d-block w-100" src="https://images7.alphacoders.com/341/341225.jpg">
-                                        </div> --}}
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExample2" role="button" data-slide="prev">
-                                        <i class="fa fa-angle-left fs-30" aria-hidden="true"></i>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExample2" role="button" data-slide="next">
-                                        <i class="fa fa-angle-right fs-30" aria-hidden="true"></i>
-                                    </a>
-                                </div>
+                                @include('layouts.supervisor.components.slider3')
                             </div>
                         </div>
                     </div>

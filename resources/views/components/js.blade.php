@@ -10,8 +10,8 @@
 <!-- Internal Chart.Bundle js-->
 {{-- <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script> --}}
 
-<!-- Peity js-->
-<script src="{{ asset('assets/plugins/peity/jquery.peity.min.js') }}"></script>
+<!-- Owl js-->
+{{-- <script src="https://cdn.jsdelivr.net/gh/blanter/design@master/blanter-owlcarousel.js"></script> --}}
 
 <!-- Select2 js-->
 <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
@@ -24,14 +24,6 @@
 
 <!-- Sidebar js -->
 <script src="{{ asset('assets/plugins/sidebar/sidebar.js') }}"></script>
-
-<!-- Internal Morris js -->
-{{-- <script src="{{ asset('assets/plugins/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/morris.js/morris.min.js') }}"></script> --}}
-
-<!-- Circle Progress js-->
-{{-- <script src="{{ asset('assets/js/circle-progress.min.js') }}"></script>
-<script src="{{ asset('assets/js/chart-circle.js') }}"></script> --}}
 
 <!-- Internal Dashboard js-->
 <script src="{{ asset('assets/js/index.js') }}"></script>
@@ -180,4 +172,12 @@
 
         $('#textFileSlider').val(value).trigger('change');
     });
+
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+        autoHeight:true,
+        margin: 10,
+        nav: true,
+        loop: true
+    })
 </script>

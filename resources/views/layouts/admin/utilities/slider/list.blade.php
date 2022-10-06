@@ -13,7 +13,7 @@
                     <div class="ml-auto">
                         <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ route('slider.create') }}">Add Slider</a>
+                            <a class="dropdown-item" href="{{ route('slider.create') }}">Add Image</a>
                         </div>
                     </div>
                 </div>
