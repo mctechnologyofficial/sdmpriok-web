@@ -11,7 +11,7 @@
         <ul class="nav">
             <li class="nav-header"><span class="nav-label">Admin</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/home"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Dashboard</span></a>
+                <a class="nav-link" href="{{ route('admin.home') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Dashboard</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Employee</span><i class="angle fe fe-chevron-right"></i></a>
@@ -51,7 +51,7 @@
             </li>
             <li class="nav-header"><span class="nav-label">Supervisor</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
+                <a class="nav-link" href="{{ route('home.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/spv/coaching-mentoring"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>

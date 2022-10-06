@@ -15,7 +15,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
+        $home = Slide::all();
+        return view('layouts.supervisor.index', compact(['home']));
     }
 
     /**

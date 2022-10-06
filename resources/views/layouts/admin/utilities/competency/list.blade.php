@@ -36,7 +36,7 @@
                                     <form action="{{ route('competency.destroy', $data->id) }}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>
+                                        <button type="submit" class="btn btn-outline-danger btn-block">Delete</button>
                                     </form>
                                 </td>
                             </tr>

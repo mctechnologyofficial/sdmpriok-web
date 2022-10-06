@@ -43,7 +43,13 @@ class SliderController extends Controller
             'row'   => 'required|string',
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-        $image_path = $request->file('image')->store('public/images/slider');
+        if($attrs['type'] == 'Slider Picture')
+        {
+            $image_path = $request->file('image')->store('public/images/slider');
+        }
+        elseif($attrs['type'] == 'Picture'){
+            $image_path = $request->file('image')->store('public/images/picture');
+        }
 
         Slide::create([
             'type'  => $attrs['type'],
@@ -92,11 +98,21 @@ class SliderController extends Controller
         ]);
 
         $slider = Slide::find($id);
+
+        // $oldphoto = $slider->image;
+        // Storage::delete($oldphoto);
+
         if($request->hasFile('image')){
             $request->validate([
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
-            $path = $request->file('image')->store('public/images/slider');
+
+            if($request->type == "Slider Picture"){
+                $path = $request->file('image')->store('public/images/slider');
+            }elseif($request->type == "Picture"){
+                $path = $request->file('image')->store('public/images/picture');
+            }
+
             $slider->image = $path;
         }
 

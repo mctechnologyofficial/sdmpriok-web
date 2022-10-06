@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Supervisor\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,9 @@ Route::get('/dashboard', function () {
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
 // });
+Route::get('/admin/home', function(){
+    return view('layouts.admin.index');
+})->name('admin.home');
 Route::get('/admin/role', [RoleController::class, 'index'])->name('role.index');
 Route::get('/admin/role/create', [RoleController::class, 'create'])->name('role.create');
 Route::post('/admin/role', [RoleController::class, 'store'])->name('role.store');
@@ -58,13 +62,10 @@ Route::get('/admin/competency/{id}/edit', [CompetencyController::class, 'edit'])
 Route::put('/admin/competency/{id}', [CompetencyController::class, 'update'])->name('competency.update');
 Route::delete('/admin/competency/{id}', [CompetencyController::class, 'destroy'])->name('competency.destroy');
 
+Route::get('/spv/home', [HomeController::class, 'index'])->name('home.index');
+
 Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
 
-
-
-Route::get('/admin/home', function(){
-    return view('layouts.admin.index');
-});
 
 Route::get('/admin/list-employee', function(){
     return view('layouts.admin.employee.list');
@@ -80,9 +81,9 @@ require __DIR__.'/auth.php';
 // End Admin //
 
 // Supervisor //
-Route::get('/spv/home', function(){
-    return view('layouts.supervisor.index');
-});
+// Route::get('/spv/home', function(){
+//     return view('layouts.supervisor.index');
+// });
 Route::get('/spv/coaching-mentoring', function(){
     return view('layouts.supervisor.mentoring.list');
 });

@@ -88,6 +88,8 @@ class CompetencyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $competency = Competency::find($id);
+        $competency->delete();
+        return redirect()->route('competency.index')->with(['success' => 'Competency has been deleted successfully.']);
     }
 }
