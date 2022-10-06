@@ -10,8 +10,8 @@
 <!-- Internal Chart.Bundle js-->
 {{-- <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script> --}}
 
-<!-- Owl js-->
-{{-- <script src="https://cdn.jsdelivr.net/gh/blanter/design@master/blanter-owlcarousel.js"></script> --}}
+<!-- Slick js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- Select2 js-->
 <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
@@ -173,11 +173,14 @@
         $('#textFileSlider').val(value).trigger('change');
     });
 
-    var owl = $('.owl-carousel');
-    owl.owlCarousel({
-        autoHeight:true,
-        margin: 10,
-        nav: true,
-        loop: true
-    })
+    $('.slider').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        fade: true,
+        adaptiveHeight: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        swipeToSlide: true,
+    });
 </script>
