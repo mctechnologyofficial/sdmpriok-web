@@ -27,7 +27,7 @@
     @foreach ($home as $slider1)
         @if ($slider1->type == "Slider Picture" && $slider1->row == "Row 3")
             <div class="m-2">
-                <img alt="img" class="d-block w-100" src="{{ Storage::url($slider1->image) }}">
+                <img alt="img" class="d-block w-100 rounded" src="{{ Storage::url($slider1->image) }}">
             </div>
         @endif
     @endforeach
