@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\QuestionOperatorController;
 use App\Http\Controllers\Supervisor\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +34,7 @@ Route::get('/dashboard', function () {
 // });
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
-})->name('admin.home'); 
+})->name('admin.home');
 Route::get('/admin/role', [RoleController::class, 'index'])->name('role.index');
 Route::get('/admin/role/create', [RoleController::class, 'create'])->name('role.create');
 Route::post('/admin/role', [RoleController::class, 'store'])->name('role.store');

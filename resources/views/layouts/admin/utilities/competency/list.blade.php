@@ -23,7 +23,7 @@
                         <thead>
                             <tr>
                                 <th class="wd-20p">Competency</th>
-                                {{-- <th class="wd-20p">Competency</th> --}}
+                                <th class="wd-20p">Role</th>
                                 <th class="wd-5p">Action</th>
                             </tr>
                         </thead>
@@ -31,6 +31,7 @@
                             @foreach ($competency as $data)
                             <tr>
                                 <td>{{ $data->name }}</td>
+                                <td>{{ $data->role }}</td>
                                 <td>
                                     <a class="btn btn-outline-primary btn-block mb-2"href="{{ route('competency.edit', $data->id) }}">Edit</a>
                                     <form action="{{ route('competency.destroy', $data->id) }}" method="post">

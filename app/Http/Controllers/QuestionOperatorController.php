@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Competency;
-// use App\Models\Role;
 use Illuminate\Http\Request;
 
-class CompetencyController extends Controller
+class QuestionOperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +13,7 @@ class CompetencyController extends Controller
      */
     public function index()
     {
-        $competency = Competency::all();
-        return view('layouts.admin.utilities.competency.list', compact(['competency']));
+        return view('layouts.operator.tools-competency.list');
     }
 
     /**
@@ -27,8 +23,7 @@ class CompetencyController extends Controller
      */
     public function create()
     {
-        // $role = Role::all();
-        return view('layouts.admin.utilities.competency.add');
+        //
     }
 
     /**
@@ -39,10 +34,7 @@ class CompetencyController extends Controller
      */
     public function store(Request $request)
     {
-        Competency::create(
-            $request->except(['_token'])
-        );
-        return redirect()->route('competency.index')->with(['success' => 'Competency has been created successfully.']);
+        //
     }
 
     /**
@@ -64,8 +56,7 @@ class CompetencyController extends Controller
      */
     public function edit($id)
     {
-        $competency = Competency::find($id);
-        return view('layouts.admin.utilities.competency.edit', compact(['competency']));
+        //
     }
 
     /**
@@ -77,9 +68,7 @@ class CompetencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $competency = Competency::find($id);
-        $competency->update($request->except(['_token', '_method']));
-        return redirect()->route('competency.index')->with(['success' => 'Competency has been updated successfully.']);
+        //
     }
 
     /**
@@ -90,8 +79,6 @@ class CompetencyController extends Controller
      */
     public function destroy($id)
     {
-        $competency = Competency::find($id);
-        $competency->delete();
-        return redirect()->route('competency.index')->with(['success' => 'Competency has been deleted successfully.']);
+        //
     }
 }
