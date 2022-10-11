@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Competency;
+use App\Models\QuestionOperator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuestionOperatorController extends Controller
 {
@@ -13,7 +16,10 @@ class QuestionOperatorController extends Controller
      */
     public function index()
     {
-        return view('layouts.operator.tools-competency.list');
+        // $tools = QuestionOperator::all();
+        $competency = Competency::all();
+        // dd($competency);
+        return view('layouts.operator.tools-competency.list', compact(['competency']));
     }
 
     /**
@@ -45,7 +51,7 @@ class QuestionOperatorController extends Controller
      */
     public function show($id)
     {
-        //
+        // $competency = Competency::find($id);
     }
 
     /**
@@ -80,5 +86,40 @@ class QuestionOperatorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get all operator lesson by competency
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getLessonByCompetency(Request $request){
+        $competency = $request->competency;
+
+        $lesson = QuestionOperator::select('lesson')
+                    ->where('competency', $competency)
+                    ->groupBy('lesson')
+                    ->get();
+
+        $response['data'] = $lesson;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all operator lesson by competency
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuestionByLesson(Request $request){
+        $lesson = $request->lesson;
+
+        $question = QuestionOperator::select('*')->where('lesson', $lesson)->get();
+
+        $response['data'] = $question;
+
+        return response()->json($response);
     }
 }

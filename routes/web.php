@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\QuestionOperatorController;
 use App\Http\Controllers\Supervisor\HomeController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +65,10 @@ Route::put('/admin/competency/{id}', [CompetencyController::class, 'update'])->n
 Route::delete('/admin/competency/{id}', [CompetencyController::class, 'destroy'])->name('competency.destroy');
 
 Route::get('/spv/home', [HomeController::class, 'index'])->name('home.index');
+
+Route::get('/operator/competency-tools', [QuestionOperatorController::class, 'index'])->name('competency-tools.index');
+Route::get('/operator/competency-tools/getlesson', [QuestionOperatorController::class, 'getLessonByCompetency']);
+Route::get('/operator/competency-tools/getquestion', [QuestionOperatorController::class, 'getQuestionByLesson']);
 
 Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
 

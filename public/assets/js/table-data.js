@@ -27,4 +27,12 @@ $(function() {
     $('#mentoringtable tbody tr').on('mouseover', function(){
         $(this).css('cursor', 'pointer');
     });
+
+    $('#tblOperatorQuestion').DataTable({
+        searching : false,
+	}).column(0).visible(false);
+        
+    $('#tblOperatorQuestion tbody').on('mouseover', 'tr', function(){
+        $(this).css('cursor', 'pointer');
+    });
 });

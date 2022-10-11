@@ -7,6 +7,7 @@
 		<meta name="description" content="Indonesia Power Dashboard">
 		<meta name="author" content="PT Indonesia Power">
 		<meta name="keywords" content="sdmpriok, indonesianpower">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 		<!-- Favicon -->
 		<link rel="icon" href="{{ asset('assets/img/brand/logo-pln.png') }}" type="image/x-icon"/>
@@ -41,7 +42,7 @@
 
                 <div class="container-fluid">
                     <div class="inner-body">
-        
+
                         <!-- Page Header -->
                         <div class="page-header">
                             <div>
@@ -53,7 +54,7 @@
                             </div>
                         </div>
                         <!-- End Page Header -->
-        
+
                         @yield('content')
                     </div>
                 </div>
