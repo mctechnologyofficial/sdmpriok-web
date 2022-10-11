@@ -44,6 +44,38 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="modal" tabindex="-1" role="dialog" id="answerOperatorModal">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Answer</label>
+                                        </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <input type="hidden" name="question" id="questionid">
+                                            <textarea name="answer" class="form-control" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-success"><i class="fas fa-save"></i> Save</button>
+                                <button type="button" class="btn btn-outline-info"><i class="fas fa-file-upload"></i> Upload File</button>
+                                <button type="button" class="btn btn-outline-danger"><i class="fas fa-microphone"></i> Record</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

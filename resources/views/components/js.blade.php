@@ -288,6 +288,13 @@
 
     $('#tblOperatorQuestion tbody').on('click', 'tr',function(){
         var id = $(this).find('.questionid').html();
-        // alert(id);
+        
+        if(id == undefined){
+            // alert('oke');
+        }else{
+            $('#answerOperatorModal').modal('show');
+            $('#questionid').val(id);
+        }
+
     });
 </script>
