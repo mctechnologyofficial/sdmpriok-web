@@ -344,7 +344,7 @@
             },
             dataType: 'json',
             success: function(response){
-                createRows(response);
+                createRowsSupervisor(response);
                 // createOptionSubCategory(response);
             }
         });
@@ -394,7 +394,7 @@
         }
     }
 
-    function createRows(response){
+    function createRowsSupervisor(response){
         var len = 0;
         $('#tblSupervisorQuestion tbody').empty();
 

@@ -69,7 +69,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-success"><i class="fas fa-save"></i> Save</button>
                                 <button type="button" class="btn btn-outline-info"><i class="fas fa-file-upload"></i> Upload File</button>
-                                <button type="button" class="btn btn-outline-danger"><i class="fas fa-microphone"></i> Record</button>
+                                {{-- <button type="button" class="btn btn-outline-danger"><i class="fas fa-microphone"></i> Record</button> --}}
                             </div>
                             </div>
                         </div>

@@ -99,7 +99,7 @@ class CompetencyOperatorController extends Controller
         $lesson = QuestionOperator::select('lesson')
                     ->where('competency', $competency)
                     ->groupBy('lesson')
-                    ->orderBy('lesson', 'desc')
+                    ->orderBy('lesson', 'asc')
                     ->get();
 
         $response['data'] = $lesson;
