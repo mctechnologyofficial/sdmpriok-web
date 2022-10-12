@@ -66,6 +66,9 @@ Route::delete('/admin/competency/{id}', [CompetencyController::class, 'destroy']
 
 Route::get('/supervisor/home', [HomeController::class, 'index'])->name('home.index');
 Route::get('/supervisor/competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
+Route::get('/supervisor/competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
+Route::get('/supervisor/competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
+Route::get('/supervisor/competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
 
 Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
 Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);

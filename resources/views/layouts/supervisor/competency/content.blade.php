@@ -7,14 +7,22 @@
         <div class="card custom-card mg-b-20">
             <div class="card-body">
                 <div class="card-header border-bottom-0 pt-0 pl-0 pr-0 d-flex">
-                    {{-- <div>
-                        <label class="main-content-label mb-2">List Employee</label>
-                    </div> --}}
+                    <div class="mr-auto mb-2 d-flex">
+                        <select name="category" id="category" class="form-control">
+                            <option value="" selected disabled>Choose category</option>
+                        </select>
+                        <select name="subcategory" id="subcategory" class="form-control ml-2">
+                            <option value="" selected disabled>Choose sub category</option>
+                        </select>
+                    </div>
                     <div class="ml-auto">
                         <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Sistem Proteksi Turbin</a>
-                            <a class="dropdown-item" href="#">Sistem Proteksi HRSG</a>
+                            @foreach ($competency as $data)
+                                @if ($data->role == "Supervisor")
+                                    <a class="dropdown-item tools-competency-spv" href="javascript:void(0)">{{ $data->name }}</a>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -22,20 +30,16 @@
                     <table class="table table-hover" id="tblSupervisorQuestion">
                         <thead>
                             <tr>
-                                <th class="wd-20p">Acuan Kinerja</th>
-                                <th class="wd-20p">Rancangan Sesi Pembelajaran</th>
-                                <th class="wd-20p">Waktu Penugasan</th>
-                                <th class="wd-5p">Realisasi</th>
+                                <th>id</th>
+                                <th class="">Competency</th>
+                                {{-- <th class="">Lesson</th> --}}
+                                <th class="">Reference</th>
+                                <th class="">Lesson Plan</th>
+                                <th class="">Processing Time</th>
+                                <th class="">Realization</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
 
                     <!-- Modal effects -->

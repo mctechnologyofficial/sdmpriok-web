@@ -88,7 +88,7 @@ class CompetencyOperatorController extends Controller
 
 
     /**
-     * Get all operator lesson by competency
+     * Get all operator lessons by competency
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -99,6 +99,7 @@ class CompetencyOperatorController extends Controller
         $lesson = QuestionOperator::select('lesson')
                     ->where('competency', $competency)
                     ->groupBy('lesson')
+                    ->orderBy('lesson', 'desc')
                     ->get();
 
         $response['data'] = $lesson;
@@ -107,7 +108,7 @@ class CompetencyOperatorController extends Controller
     }
 
     /**
-     * Get all operator lesson by competency
+     * Get all operator questions by competency
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

@@ -17,7 +17,7 @@
                             <div class="dropdown-menu">
                                 @foreach ($competency as $data)
                                     @if ($data->role == "Operator")
-                                        <a class="dropdown-item tools-competency" href="javascript:void(0)">{{ $data->name }}</a>
+                                        <a class="dropdown-item tools-competency-op" href="javascript:void(0)">{{ $data->name }}</a>
                                     @endif
                                 @endforeach
                             </div>
@@ -30,8 +30,6 @@
                                 <tr>
                                     <th>id</th>
                                     <th class="">Competency</th>
-                                    {{-- <th class="">Category</th> --}}
-                                    {{-- <th class="">Sub Category</th> --}}
                                     <th class="">Lesson</th>
                                     <th class="">Reference</th>
                                     <th class="">Lesson Plan</th>

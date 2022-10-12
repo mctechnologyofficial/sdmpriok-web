@@ -18,6 +18,10 @@ $(function() {
 
     $('#tblSupervisorQuestion').DataTable({
         searching: false,
+    }).column(0).visible(false);
+
+    $('#tblSupervisorQuestion tbody').on('mouseover', 'tr', function(){
+        $(this).css('cursor', 'pointer');
     });
 
     $('#mentoringtable').DataTable({

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('lesson_plan')->nullable();
             $table->string('processing_time')->nullable();
             $table->string('realization')->nullable();
-            $table->string('total_time')->nullable();
+            $table->string('total_time')->nullable(); 
             $table->timestamps();
         });
     }

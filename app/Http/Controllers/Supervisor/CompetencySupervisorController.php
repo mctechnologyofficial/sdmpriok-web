@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Competency;
+use App\Models\QuestionSupervisor;
 use Illuminate\Http\Request;
 
 class CompetencySupervisorController extends Controller
@@ -14,7 +16,8 @@ class CompetencySupervisorController extends Controller
      */
     public function index()
     {
-        return view('layouts.supervisor.competency.content');
+        $competency = Competency::all();
+        return view('layouts.supervisor.competency.content', compact(['competency']));
     }
 
     /**
@@ -81,5 +84,68 @@ class CompetencySupervisorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get all category questions by competency
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getCategoryByCompetency(Request $request)
+    {
+        $competency = $request->competency;
+
+        $category = QuestionSupervisor::select('category')
+                    ->where('competency', 'LIKE','%'.$competency.'%')
+                    ->groupBy('category')
+                    ->orderBy('category', 'desc')
+                    ->get();
+
+        $response['data'] = $category;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all sub category questions by category
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getSubCategoryByCategory(Request $request)
+    {
+        $category = $request->category;
+
+        $category = QuestionSupervisor::select('sub_category')
+                    ->where('category', 'LIKE','%'.$category.'%')
+                    ->groupBy('sub_category')
+                    ->orderBy('sub_category', 'desc')
+                    ->get();
+
+        $response['data'] = $category;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all questions by sub category
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuestionBySubCategory(Request $request)
+    {
+        $subcategory = $request->subcategory;
+
+        $subcategory = QuestionSupervisor::select('*')
+                    ->where('sub_category', 'LIKE','%'.$subcategory.'%')
+                    // ->groupBy('sub_category')
+                    // ->orderBy('sub_category', 'desc')
+                    ->get();
+
+        $response['data'] = $subcategory;
+
+        return response()->json($response);
     }
 }
