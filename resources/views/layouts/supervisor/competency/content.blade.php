@@ -42,36 +42,37 @@
                         <tbody></tbody>
                     </table>
 
-                    <!-- Modal effects -->
-                    <div class="modal fade" id="modaldemo8" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal" tabindex="-1" role="dialog" id="answerSupervisorModal">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <!-- <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5> -->
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="">
-                                        <div class="form-group">
-                                            <label for="exampleFormControlTextarea1">Answer</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            <button class="btn btn-danger form-control mt-2">
-                                                Record <i class="fas fa-microphone"></i>
-                                            </button>
+                            <div class="modal-header">
+                                <h5 class="modal-title"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Answer</label>
                                         </div>
-
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Save</button>
-                                    <button type="button" class="btn btn-success">Upload Files</button>
-                                </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <input type="hidden" name="question" id="questionid">
+                                            <textarea name="answer" class="form-control" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-success"><i class="fas fa-save"></i> Save</button>
+                                <button type="button" class="btn btn-outline-info"><i class="fas fa-file-upload"></i> Upload File</button>
+                                {{-- <button type="button" class="btn btn-outline-danger"><i class="fas fa-microphone"></i> Record</button> --}}
+                            </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End Modal effects-->
                 </div>
             </div>
         </div>

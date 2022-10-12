@@ -17,7 +17,7 @@ $(function() {
     });
 
     $('#tblSupervisorQuestion').DataTable({
-        searching: false,
+        searching: false
     }).column(0).visible(false);
 
     $('#tblSupervisorQuestion tbody').on('mouseover', 'tr', function(){
@@ -37,7 +37,7 @@ $(function() {
     });
 
     $('#tblOperatorQuestion').DataTable({
-        searching : false,
+        searching : false
 	}).column(0).visible(false);
 
     $('#tblOperatorQuestion tbody').on('mouseover', 'tr', function(){

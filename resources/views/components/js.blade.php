@@ -287,7 +287,7 @@
 
     $('#tblOperatorQuestion tbody').on('click', 'tr',function(){
         var id = $(this).find('.questionid').html();
-        
+
         if(id == undefined){
             // alert('oke');
         }else{
@@ -348,6 +348,18 @@
                 // createOptionSubCategory(response);
             }
         });
+    });
+
+    $('#tblSupervisorQuestion tbody').on('click', 'tr',function(){
+        var id = $(this).find('.questionid').html();
+
+        if(id == undefined){
+            // alert('oke');
+        }else{
+            $('#answerSupervisorModal').modal('show');
+            $('#questionid').val(id);
+        }
+
     });
 
     function createOptionCategory(response){
