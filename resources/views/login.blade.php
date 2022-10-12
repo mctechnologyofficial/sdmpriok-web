@@ -13,7 +13,7 @@
     <link rel="icon" href="{{ asset('assets/img/brand/logo-pln.png') }}" type="image/x-icon" />
 
     <!-- Title -->
-    <title>Indonesia Power Dashboard - Login</title>
+    <title>Indonesia Power - Login</title>
 
     <!-- Bootstrap css-->
     <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
