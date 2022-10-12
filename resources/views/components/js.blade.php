@@ -171,6 +171,10 @@
         var value = $(this).val().replace(/C:\\fakepath\\/i, '');
 
         $('#textFileSlider').val(value).trigger('change');
+
+        // $('#textFileSlider').on('change', function(){
+        //     $('#image').hide();
+        // });
     });
 
     $('.slider').slick({

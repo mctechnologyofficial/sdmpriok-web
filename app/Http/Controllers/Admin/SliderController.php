@@ -104,12 +104,13 @@ class SliderController extends Controller
         ]);
 
         $slider = Slide::find($id);
-        Storage::delete($slider->image);
 
         if($request->hasFile('image')){
             $request->validate([
-                'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
+
+            Storage::delete($slider->image);
 
             if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
                 $path = $request->file('image')->store('public/images/slider/row1');

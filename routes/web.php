@@ -36,6 +36,14 @@ Route::get('/dashboard', function () {
 Route::get('/admin/home', function(){
     return view('layouts.admin.index');
 })->name('admin.home');
+
+Route::get('/admin/employee', [EmployeeController::class, 'index'])->name('employee.index');
+Route::get('/admin/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
+Route::get('/admin/employee/{id}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
+Route::post('/admin/employee', [EmployeeController::class, 'store'])->name('employee.store');
+Route::put('/admin/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+Route::delete('/admin/employee/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
+
 Route::get('/admin/role', [RoleController::class, 'index'])->name('role.index');
 Route::get('/admin/role/create', [RoleController::class, 'create'])->name('role.create');
 Route::post('/admin/role', [RoleController::class, 'store'])->name('role.store');
@@ -74,34 +82,14 @@ Route::get('/operator/competency-tools', [CompetencyOperatorController::class, '
 Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
 Route::get('/operator/competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
 
-Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
-
-
-Route::get('/admin/list-employee', function(){
-    return view('layouts.admin.employee.list');
-});
-// Route::get('/admin/add-employee', function(){
-//     return view('layouts.admin.employee.add');
-// });
-Route::get('/admin/edit-employee', function(){
-    return view('layouts.admin.employee.edit');
-});
-
 require __DIR__.'/auth.php';
-// End Admin //
 
 // Supervisor //
-// Route::get('/spv/home', function(){
-//     return view('layouts.supervisor.index');
-// });
 Route::get('/spv/coaching-mentoring', function(){
     return view('layouts.supervisor.mentoring.list');
 });
 Route::get('/spv/detail-mentoring', function(){
     return view('layouts.supervisor.mentoring.detail');
-});
-Route::get('/spv/sistem-proteksi', function(){
-    return view('layouts.supervisor.competency.content');
 });
 Route::get('/spv/chart-personal', function(){
     return view('layouts.supervisor.assessment-chart.personal');
@@ -110,9 +98,3 @@ Route::get('/spv/chart-team', function(){
     return view('layouts.supervisor.assessment-chart.team');
 });
 // End Supervisor //
-
-// Operator //
-Route::get('/operator/sistem-proteksi', function(){
-    return view('layouts.operator.competency.content');
-});
-// End Operator //

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -15,7 +19,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('layouts.admin.employee.list');
+        $user = User::join('roles', 'roles.id', '=', 'users.role_id')
+                    ->join('teams', 'teams.id', '=', 'users.team_id')
+                    ->get(['users.*', 'roles.name as role_name', 'teams.name as team_name']);
+        return view('layouts.admin.employee.list', compact(['user']));
     }
 
     /**
@@ -25,7 +32,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.employee.add');
+        $role = Role::all();
+        $team = Team::all();
+        return view('layouts.admin.employee.add', compact(['role', 'team']));
     }
 
     /**
@@ -36,7 +45,29 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new User();
+        $attrs = $request->validate([
+            'name'      => 'required|string',
+            'email'     => 'required|email',
+            'phone'     => 'required|string',
+            'password'  => 'required|string',
+            'role_id'   => 'required|string',
+            'team_id'   => 'required|string',
+            'image'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+        ]);
+
+        $image_path = $request->file('image')->store('public/images/users');
+
+        User::create([
+            'name'      => $attrs['name'],
+            'email'     => $attrs['email'],
+            'phone'     => $attrs['phone'],
+            'password'  => Hash::make($attrs['password']),
+            'role_id'   => $attrs['role_id'],
+            'team_id'   => $attrs['team_id'],
+            'image'     => $image_path
+        ]);
+
+        return redirect()->route('employee.index')->with('success','User has been created successfully.');
     }
 
     /**
@@ -58,7 +89,10 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        return view('layouts.admin.employee.edit');
+        $user = User::find($id);
+        $role = Role::all();
+        $team = Team::all();
+        return view('layouts.admin.employee.edit', compact(['user', 'role', 'team']));
     }
 
     /**
@@ -70,7 +104,36 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $attrs = $request->validate([
+            'name'      => 'required|string',
+            'email'     => 'required|email',
+            'phone'     => 'required|string',
+            // 'password'  => 'required|string',
+            'role_id'   => 'required|string',
+            'team_id'   => 'required|string',
+        ]);
+
+        $user = User::find($id);
+
+        if($request->hasFile('image')){
+            $request->validate([
+                'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+            ]);
+
+            Storage::delete($user->image);
+            $path = $request->file('image')->store('public/images/users');
+            $user->image = $path;
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        // $user->password = Hash::make($request->password);
+        $user->role_id = $request->role_id;
+        $user->team_id = $request->team_id;
+        $user->save();
+
+        return redirect()->route('employee.index')->with('success','User updated successfully');
     }
 
     /**
@@ -81,6 +144,10 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        Storage::delete($user->image);
+        $user->delete();
+
+        return redirect()->route('employee.index')->with('success','User has been deleted successfully');
     }
 }

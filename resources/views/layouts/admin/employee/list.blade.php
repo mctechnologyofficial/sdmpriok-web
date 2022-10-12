@@ -13,7 +13,7 @@
                     <div class="ml-auto">
                         <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/admin/add-employee">Add Employee</a>
+                            <a class="dropdown-item" href="{{ route('employee.create') }}">Add Employee</a>
                         </div>
                     </div>
                 </div>
@@ -21,49 +21,38 @@
                     <table class="table" id="example1">
                         <thead>
                             <tr>
-                                <th class="wd-20p">Name</th>
-                                <th class="wd-20p">Position</th>
-                                <th class="wd-20p">Team</th>
-                                <th class="wd-5p">Action</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Position</th>
+                                <th>Team</th>
+                                <th>Image</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Fawwaz Hudzalfah Saputra</td>
-                                <td>Supervisor Operator</td>
-                                <td>Team A</td>
-                                <td>
-                                    <a class="btn btn-outline-primary btn-block" href="/admin/edit-employee">Edit</a>
-                                    <a class="modal-effect btn btn-outline-danger btn-block" data-effect="effect-scale" data-toggle="modal" href="#modaldemo8">Delete</a>
-                                </td>
-                            </tr>
+                            @foreach ($user as $data)
+                                <tr>
+                                    <td>{{ $data->name }}</td>
+                                    <td>{{ $data->email }}</td>
+                                    <td>{{ $data->phone }}</td>
+                                    <td>{{ $data->role_name }}</td>
+                                    <td>{{ $data->team_name }}</td>
+                                    <td class="text-center">
+                                        <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-75">
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('employee.edit', $data->id) }}">Edit</a>
+                                        <form action="{{ route('employee.destroy', $data->id) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-outline-danger btn-block">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
-
-                    <!-- Modal effects -->
-                    <div class="modal" id="modaldemo8">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content modal-content-demo">
-                                <div class="modal-header">
-                                    <h6 class="modal-title">Delete User Data</h6>
-                                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body tx-center pd-y-20 pd-x-20">
-                                    {{-- <i class="icon ion-ios-checkmark-circle-outline tx-100 tx-success lh-1 mg-t-20 d-inline-block"></i> --}}
-                                    <i class="fas fa-exclamation-triangle tx-100 tx-warning lh-1 mg-t-20 d-inline-block"></i>
-                                    <h4 class="tx-warning tx-semibold mg-b-20">Warning</h4>
-                                    <p class="mg-b-20 mg-x-20">Are you sure want to delete this user data?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn ripple btn-primary" type="button">Delete</button>
-                                    <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Modal effects-->
                 </div>
             </div>
         </div>

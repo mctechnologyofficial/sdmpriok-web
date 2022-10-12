@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('team_id');
+            $table->string('image')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamps();
             $table->softDeletes();
