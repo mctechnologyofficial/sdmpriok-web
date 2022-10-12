@@ -57,12 +57,7 @@
                 <a class="nav-link" href="/spv/coaching-mentoring"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                <ul class="nav-sub">
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/spv/sistem-proteksi">Sistem Proteksi</a>
-                    </li>
-                </ul>
+                <a class="nav-link" href="{{ route('competency-tools-spv.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
@@ -80,16 +75,8 @@
                 <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('competency-tools.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
+                <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
             </li>
-            {{-- <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                <ul class="nav-sub">
-                    <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="{{ route('competency-tools.index') }}">Tools Gas Turbin</a>
-                    </li>
-                </ul>
-            </li> --}}
             <li class="nav-item">
                 <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
             </li>

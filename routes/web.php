@@ -5,9 +5,9 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
-use App\Http\Controllers\QuestionOperatorController;
+use App\Http\Controllers\Operator\CompetencyOperatorController;
+use App\Http\Controllers\Supervisor\CompetencySupervisorController;
 use App\Http\Controllers\Supervisor\HomeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,11 +64,12 @@ Route::get('/admin/competency/{id}/edit', [CompetencyController::class, 'edit'])
 Route::put('/admin/competency/{id}', [CompetencyController::class, 'update'])->name('competency.update');
 Route::delete('/admin/competency/{id}', [CompetencyController::class, 'destroy'])->name('competency.destroy');
 
-Route::get('/spv/home', [HomeController::class, 'index'])->name('home.index');
+Route::get('/supervisor/home', [HomeController::class, 'index'])->name('home.index');
+Route::get('/supervisor/competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
 
-Route::get('/operator/competency-tools', [QuestionOperatorController::class, 'index'])->name('competency-tools.index');
-Route::get('/operator/competency-tools/getlesson', [QuestionOperatorController::class, 'getLessonByCompetency']);
-Route::get('/operator/competency-tools/getquestion', [QuestionOperatorController::class, 'getQuestionByLesson']);
+Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
+Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
+Route::get('/operator/competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
 
 Route::get('/admin/employee', [EmployeeController::class, 'create'])->name('employee.create');
 

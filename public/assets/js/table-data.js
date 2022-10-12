@@ -16,6 +16,10 @@ $(function() {
         $(this).css('cursor', 'pointer');
     });
 
+    $('#tblSupervisorQuestion').DataTable({
+        searching: false,
+    });
+
     $('#mentoringtable').DataTable({
         // responsive: true,
 		language: {
@@ -31,7 +35,7 @@ $(function() {
     $('#tblOperatorQuestion').DataTable({
         searching : false,
 	}).column(0).visible(false);
-        
+
     $('#tblOperatorQuestion tbody').on('mouseover', 'tr', function(){
         $(this).css('cursor', 'pointer');
     });

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Employee')
+@section('title', 'Competency Tools')
 
 @section('content')
 <div class="row">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover tableCompetency" id="example1">
+                    <table class="table table-hover" id="tblSupervisorQuestion">
                         <thead>
                             <tr>
                                 <th class="wd-20p">Acuan Kinerja</th>

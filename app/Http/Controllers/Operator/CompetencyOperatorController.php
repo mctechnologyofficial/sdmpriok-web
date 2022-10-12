@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Operator;
 
+use App\Http\Controllers\Controller;
 use App\Models\Competency;
 use App\Models\QuestionOperator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class QuestionOperatorController extends Controller
+class CompetencyOperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,7 @@ class QuestionOperatorController extends Controller
      */
     public function index()
     {
-        // $tools = QuestionOperator::all();
         $competency = Competency::all();
-        // dd($competency);
         return view('layouts.operator.tools-competency.list', compact(['competency']));
     }
 
@@ -51,7 +49,7 @@ class QuestionOperatorController extends Controller
      */
     public function show($id)
     {
-        // $competency = Competency::find($id);
+        //
     }
 
     /**
@@ -87,6 +85,7 @@ class QuestionOperatorController extends Controller
     {
         //
     }
+
 
     /**
      * Get all operator lesson by competency
