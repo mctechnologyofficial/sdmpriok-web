@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class AnswerSupervisor extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'question_id',
+        'essay',
+        'file'
+    ];
 }

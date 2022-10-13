@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('question_id');
-            // $table->string('submit_type');
-            $table->text('essay')->nullable();
+            $table->string('essay')->nullable();
             $table->string('file')->nullable();
-            // $table->string('submit_time');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

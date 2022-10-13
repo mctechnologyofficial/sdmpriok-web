@@ -41,18 +41,17 @@ class CompetencySupervisorController extends Controller
     {
         $attrs = $request->validate([
             'questionid'    => 'required|integer',
-            'essay'         => 'string',
+            'essay'         => '',
             'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
         ]);
 
-        if($request->hasAny('essay')){
-            $jawaban = $request->essay;
-        }
+        // if($request->hasAny('essay')){
+        //     $jawaban = $request->essay;
+        // }
 
         if($request->hasFile('image')){
             $path = $request->file('image')->store('public/answer/supervisor-answer');
-        }
-        else{
+        }else{
             $path = null;
         }
 
@@ -62,6 +61,7 @@ class CompetencySupervisorController extends Controller
             'essay'         => $attrs['essay'],
             'file'          => $path
         ]);
+
         return redirect()->route('competency-tools-spv.index')->with('success','Answer has been submitted successfully.');
     }
 
