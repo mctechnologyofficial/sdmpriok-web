@@ -165,8 +165,9 @@
         type: 'radar',
         data: teamData
     });
+</script>
 
-
+<script>
     $('#fileSlider').on('change', function(){
         var value = $(this).val().replace(/C:\\fakepath\\/i, '');
 
@@ -193,6 +194,7 @@
 
     function createOption(response){
         var len = 0;
+        $("#lesson").find('option:not(:first)').remove();
 
         if(response['data'] != null){
             len = response['data'].length;
@@ -302,14 +304,16 @@
     });
 
     // SUPERVISOR COMPETENCY TOOLS
+    var valueCompetencySpv;
+
     $('.tools-competency-spv').on('click', function(){
-        var value = $(this).text();
+        valueCompetencySpv = $(this).text();
         $.ajax({
             url: '/supervisor/competency-tools/getcategory',
             type: 'GET',
             data: {
                 _token: CSRF_TOKEN,
-                competency: value
+                competency: valueCompetencySpv
             },
             dataType: 'json',
             success: function(response){
@@ -360,14 +364,18 @@
         if(id == undefined){
             // alert('oke');
         }else{
+            $('#competency').val(valueCompetencySpv);
+            $('#textCategory').val($('#category').val());
+            $('#textSubCategory').val($('#subcategory').val());
+            $('#questionid').val(id);
             $('#answerSupervisorModal').modal('show');
             $('#questionid').val(id);
         }
-
     });
 
     function createOptionCategory(response){
         var len = 0;
+        $("#category").find('option:not(:first)').remove();
 
         if(response['data'] != null){
             len = response['data'].length;
@@ -390,6 +398,7 @@
 
     function createOptionSubCategory(response){
         var len = 0;
+        $("#subcategory").find('option:not(:first)').remove();
 
         if(response['data'] != null){
             len = response['data'].length;
@@ -398,11 +407,8 @@
         if(len > 0){
             for(var i = 0; i < len; i++){
                 var sub_category = response['data'][i].sub_category;
-
-                $("#subcategory").append($('<option>', {
-                    value: sub_category,
-                    text: sub_category
-                }));
+                // var val = "<option value='"+ sub_category +"'>" + sub_category + "</option>";
+                $('#subcategory').append(new Option(sub_category, sub_category));
             }
         }else{
             var opt = "<option value='' selected disabled>Choose sub category</option>";
