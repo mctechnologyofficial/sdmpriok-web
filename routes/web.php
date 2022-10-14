@@ -80,6 +80,7 @@ Route::get('/supervisor/competency-tools/getsubcategory', [CompetencySupervisorC
 Route::get('/supervisor/competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
 
 Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
+Route::post('/operator/competency-tools', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
 Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
 Route::get('/operator/competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
 

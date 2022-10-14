@@ -37,7 +37,7 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover" id="tblSupervisorQuestion">
-                        <thead>
+                        <thead class="thead-dark">
                             <tr>
                                 <th>id</th>
                                 <th class="">Competency</th>
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                                 <input type="hidden" name="questionid" id="questionid">
-                                                <input type="text" name="competency" class="form-control" id="competency">
+                                                <input type="text" name="competency" class="form-control" id="competency" readonly>
                                             </div>
                                         </div>
                                         <div class="row row-xs align-items-center mg-b-20">
@@ -77,7 +77,7 @@
                                                 <label class="mg-b-0">Category</label>
                                             </div>
                                             <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                                <input type="text" name="category" class="form-control" id="textCategory">
+                                                <input type="text" name="category" class="form-control" id="textCategory" readonly>
                                             </div>
                                         </div>
                                         <div class="row row-xs align-items-center mg-b-20">
@@ -85,7 +85,7 @@
                                                 <label class="mg-b-0">Sub Category</label>
                                             </div>
                                             <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                                <input type="text" name="subcategory" class="form-control" id="textSubCategory">
+                                                <input type="text" name="subcategory" class="form-control" id="textSubCategory" readonly>
                                             </div>
                                         </div>
                                         <div class="row row-xs align-items-center mg-b-20">

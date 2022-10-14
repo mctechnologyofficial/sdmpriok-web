@@ -17,7 +17,7 @@ class CompetencyOperatorController extends Controller
     public function index()
     {
         $competency = Competency::all();
-        return view('layouts.operator.tools-competency.list', compact(['competency']));
+        return view('layouts.operator.competency.content', compact(['competency']));
     }
 
     /**
