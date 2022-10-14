@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class RoleController extends Controller
+class AssessmentChartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,16 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $role = Role::all();
-        return view('layouts.admin.role.list', compact(['role']));
+        $user = User::select(DB::raw('COUNT(*) as count'), DB::raw("progress.progress as progressdata"))
+                    ->join('progress', 'progress.user_id', '=', 'users.id')
+                    ->where('team_id', '1')
+                    ->groupBy(DB::raw("progressdata"))
+                    ->orderBy('users.id','ASC')
+                    ->pluck('count');
+
+        $label = $user->keys();
+        $data = $user->values();
+        return view('layouts.supervisor.assessment-chart.team', compact(['label', 'data']));
     }
 
     /**
@@ -26,7 +35,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.role.add');
+        //
     }
 
     /**
@@ -37,15 +46,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $attrs = $request->validate([
-            'name'  => 'required|string'
-        ]);
-        Role::create([
-            'name'          => $attrs['name'],
-            'guard_name'    => $attrs['name']
-        ]);
-        return redirect()->route('role.index')->with(['success' => 'Role has been created successfully.']);
-        // dd($request->all());
+        //
     }
 
     /**
@@ -67,8 +68,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        return view('layouts.admin.role.edit', compact(['role']));
+        //
     }
 
     /**
@@ -80,11 +80,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
-        $role->name = $request->name;
-        $role->guard_name = $request->name;
-        $role->save();
-        return redirect()->route('role.index')->with(['success' => 'Role has been updated successfully.']);
+        //
     }
 
     /**
@@ -95,8 +91,6 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
-        $role->delete();
-        return redirect()->route('role.index')->with(['success' => 'Role has been deleted successfully.']);
+        //
     }
 }

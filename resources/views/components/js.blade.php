@@ -82,7 +82,6 @@
             }
         ]
     };
-
     var radarChart = new Chart(marksCanvas, {
         type: 'bar',
         data: marksData,
@@ -133,30 +132,19 @@
         data: personalData
     });
 
-    // var teamChart = document.getElementById("teamCanvasChart");
+    var labelTeamSpv = {{ Js::from($label) }}
+    var dataTeamSpv = {{ Js::from($data) }}
+    var rand = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];
+    var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+
     var teamChart = $('#teamChart')[0];
     var teamData = {
         labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
         datasets: [
             {
-                label: "Fawwaz Hudzalfah Saputra",
-                backgroundColor: "rgba(200,0,0,0.2)",
-                data: [65, 75, 70, 80, 60]
-            },
-            {
-                label: "Agus Wijayanto",
-                backgroundColor: "rgba(0,0,200,0.2)",
-                data: [54, 65, 60, 70, 70]
-            },
-            {
-                label: "Udin Syarifudin",
-                backgroundColor: "rgba(76,255,0, 0.2)",
-                data: [20, 50, 80, 90, 10]
-            },
-            {
-                label: "Jonathan Hasyim",
-                backgroundColor: "rgba(255,180,0,0.2)",
-                data: [15, 40, 20, 40, 90]
+                label: labelTeamSpv,
+                backgroundColor: color,
+                data: dataTeamSpv
             },
         ]
     };
@@ -190,6 +178,7 @@
     });
 
     // OPERATOR COMPETENCY TOOLS
+    var valueCompetencyOp;
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     function createOption(response){
@@ -235,6 +224,21 @@
             var processing_time = response['data'][i].processing_time;
             var realization = response['data'][i].realization;
 
+            // $('#tblOperatorQuestion').DataTable({
+            //     // processing: true,
+            //     // serverSide: true,
+            //     bDestroy: true,
+            //     columns: [
+            //         {data: id},
+            //         {data: competency},
+            //         {data: lesson},
+            //         {data: reference},
+            //         {data: lesson_plan},
+            //         {data: processing_time},
+            //         {data: realization},
+            //     ],
+            // });
+
             var tr_str = "<tr>" +
                 "<td class='questionid' style='display: none;'>" + id + "</td>" +
                 "<td>" + competency + "</td>" +
@@ -259,13 +263,13 @@
     }
 
     $('.tools-competency-op').on('click', function(){
-        var value = $(this).text();
+        valueCompetencyOp = $(this).text();
         $.ajax({
             url: '/operator/competency-tools/getlesson',
             type: 'GET',
             data: {
                 _token: CSRF_TOKEN,
-                competency: value
+                competency: valueCompetencyOp
             },
             dataType: 'json',
             success: function(response){
@@ -297,6 +301,8 @@
         if(id == undefined){
             // alert('oke');
         }else{
+            $('#competency').val(valueCompetencyOp);
+            $('#textlesson').val($('#lesson').val());
             $('#answerOperatorModal').modal('show');
             $('#questionid').val(id);
         }

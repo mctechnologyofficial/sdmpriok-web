@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Operator;
 
 use App\Http\Controllers\Controller;
+use App\Models\AnswerOperator;
 use App\Models\Competency;
+use App\Models\Progress;
 use App\Models\QuestionOperator;
 use Illuminate\Http\Request;
 
@@ -32,13 +34,59 @@ class CompetencyOperatorController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+    *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->validate([
+            'questionid'    => 'required|integer',
+            'essay'         => '',
+            'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
+        ]);
+
+        if($request->hasFile('image')){
+            $path = $request->file('image')->store('public/answer/operator-answer');
+        }else{
+            $path = null;
+        }
+        
+        AnswerOperator::create([
+            'user_id'       => 2,
+            'question_id'   => $attrs['questionid'],
+            'essay'         => $attrs['essay'],
+            'file'          => $path
+        ]);
+        
+        $total_question = QuestionOperator::count();
+        $total_submit = AnswerOperator::where('user_id', '2')->count();
+        $validation = Progress::where('user_id', '2')->count();
+        
+        function get_percentage($total, $number)
+        {
+            if ( $total > 0 ) {
+                return round(($number * 100) / $total, 2);
+            } else {
+                return 0;
+            }
+        }
+        // dd(get_percentage($total_question, $total_submit));
+
+        if($validation == 0){
+            Progress::create([
+                'user_id'       => 2,
+                'submit_time'   => $total_submit,
+                'progress'      => get_percentage($total_question, $total_submit)
+            ]);
+        }else{
+            Progress::where('user_id', '2')->update([
+                'submit_time'   => $total_submit,
+                'progress'      => get_percentage($total_question, $total_submit)
+            ]);
+        }
+
+        return redirect()->route('competency-tools-op.index')->with('success','Answer has been submitted successfully.');
     }
 
     /**
@@ -97,9 +145,9 @@ class CompetencyOperatorController extends Controller
         $competency = $request->competency;
 
         $lesson = QuestionOperator::select('lesson')
-                    ->where('competency', $competency)
+                    ->where('competency', 'LIKE', '%'.$competency.'%')
                     ->groupBy('lesson')
-                    ->orderBy('lesson', 'asc')
+                    ->orderBy('id', 'asc')
                     ->get();
 
         $response['data'] = $lesson;
@@ -116,7 +164,7 @@ class CompetencyOperatorController extends Controller
     public function getQuestionByLesson(Request $request){
         $lesson = $request->lesson;
 
-        $question = QuestionOperator::select('*')->where('lesson', $lesson)->get();
+        $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$lesson.'%')->get();
 
         $response['data'] = $question;
 

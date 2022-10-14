@@ -66,7 +66,7 @@
                         <a class="nav-sub-link" href="/spv/chart-personal">Assessment Chart (Personal)</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/spv/chart-team">Assessment Chart (Team)</a>
+                        <a class="nav-sub-link" href="{{ route('assessment.index') }}">Assessment Chart (Team)</a>
                     </li>
                 </ul>
             </li>

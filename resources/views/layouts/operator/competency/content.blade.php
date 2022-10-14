@@ -49,6 +49,7 @@
                     </div>
 
                     <form action="{{ route('competency-tools-op.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="modal" tabindex="-1" role="dialog" id="answerOperatorModal">
                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                 <div class="modal-content">
@@ -73,7 +74,7 @@
                                             <label class="mg-b-0">Lesson</label>
                                         </div>
                                         <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                            <input type="text" name="lesson" class="form-control" id="lesson" readonly>
+                                            <input type="text" name="lesson" class="form-control" id="textlesson" readonly>
                                         </div>
                                     </div>
                                     <div class="row row-xs align-items-center mg-b-20">

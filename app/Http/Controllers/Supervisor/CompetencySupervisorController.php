@@ -45,10 +45,6 @@ class CompetencySupervisorController extends Controller
             'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
         ]);
 
-        // if($request->hasAny('essay')){
-        //     $jawaban = $request->essay;
-        // }
-
         if($request->hasFile('image')){
             $path = $request->file('image')->store('public/answer/supervisor-answer');
         }else{

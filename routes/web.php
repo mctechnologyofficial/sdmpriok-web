@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Operator\CompetencyOperatorController;
+use App\Http\Controllers\Supervisor\AssessmentChartController;
 use App\Http\Controllers\Supervisor\CompetencySupervisorController;
 use App\Http\Controllers\Supervisor\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -79,6 +80,8 @@ Route::get('/supervisor/competency-tools/getcategory', [CompetencySupervisorCont
 Route::get('/supervisor/competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
 Route::get('/supervisor/competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
 
+Route::get('/supervisor/assessment-chart', [AssessmentChartController::class, 'index'])->name('assessment.index');
+
 Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
 Route::post('/operator/competency-tools', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
 Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
@@ -93,10 +96,10 @@ Route::get('/spv/coaching-mentoring', function(){
 Route::get('/spv/detail-mentoring', function(){
     return view('layouts.supervisor.mentoring.detail');
 });
-Route::get('/spv/chart-personal', function(){
-    return view('layouts.supervisor.assessment-chart.personal');
-});
-Route::get('/spv/chart-team', function(){
-    return view('layouts.supervisor.assessment-chart.team');
-});
+// Route::get('/spv/chart-personal', function(){
+//     return view('layouts.supervisor.assessment-chart.personal');
+// });
+// Route::get('/spv/chart-team', function(){
+//     return view('layouts.supervisor.assessment-chart.team');
+// });
 // End Supervisor //
