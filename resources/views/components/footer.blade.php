@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row row-sm">
             <div class="col-md-12">
-                <span>Copyright © 2021 <a href="#">Spruha</a>. Designed by <a href="https://www.spruko.com/">Spruko</a> All rights reserved.</span>
+                <span>©Copyright 2022 <a href="javascript:void(0)">Indonesia Power</a>. Designed by <a href="javascript:void(0)">MC TECHNOLOGY</a> All rights reserved.</span>
             </div>
         </div>
     </div>

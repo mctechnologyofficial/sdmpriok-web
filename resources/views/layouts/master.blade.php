@@ -21,9 +21,9 @@
 	<body class="main-body leftmenu">
 
 		<!-- Loader -->
-		<div id="global-loader">
+		{{-- <div id="global-loader">
 			<img src="{{ asset('assets/img/loader.svg') }}" class="loader-img" alt="Loader">
-		</div>
+		</div> --}}
 		<!-- End Loader -->
 
 		<!-- Page -->
@@ -46,7 +46,7 @@
                         <!-- Page Header -->
                         <div class="page-header">
                             <div>
-                                <h2 class="main-content-title tx-24 mg-b-5">Welcome To Dashboard</h2>
+                                <h2 class="main-content-title tx-24 mg-b-5">Welcome to Dashboard</h2>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">@yield('title')</li>

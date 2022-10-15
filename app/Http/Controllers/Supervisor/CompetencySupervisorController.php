@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
+use App\Models\AnswerSupervisor;
 use App\Models\Competency;
 use App\Models\QuestionSupervisor;
 use Illuminate\Http\Request;
@@ -38,7 +39,26 @@ class CompetencySupervisorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attrs = $request->validate([
+            'questionid'    => 'required|integer',
+            'essay'         => '',
+            'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
+        ]);
+
+        if($request->hasFile('image')){
+            $path = $request->file('image')->store('public/answer/supervisor-answer');
+        }else{
+            $path = null;
+        }
+
+        AnswerSupervisor::create([
+            'user_id'       => 2,
+            'question_id'   => $attrs['questionid'],
+            'essay'         => $attrs['essay'],
+            'file'          => $path
+        ]);
+
+        return redirect()->route('competency-tools-spv.index')->with('success','Answer has been submitted successfully.');
     }
 
     /**

@@ -1,0 +1,17 @@
+// data soal, terus disini kita count soal
+$subCategory = Category::count();
+$subCategory = 150;
+
+// Ngeget dari column submitting, dari table progress
+$submmiting = 130;
+if (submittitng < 150)
+echo 90%
+130
+
+
+// Table Progress
+user_id, |  submitting, | progress | answer_id
+
+if(question == 50 & submit_time < 50){
+    progress = 80%
+}

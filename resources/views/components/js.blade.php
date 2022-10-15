@@ -82,7 +82,6 @@
             }
         ]
     };
-
     var radarChart = new Chart(marksCanvas, {
         type: 'bar',
         data: marksData,
@@ -133,30 +132,19 @@
         data: personalData
     });
 
-    // var teamChart = document.getElementById("teamCanvasChart");
+    var labelTeamSpv = {{ Js::from($label) }}
+    var dataTeamSpv = {{ Js::from($data) }}
+    var rand = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];
+    var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+
     var teamChart = $('#teamChart')[0];
     var teamData = {
         labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
         datasets: [
             {
-                label: "Fawwaz Hudzalfah Saputra",
-                backgroundColor: "rgba(200,0,0,0.2)",
-                data: [65, 75, 70, 80, 60]
-            },
-            {
-                label: "Agus Wijayanto",
-                backgroundColor: "rgba(0,0,200,0.2)",
-                data: [54, 65, 60, 70, 70]
-            },
-            {
-                label: "Udin Syarifudin",
-                backgroundColor: "rgba(76,255,0, 0.2)",
-                data: [20, 50, 80, 90, 10]
-            },
-            {
-                label: "Jonathan Hasyim",
-                backgroundColor: "rgba(255,180,0,0.2)",
-                data: [15, 40, 20, 40, 90]
+                label: labelTeamSpv,
+                backgroundColor: color,
+                data: dataTeamSpv
             },
         ]
     };
@@ -165,12 +153,17 @@
         type: 'radar',
         data: teamData
     });
+</script>
 
-
+<script>
     $('#fileSlider').on('change', function(){
         var value = $(this).val().replace(/C:\\fakepath\\/i, '');
 
         $('#textFileSlider').val(value).trigger('change');
+
+        // $('#textFileSlider').on('change', function(){
+        //     $('#image').hide();
+        // });
     });
 
     $('.slider').slick({
@@ -185,10 +178,12 @@
     });
 
     // OPERATOR COMPETENCY TOOLS
+    var valueCompetencyOp;
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     function createOption(response){
         var len = 0;
+        $("#lesson").find('option:not(:first)').remove();
 
         if(response['data'] != null){
             len = response['data'].length;
@@ -229,6 +224,21 @@
             var processing_time = response['data'][i].processing_time;
             var realization = response['data'][i].realization;
 
+            // $('#tblOperatorQuestion').DataTable({
+            //     // processing: true,
+            //     // serverSide: true,
+            //     bDestroy: true,
+            //     columns: [
+            //         {data: id},
+            //         {data: competency},
+            //         {data: lesson},
+            //         {data: reference},
+            //         {data: lesson_plan},
+            //         {data: processing_time},
+            //         {data: realization},
+            //     ],
+            // });
+
             var tr_str = "<tr>" +
                 "<td class='questionid' style='display: none;'>" + id + "</td>" +
                 "<td>" + competency + "</td>" +
@@ -253,13 +263,13 @@
     }
 
     $('.tools-competency-op').on('click', function(){
-        var value = $(this).text();
+        valueCompetencyOp = $(this).text();
         $.ajax({
             url: '/operator/competency-tools/getlesson',
             type: 'GET',
             data: {
                 _token: CSRF_TOKEN,
-                competency: value
+                competency: valueCompetencyOp
             },
             dataType: 'json',
             success: function(response){
@@ -291,6 +301,8 @@
         if(id == undefined){
             // alert('oke');
         }else{
+            $('#competency').val(valueCompetencyOp);
+            $('#textlesson').val($('#lesson').val());
             $('#answerOperatorModal').modal('show');
             $('#questionid').val(id);
         }
@@ -298,14 +310,16 @@
     });
 
     // SUPERVISOR COMPETENCY TOOLS
+    var valueCompetencySpv;
+
     $('.tools-competency-spv').on('click', function(){
-        var value = $(this).text();
+        valueCompetencySpv = $(this).text();
         $.ajax({
             url: '/supervisor/competency-tools/getcategory',
             type: 'GET',
             data: {
                 _token: CSRF_TOKEN,
-                competency: value
+                competency: valueCompetencySpv
             },
             dataType: 'json',
             success: function(response){
@@ -356,14 +370,18 @@
         if(id == undefined){
             // alert('oke');
         }else{
+            $('#competency').val(valueCompetencySpv);
+            $('#textCategory').val($('#category').val());
+            $('#textSubCategory').val($('#subcategory').val());
+            $('#questionid').val(id);
             $('#answerSupervisorModal').modal('show');
             $('#questionid').val(id);
         }
-
     });
 
     function createOptionCategory(response){
         var len = 0;
+        $("#category").find('option:not(:first)').remove();
 
         if(response['data'] != null){
             len = response['data'].length;
@@ -386,6 +404,7 @@
 
     function createOptionSubCategory(response){
         var len = 0;
+        $("#subcategory").find('option:not(:first)').remove();
 
         if(response['data'] != null){
             len = response['data'].length;
@@ -394,11 +413,8 @@
         if(len > 0){
             for(var i = 0; i < len; i++){
                 var sub_category = response['data'][i].sub_category;
-
-                $("#subcategory").append($('<option>', {
-                    value: sub_category,
-                    text: sub_category
-                }));
+                // var val = "<option value='"+ sub_category +"'>" + sub_category + "</option>";
+                $('#subcategory').append(new Option(sub_category, sub_category));
             }
         }else{
             var opt = "<option value='' selected disabled>Choose sub category</option>";

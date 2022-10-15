@@ -6,6 +6,11 @@
     <div class="col-lg-12">
         <div class="card custom-card mg-b-20">
             <div class="card-body">
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success alert-block">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @endif
                 <div class="card-header border-bottom-0 pt-0 pl-0 pr-0 d-flex">
                     <div>
                         <label class="main-content-label mb-2">List Slider</label>
