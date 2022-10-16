@@ -34,66 +34,98 @@ Route::get('/dashboard', function () {
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
 // });
-Route::get('/admin/home', function(){
+
+Route::get('/admin/home', function () {
     return view('layouts.admin.index');
 })->name('admin.home');
 
-Route::get('/admin/employee', [EmployeeController::class, 'index'])->name('employee.index');
-Route::get('/admin/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
-Route::get('/admin/employee/{id}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
-Route::post('/admin/employee', [EmployeeController::class, 'store'])->name('employee.store');
-Route::put('/admin/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
-Route::delete('/admin/employee/{id}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::prefix('admin')->group(function () {
 
-Route::get('/admin/role', [RoleController::class, 'index'])->name('role.index');
-Route::get('/admin/role/create', [RoleController::class, 'create'])->name('role.create');
-Route::post('/admin/role', [RoleController::class, 'store'])->name('role.store');
-Route::get('/admin/role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
-Route::put('/admin/role/{id}', [RoleController::class, 'update'])->name('role.update');
-Route::delete('/admin/role/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+        // employee routes
+        Route::prefix('employee')->group(function () {
+            Route::get('/', [EmployeeController::class, 'index'])->name('employee.index');
+            Route::get('create', [EmployeeController::class, 'create'])->name('employee.create');
+            Route::get('{id}/edit', [EmployeeController::class, 'edit'])->name('employee.edit');
+            Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
+            Route::put('{id}/update', [EmployeeController::class, 'update'])->name('employee.update');
+            Route::delete('{id}/delete', [EmployeeController::class, 'destroy'])->name('employee.destroy');
+        });
 
-Route::get('/admin/team', [TeamController::class, 'index'])->name('team.index');
-Route::get('/admin/team/create', [TeamController::class, 'create'])->name('team.create');
-Route::post('/admin/team', [TeamController::class, 'store'])->name('team.store');
-Route::get('/admin/team/{id}/edit', [TeamController::class, 'edit'])->name('team.edit');
-Route::put('/admin/team/{id}', [TeamController::class, 'update'])->name('team.update');
-Route::delete('/admin/team/{id}', [TeamController::class, 'destroy'])->name('team.destroy');
+        // Roles routes
+        Route::prefix('role')->group(function () {
+            Route::get('/', [RoleController::class, 'index'])->name('role.index');
+            Route::get('create', [RoleController::class, 'create'])->name('role.create');
+            Route::post('store', [RoleController::class, 'store'])->name('role.store');
+            Route::get('{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
+            Route::put('{id}/update', [RoleController::class, 'update'])->name('role.update');
+            Route::delete('{id}/delete', [RoleController::class, 'destroy'])->name('role.destroy');
+        });
 
-Route::get('/admin/slider', [SliderController::class, 'index'])->name('slider.index');
-Route::get('/admin/slider/create', [SliderController::class, 'create'])->name('slider.create');
-Route::post('/admin/slider', [SliderController::class, 'store'])->name('slider.store');
-Route::get('/admin/slider/{id}/edit', [SliderController::class, 'edit'])->name('slider.edit');
-Route::put('/admin/slider/{id}', [SliderController::class, 'update'])->name('slider.update');
-Route::delete('/admin/slider/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
+        // team routes
+        Route::prefix('team')->group(function () {
+            Route::get('/', [TeamController::class, 'index'])->name('team.index');
+            Route::get('create', [TeamController::class, 'create'])->name('team.create');
+            Route::post('store', [TeamController::class, 'store'])->name('team.store');
+            Route::get('{id}/edit', [TeamController::class, 'edit'])->name('team.edit');
+            Route::put('{id}/update', [TeamController::class, 'update'])->name('team.update');
+            Route::delete('{id}/delete', [TeamController::class, 'destroy'])->name('team.destroy');
+        });
 
-Route::get('/admin/competency', [CompetencyController::class, 'index'])->name('competency.index');
-Route::get('/admin/competency/create', [CompetencyController::class, 'create'])->name('competency.create');
-Route::post('/admin/competency', [CompetencyController::class, 'store'])->name('competency.store');
-Route::get('/admin/competency/{id}/edit', [CompetencyController::class, 'edit'])->name('competency.edit');
-Route::put('/admin/competency/{id}', [CompetencyController::class, 'update'])->name('competency.update');
-Route::delete('/admin/competency/{id}', [CompetencyController::class, 'destroy'])->name('competency.destroy');
+        // sliders routes
+        Route::prefix('slider')->group(function () {
 
-Route::get('/supervisor/home', [HomeController::class, 'index'])->name('home.index');
-Route::get('/supervisor/competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
-Route::post('/supervisor/competency-tools', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');
-Route::get('/supervisor/competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
-Route::get('/supervisor/competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
-Route::get('/supervisor/competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
+            Route::get('/', [SliderController::class, 'index'])->name('slider.index');
+            Route::get('create', [SliderController::class, 'create'])->name('slider.create');
+            Route::post('store', [SliderController::class, 'store'])->name('slider.store');
+            Route::get('{id}/edit', [SliderController::class, 'edit'])->name('slider.edit');
+            Route::put('{id}/update', [SliderController::class, 'update'])->name('slider.update');
+            Route::delete('{id}/delete', [SliderController::class, 'destroy'])->name('slider.destroy');
+        });
 
-Route::get('/supervisor/assessment-chart', [AssessmentChartController::class, 'index'])->name('assessment.index');
+        // competency routes
+        Route::prefix('competency')->group(function () {
+            Route::get('/', [CompetencyController::class, 'index'])->name('competency.index');
+            Route::get('create', [CompetencyController::class, 'create'])->name('competency.create');
+            Route::post('store', [CompetencyController::class, 'store'])->name('competency.store');
+            Route::get('{id}/edit', [CompetencyController::class, 'edit'])->name('competency.edit');
+            Route::put('{id}/update', [CompetencyController::class, 'update'])->name('competency.update');
+            Route::delete('{id}/delete', [CompetencyController::class, 'destroy'])->name('competency.destroy');
+        });
+    });
+});
 
-Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
-Route::post('/operator/competency-tools', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
-Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
-Route::get('/operator/competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
+Route::group(['middleware' => ['role:supervisor']], function () {
+    // Supervisor routes
+    Route::prefix('supervisor')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('supervisor.home');
+        Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
+        Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');
+        Route::get('competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
+        Route::get('competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
+        Route::get('competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
 
-require __DIR__.'/auth.php';
+        Route::get('assessment-chart', [AssessmentChartController::class, 'index'])->name('assessment.index');
+    });
+});
+
+Route::group(['middleware' => ['role:operator']], function () {
+    // operator routes
+    Route::prefix('operator')->group(function () {
+        Route::get('competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
+        Route::post('competency-tools/store', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
+        Route::get('competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
+        Route::get('competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
+    });
+});
+
+require __DIR__ . '/auth.php';
 
 // Supervisor //
-Route::get('/spv/coaching-mentoring', function(){
+Route::get('/spv/coaching-mentoring', function () {
     return view('layouts.supervisor.mentoring.list');
 });
-Route::get('/spv/detail-mentoring', function(){
+Route::get('/spv/detail-mentoring', function () {
     return view('layouts.supervisor.mentoring.detail');
 });
 // Route::get('/spv/chart-personal', function(){

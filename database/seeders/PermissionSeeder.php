@@ -21,59 +21,80 @@ class PermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'add employee']);
-        Permission::create(['name' => 'edit employee']);
-        Permission::create(['name' => 'add question']);
-        Permission::create(['name' => 'edit question']);
-        Permission::create(['name' => 'fill question']);
-        Permission::create(['name' => 'give answer']);
+        // create permissions for admin
+        Permission::create(['name' => 'admin home']);
+        Permission::create(['name' => 'set employee']);
+        Permission::create(['name' => 'set team']);
+        Permission::create(['name' => 'set role']);
+        Permission::create(['name' => 'mentoring']);
+        Permission::create(['name' => 'monitoring']);
+        Permission::create(['name' => 'set slider']);
+        Permission::create(['name' => 'set competency']);
 
-        // create roles and assign existing permissions
+        // create permission for supervisor
+        Permission::create(['name' => 'spv home']);
+        Permission::create(['name' => 'coaching mentoring']);
+        Permission::create(['name' => 'competency tools spv']);
+        Permission::create(['name' => 'assesment chart']);
+
+        // create permission for operator
+        Permission::create(['name' => 'operator home']);
+        Permission::create(['name' => 'competency tools operator']);
+        Permission::create(['name' => 'competency score']);
+
+        // create roles admin and assign existing permissions
         $role1 = Role::create(['name' => 'admin']);
-        $role1->givePermissionTo('add employee');
-        $role1->givePermissionTo('edit employee');
+        $role1->givePermissionTo('admin home');
+        $role1->givePermissionTo('set employee');
+        $role1->givePermissionTo('set team');
+        $role1->givePermissionTo('set role');
+        $role1->givePermissionTo('mentoring');
+        $role1->givePermissionTo('monitoring');
+        $role1->givePermissionTo('set slider');
+        $role1->givePermissionTo('set competency');
 
+        // create roles supervisor and assign permission to this roles
         $role2 = Role::create(['name' => 'supervisor']);
-        $role2->givePermissionTo('add question');
-        $role2->givePermissionTo('edit question');
+        $role2->givePermissionTo('spv home');
+        $role2->givePermissionTo('coaching mentoring');
+        $role2->givePermissionTo('competency tools spv');
+        $role2->givePermissionTo('assesment chart');
 
+        // create roles operator and assign permission to this roles
         $role3 = Role::create(['name' => 'operator']);
         // gets all permissions via Gate::before rule; see AuthServiceProvider
-        $role3->givePermissionTo('fill question');
-        $role3->givePermissionTo('give answer');
+        $role3->givePermissionTo('operator home');
+        $role3->givePermissionTo('competency tools operator');
+        $role3->givePermissionTo('competency score');
 
         // create demo users
         $user = \App\Models\User::factory()->create([
-            'name' => 'Admin example user',
-            'email' => 'admin@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'phone' => '08112233445577',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => $role1->id,
             'team_id' => 1
         ]);
         $user->assignRole($role1);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Supervisor example user',
-            'email' => 'supervisor@example.com',
+            'name' => 'Supervisor',
+            'email' => 'supervisor@gmail.com',
             'phone' => '08112233445566',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => $role1->id,
-            'team_id' => 1
+            'team_id' => 2
         ]);
         $user->assignRole($role2);
 
         $user = \App\Models\User::factory()->create([
-            'name' => 'Example Operator User',
-            'email' => 'operator@example.com',
+            'name' => 'Operator',
+            'email' => 'operator@gmail.com',
             'phone' => '0823343441100',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => $role1->id,
-            'team_id' => 1
+            'team_id' => 3
         ]);
         $user->assignRole($role3);
     }
