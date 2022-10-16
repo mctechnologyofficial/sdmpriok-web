@@ -22,7 +22,7 @@
     <script>
         $(document).ready(function(){
             $.ajax({
-                url: '/supervisor/getradar',
+                url: '/supervisor/getradarteam',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN

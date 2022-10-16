@@ -63,10 +63,10 @@
                 <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="/spv/chart-personal">Assessment Chart (Personal)</a>
+                        <a class="nav-sub-link" href="{{ route('chart-personal.personal') }}">Assessment Chart (Personal)</a>
                     </li>
                     <li class="nav-sub-item">
-                        <a class="nav-sub-link" href="{{ route('assessment.index') }}">Assessment Chart (Team)</a>
+                        <a class="nav-sub-link" href="{{ route('chart-team.team') }}">Assessment Chart (Team)</a>
                     </li>
                 </ul>
             </li>

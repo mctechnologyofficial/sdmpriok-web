@@ -16,9 +16,19 @@ class AssessmentChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function team()
     {
         return view('layouts.supervisor.assessment-chart.team');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function personal()
+    {
+        return view('layouts.supervisor.assessment-chart.personal');
     }
 
     /**
@@ -88,11 +98,11 @@ class AssessmentChartController extends Controller
     }
 
     /**
-     * Get radar chart data
+     * Get radar chart data team
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDataRadarChart(){
+    public function getDataRadarChartTeam(){
         $competency = Competency::select('name')
                                 ->where('role', 'Operator')->pluck('name');
 
@@ -114,6 +124,42 @@ class AssessmentChartController extends Controller
         $response['labeluser'] = $label;
         $response['dataprogress'] = $progress;
         $response['labelcompetency'] = $labels;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get radar chart data personal
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDataRadarChartPersonal(){
+        $competency = Competency::select('competencies.name', 'progress.progress')
+                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+                                ->where('progress.user_id', '1')
+                                ->groupBy('competencies.name', 'progress.progress')
+                                ->orderBy('competencies.id', 'ASC')
+                                ->pluck('competencies.name', 'progress.progress');
+
+        // $user = User::select('name')
+        //             ->join('progress', 'progress.user_id', '=', 'users.id')
+        //             ->where('users.id', '1')
+        //             ->groupBy('name')
+        //             ->orderBy('users.id', 'ASC')
+        //             ->pluck('name');
+
+        // $progress = Progress::select('progress')
+        //             ->get()
+        //             ->pluck('progress')
+        //             ->toArray();
+
+        // $label = $user->values();
+        $label = $competency->values();
+        $data = $competency->keys();
+
+        $response['label'] = $label;
+        // $response['dataprogress'] = $progress;
+        $response['data'] = $data;
 
         return response()->json($response);
     }

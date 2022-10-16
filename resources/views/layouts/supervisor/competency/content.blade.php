@@ -69,6 +69,7 @@
                                             </div>
                                             <div class="col-md-8 mg-t-5 mg-md-t-0">
                                                 <input type="hidden" name="questionid" id="questionid">
+                                                <input type="hidden" name="idcompetency" id="idcompetency">
                                                 <input type="text" name="competency" class="form-control" id="competency" readonly>
                                             </div>
                                         </div>
@@ -118,4 +119,204 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // SUPERVISOR COMPETENCY TOOLS
+        var valueCompetencySpv;
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        $('.tools-competency-spv').on('click', function(){
+            valueCompetencySpv = $(this).text();
+            $.ajax({
+                url: '/supervisor/competency-tools/getcategory',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    competency: valueCompetencySpv
+                },
+                dataType: 'json',
+                success: function(response){
+                    // createRows(response);
+                    createOptionCategory(response);
+                }
+            });
+
+            $.ajax({
+                url: '/supervisor/competency-tools/getidcompetency',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    competency: valueCompetencySpv
+                },
+                dataType: 'json',
+                success: function(response){
+                    createValue(response);
+                }
+            });
+        });
+
+        $('#category').on('change', function(){
+            var value = $(this).val();
+            $.ajax({
+                url: '/supervisor/competency-tools/getsubcategory',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    category: value
+                },
+                dataType: 'json',
+                success: function(response){
+                    // createRows(response);
+                    createOptionSubCategory(response);
+                }
+            });
+        });
+
+        $('#subcategory').on('change', function(){
+            var value = $(this).val();
+
+            $.ajax({
+                url: '/supervisor/competency-tools/getquestion',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    subcategory: value
+                },
+                dataType: 'json',
+                success: function(response){
+                    createRowsSupervisor(response);
+                    // createOptionSubCategory(response);
+                }
+            });
+        });
+
+        $('#tblSupervisorQuestion tbody').on('click', 'tr',function(){
+            var id = $(this).find('.questionid').html();
+
+            if(id == undefined){
+                // alert('oke');
+            }else{
+                $('#competency').val(valueCompetencySpv);
+                $('#textCategory').val($('#category').val());
+                $('#textSubCategory').val($('#subcategory').val());
+                $('#questionid').val(id);
+                $('#answerSupervisorModal').modal('show');
+                $('#questionid').val(id);
+            }
+        });
+
+        function createOptionCategory(response){
+            var len = 0;
+            $("#category").find('option:not(:first)').remove();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i = 0; i < len; i++){
+                    var category =response['data'][i].category;
+
+                    $("#category").append($('<option>', {
+                        value: category,
+                        text: category
+                    }));
+                }
+            }else{
+                var opt = "<option value='' selected disabled>Choose category</option>";
+                $("#category").empty().append(opt).trigger('change');
+            }
+        }
+
+        function createOptionSubCategory(response){
+            var len = 0;
+            $("#subcategory").find('option:not(:first)').remove();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i = 0; i < len; i++){
+                    var sub_category = response['data'][i].sub_category;
+                    // var val = "<option value='"+ sub_category +"'>" + sub_category + "</option>";
+                    $('#subcategory').append(new Option(sub_category, sub_category));
+                }
+            }else{
+                var opt = "<option value='' selected disabled>Choose sub category</option>";
+                $("#subcategory").empty().append(opt).trigger('change');
+            }
+        }
+
+        function createRowsSupervisor(response){
+            var len = 0;
+            $('#tblSupervisorQuestion tbody').empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+                    var id = response['data'][i].id;
+                    var competency = response['data'][i].competency;
+                    // var category = response['data'][i].category;
+                    // var sub_category = response['data'][i].sub_category;
+                    // var lesson = response['data'][i].lesson;
+                    var reference = response['data'][i].reference;
+                    var lesson_plan = response['data'][i].lesson_plan;
+                    var processing_time = response['data'][i].processing_time;
+                    var realization = response['data'][i].realization;
+
+                    var tr_str = "<tr>" +
+                        "<td class='questionid' style='display: none;'>" + id + "</td>" +
+                        "<td>" + competency + "</td>" +
+                        // "<td>" + category + "</td>" +
+                        // "<td>" + sub_category + "</td>" +
+                        // "<td>" + lesson + "</td>" +
+                        "<td>" + reference + "</td>" +
+                        "<td>" + lesson_plan + "</td>" +
+                        "<td>" + processing_time + "</td>" +
+                        "<td>" + realization + "</td>" +
+                    "</tr>";
+
+                    $("#tblSupervisorQuestion tbody").append(tr_str);
+                }
+            }else{
+                var tr_str = "<tr>" +
+                "<td colspan='6' class='text-center'>No record found</td>" +
+                "</tr>";
+
+                $("#tblSupervisorQuestion tbody").empty().append(tr_str);
+            }
+        }
+
+        function createValue(response){
+            var len = 0;
+            // $("#lesson").find('option:not(:first)').remove();
+            $('#idcompetency').empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i = 0; i < len; i++){
+                    var id = response['data'][i].id;
+                    $('#idcompetency').val(id);
+                    // $("#lesson").append($('<option>', {
+                    //     value: lesson,
+                    //     text: lesson
+                    // }));
+                }
+            }else{
+                // var opt = "<option value='' selected disabled>Choose lesson</option>";
+                // $("#lesson").empty().append(opt).trigger('change');
+                $('#idcompetency').val('');
+            }
+        }
+    </script>
 @endsection

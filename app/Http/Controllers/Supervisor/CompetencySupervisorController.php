@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSupervisor;
 use App\Models\Competency;
+use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,7 @@ class CompetencySupervisorController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->validate([
+            'idcompetency'  => 'required|integer',
             'questionid'    => 'required|integer',
             'essay'         => '',
             'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
@@ -52,11 +54,46 @@ class CompetencySupervisorController extends Controller
         }
 
         AnswerSupervisor::create([
-            'user_id'       => 2,
+            'user_id'       => 1,
+            'competency_id' => $attrs['idcompetency'],
             'question_id'   => $attrs['questionid'],
             'essay'         => $attrs['essay'],
             'file'          => $path
         ]);
+
+        $competency = Competency::find($attrs['idcompetency']);
+        $total_question = QuestionSupervisor::where('competency', $competency->name)->count();
+        $total_submit = AnswerSupervisor::where('user_id', '=' ,'1')
+                        ->where('competency_id', '=', $competency->id)
+                        ->count();
+        $validation = Progress::where('user_id', '=' ,'1')
+                            ->where('competency_id', '=', $competency->id)
+                            ->count();
+
+        function get_percentage($total, $number)
+        {
+            if ( $total > 0 ) {
+                return round(($number * 100) / $total, 2);
+            } else {
+                return 0;
+            }
+        }
+
+        if($validation == 0){
+            Progress::create([
+                'user_id'       => 1,
+                'competency_id' => $competency->id,
+                'submit_time'   => $total_submit,
+                'progress'      => get_percentage($total_question, $total_submit)
+            ]);
+        }else{
+            Progress::where('user_id', '=' , '1')
+            ->where('competency_id', '=' , $competency->id)
+            ->update([
+                'submit_time'   => $total_submit,
+                'progress'      => get_percentage($total_question, $total_submit)
+            ]);
+        }
 
         return redirect()->route('competency-tools-spv.index')->with('success','Answer has been submitted successfully.');
     }
@@ -165,6 +202,22 @@ class CompetencySupervisorController extends Controller
                     ->get();
 
         $response['data'] = $subcategory;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get id competency
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getIdCompetency(Request $request){
+        $competency = $request->competency;
+
+        $id = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
+
+        $response['data'] = $id;
 
         return response()->json($response);
     }

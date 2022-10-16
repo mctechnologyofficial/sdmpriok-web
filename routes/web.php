@@ -79,9 +79,12 @@ Route::post('/supervisor/competency-tools', [CompetencySupervisorController::cla
 Route::get('/supervisor/competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
 Route::get('/supervisor/competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
 Route::get('/supervisor/competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
+Route::get('/supervisor/competency-tools/getidcompetency', [CompetencySupervisorController::class, 'getIdCompetency']);
 
-Route::get('/supervisor/assessment-chart', [AssessmentChartController::class, 'index'])->name('assessment.index');
-Route::get('/supervisor/getradar', [AssessmentChartController::class, 'getDataRadarChart']);
+Route::get('/supervisor/assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal.personal');
+Route::get('/supervisor/assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team.team');
+Route::get('/supervisor/getradarteam', [AssessmentChartController::class, 'getDataRadarChartTeam']);
+Route::get('/supervisor/getradarpersonal', [AssessmentChartController::class, 'getDataRadarChartPersonal']);
 
 Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
 Route::post('/operator/competency-tools', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
