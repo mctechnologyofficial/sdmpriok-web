@@ -74,7 +74,7 @@ class PermissionSeeder extends Seeder
             'phone' => '08112233445577',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => 1,
+            // 'role_id' => 1,
             'team_id' => 1
         ]);
         $user->assignRole($role1);
@@ -85,7 +85,7 @@ class PermissionSeeder extends Seeder
             'phone' => '08112233445566',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => 2,
+            // 'role_id' => 2,
             'team_id' => 2
         ]);
         $user->assignRole($role2);
@@ -96,7 +96,7 @@ class PermissionSeeder extends Seeder
             'phone' => '0823343441100',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => 3,
+            // 'role_id' => 3,
             'team_id' => 2
         ]);
         $user->assignRole($role3);

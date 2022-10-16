@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('role_id');
+            // $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('team_id');
             $table->string('image')->nullable();
             $table->rememberToken()->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('team_id')->references('id')->on('teams');
-            $table->foreign('role_id')->references('id')->on('roles');
+            // $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
