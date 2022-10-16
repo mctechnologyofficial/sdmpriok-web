@@ -110,21 +110,23 @@ class SliderController extends Controller
                 'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             ]);
 
-            Storage::delete($slider->image);
-
-            if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
-                $path = $request->file('image')->store('public/images/slider/row1');
-            }
-            elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 2')
-            {
-                $path = $request->file('image')->store('public/images/slider/row2');
-            }
-            elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 3')
-            {
-                $path = $request->file('image')->store('public/images/slider/row3');
-            }
-            elseif($attrs['type'] == "Picture"){
-                $path = $request->file('image')->store('public/images/picture');
+            if(Storage::exists($request->image)){
+                Storage::delete($slider->image);
+            }else{
+                if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
+                    $path = $request->file('image')->store('public/images/slider/row1');
+                }
+                elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 2')
+                {
+                    $path = $request->file('image')->store('public/images/slider/row2');
+                }
+                elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 3')
+                {
+                    $path = $request->file('image')->store('public/images/slider/row3');
+                }
+                elseif($attrs['type'] == "Picture"){
+                    $path = $request->file('image')->store('public/images/picture');
+                }
             }
 
             $slider->image = $path;

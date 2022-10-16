@@ -120,8 +120,11 @@ class EmployeeController extends Controller
                 'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
             ]);
 
-            Storage::delete($user->image);
-            $path = $request->file('image')->store('public/images/users');
+            if(Storage::exists($request->image)){
+                Storage::delete($user->image);
+            }else{
+                $path = $request->file('image')->store('public/images/users');
+            }
             $user->image = $path;
         }
 

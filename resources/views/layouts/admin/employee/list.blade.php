@@ -44,7 +44,7 @@
                                     <td>{{ $data->role_name }}</td>
                                     <td>{{ $data->team_name }}</td>
                                     <td class="text-center">
-                                        <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-75">
+                                        <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">
                                     </td>
                                     <td>
                                         <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('employee.edit', $data->id) }}">Edit</a>

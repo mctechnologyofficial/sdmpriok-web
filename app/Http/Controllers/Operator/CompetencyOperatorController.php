@@ -8,6 +8,7 @@ use App\Models\Competency;
 use App\Models\Progress;
 use App\Models\QuestionOperator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompetencyOperatorController extends Controller
 {
@@ -54,7 +55,7 @@ class CompetencyOperatorController extends Controller
         }
 
         AnswerOperator::create([
-            'user_id'       => 3,
+            'user_id'       => Auth::user()->id,
             'competency_id' => $attrs['competencyid'],
             'question_id'   => $attrs['questionid'],
             'essay'         => $attrs['essay'],
@@ -63,10 +64,10 @@ class CompetencyOperatorController extends Controller
 
         $competency = Competency::find($attrs['competencyid']);
         $total_question = QuestionOperator::where('competency', $competency->name)->count();
-        $total_submit = AnswerOperator::where('user_id', '=' ,'3')
+        $total_submit = AnswerOperator::where('user_id', '=' , Auth::user()->id)
                         ->where('competency_id', '=', $competency->id)
                         ->count();
-        $validation = Progress::where('user_id', '=' ,'3')
+        $validation = Progress::where('user_id', '=' , Auth::user()->id)
                     // ->where('competency_id', '=', $competency->name)
                     ->count();
 
@@ -81,13 +82,13 @@ class CompetencyOperatorController extends Controller
 
         if($validation == 0){
             Progress::create([
-                'user_id'       => 3,
+                'user_id'       => Auth::user()->id,
                 // 'competency_id'    => $competency->id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);
         }else{
-            Progress::where('user_id', '=' ,'3')
+            Progress::where('user_id', '=' , Auth::user()->id)
             // ->where('competency_id', '=', $competency->id)
             ->update([
                 'submit_time'   => $total_submit,

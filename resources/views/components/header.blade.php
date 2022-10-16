@@ -13,12 +13,12 @@
             <div class="dropdown main-profile-menu">
                 <a class="d-flex" href="">
                     <span class="main-img-user"><img alt="avatar"
-                            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></span>
+                            src="{{ Storage::url(Auth::user()->image) }}"></span>
                 </a>
                 <div class="dropdown-menu">
                     <div class="header-navheading">
-                        <h6 class="main-notification-title">Sonia Taylor</h6>
-                        <p class="main-notification-text">Web Designer</p>
+                        <h6 class="main-notification-title">{{ Auth::user()->name }}</h6>
+                        <p class="main-notification-text">{{ Auth::user()->roles->pluck('name')[0] }}</p>
                     </div>
                     <a class="dropdown-item border-top" href="profile.html">
                         <i class="fe fe-user"></i> My Profile
@@ -56,13 +56,12 @@
             <div class="d-flex order-lg-2 ml-auto">
                 <div class="dropdown main-profile-menu">
                     <a class="d-flex" href="#">
-                        <span class="main-img-user"><img alt="avatar"
-                                src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"></span>
+                        <span class="main-img-user"><img alt="avatar" src="{{ Storage::url(Auth::user()->image) }}"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="header-navheading">
-                            <h6 class="main-notification-title">Sonia Taylor</h6>
-                            <p class="main-notification-text">Web Designer</p>
+                            <h6 class="main-notification-title">{{ Auth::user()->name }}</h6>
+                            <p class="main-notification-text">{{ Auth::user()->roles->pluck('name')[0] }}</p>
                         </div>
                         <a class="dropdown-item border-top" href="profile.html">
                             <i class="fe fe-user"></i> My Profile
@@ -79,9 +78,13 @@
                         <a class="dropdown-item" href="profile.html">
                             <i class="fe fe-compass"></i> Activity
                         </a>
-                        <a class="dropdown-item" href="signin.html">
-                            <i class="fe fe-power"></i> Sign Out
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="dropdown-item">
+                                <i class="fe fe-power"> Sign Out
+                                </i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

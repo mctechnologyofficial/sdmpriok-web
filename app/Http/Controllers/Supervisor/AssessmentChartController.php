@@ -148,7 +148,7 @@ class AssessmentChartController extends Controller
         //             ->orderBy('users.id', 'ASC')
         //             ->pluck('name');
 
-        // $progress = Progress::select('progress')
+    // $progress = Progress::select('progress')
         //             ->get()
         //             ->pluck('progress')
         //             ->toArray();

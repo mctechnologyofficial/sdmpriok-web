@@ -8,6 +8,7 @@ use App\Models\Competency;
 use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompetencySupervisorController extends Controller
 {
@@ -54,7 +55,7 @@ class CompetencySupervisorController extends Controller
         }
 
         AnswerSupervisor::create([
-            'user_id'       => 1,
+            'user_id'       => Auth::user()->id,
             'competency_id' => $attrs['idcompetency'],
             'question_id'   => $attrs['questionid'],
             'essay'         => $attrs['essay'],
@@ -63,10 +64,10 @@ class CompetencySupervisorController extends Controller
 
         $competency = Competency::find($attrs['idcompetency']);
         $total_question = QuestionSupervisor::where('competency', $competency->name)->count();
-        $total_submit = AnswerSupervisor::where('user_id', '=' ,'1')
+        $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)
                         ->where('competency_id', '=', $competency->id)
                         ->count();
-        $validation = Progress::where('user_id', '=' ,'1')
+        $validation = Progress::where('user_id', '=' , Auth::user()->id)
                             ->where('competency_id', '=', $competency->id)
                             ->count();
 
@@ -81,13 +82,13 @@ class CompetencySupervisorController extends Controller
 
         if($validation == 0){
             Progress::create([
-                'user_id'       => 1,
+                'user_id'       => Auth::user()->id,
                 'competency_id' => $competency->id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);
         }else{
-            Progress::where('user_id', '=' , '1')
+            Progress::where('user_id', '=' , Auth::user()->id)
             ->where('competency_id', '=' , $competency->id)
             ->update([
                 'submit_time'   => $total_submit,
@@ -197,8 +198,6 @@ class CompetencySupervisorController extends Controller
 
         $subcategory = QuestionSupervisor::select('*')
                     ->where('sub_category', 'LIKE','%'.$subcategory.'%')
-                    // ->groupBy('sub_category')
-                    // ->orderBy('sub_category', 'desc')
                     ->get();
 
         $response['data'] = $subcategory;
