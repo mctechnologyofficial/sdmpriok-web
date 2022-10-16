@@ -20,24 +20,9 @@
                         <h6 class="main-notification-title">{{ Auth::user()->name }}</h6>
                         <p class="main-notification-text">{{ Auth::user()->roles->pluck('name')[0] }}</p>
                     </div>
-                    <a class="dropdown-item border-top" href="profile.html">
-                        <i class="fe fe-user"></i> My Profile
-                    </a>
                     <a class="dropdown-item" href="profile.html">
                         <i class="fe fe-edit"></i> Edit Profile
                     </a>
-                    <a class="dropdown-item" href="profile.html">
-                        <i class="fe fe-settings"></i> Account Settings
-                    </a>
-                    <a class="dropdown-item" href="profile.html">
-                        <i class="fe fe-settings"></i> Support
-                    </a>
-                    <a class="dropdown-item" href="profile.html">
-                        <i class="fe fe-compass"></i> Activity
-                    </a>
-                    {{-- <a class="dropdown-item" href="{{route('logout')}}">
-                        <i class="fe fe-power"></i> Sign Out
-                    </a> --}}
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="dropdown-item">
@@ -63,20 +48,8 @@
                             <h6 class="main-notification-title">{{ Auth::user()->name }}</h6>
                             <p class="main-notification-text">{{ Auth::user()->roles->pluck('name')[0] }}</p>
                         </div>
-                        <a class="dropdown-item border-top" href="profile.html">
-                            <i class="fe fe-user"></i> My Profile
-                        </a>
                         <a class="dropdown-item" href="profile.html">
                             <i class="fe fe-edit"></i> Edit Profile
-                        </a>
-                        <a class="dropdown-item" href="profile.html">
-                            <i class="fe fe-settings"></i> Account Settings
-                        </a>
-                        <a class="dropdown-item" href="profile.html">
-                            <i class="fe fe-settings"></i> Support
-                        </a>
-                        <a class="dropdown-item" href="profile.html">
-                            <i class="fe fe-compass"></i> Activity
                         </a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf

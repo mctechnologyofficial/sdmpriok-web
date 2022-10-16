@@ -42,7 +42,7 @@ class RoleController extends Controller
         ]);
         Role::create([
             'name'          => $attrs['name'],
-            'guard_name'    => $attrs['name']
+            'guard_name'    => 'Web'
         ]);
         return redirect()->route('role.index')->with(['success' => 'Role has been created successfully.']);
         // dd($request->all());
@@ -82,7 +82,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $role->name = $request->name;
-        $role->guard_name = $request->name;
+        $role->guard_name = 'web';
         $role->save();
         return redirect()->route('role.index')->with(['success' => 'Role has been updated successfully.']);
     }

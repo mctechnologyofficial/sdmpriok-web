@@ -2,7 +2,6 @@ $(function() {
     'use strict'
 
 	$('#example1').DataTable({
-        order: [[0, 'asc']],
 		language: {
 			searchPlaceholder: 'Search...',
 			sSearch: '',
