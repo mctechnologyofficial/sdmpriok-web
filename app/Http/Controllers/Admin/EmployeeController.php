@@ -19,9 +19,12 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $user = User::join('roles', 'roles.id', '=', 'users.role_id')
-                    ->join('teams', 'teams.id', '=', 'users.team_id')
-                    ->get(['users.*', 'roles.name as role_name', 'teams.name as team_name']);
+        // $user = User::join('roles', 'roles.id', '=', 'users.role_id')
+        //             ->join('teams', 'teams.id', '=', 'users.team_id')
+        //             ->get(['users.*', 'roles.name as role_name', 'teams.name as team_name']);
+
+        // get user with direct relationsship roles and teams
+        $user = User::with('roles', 'teams')->get();
         return view('layouts.admin.employee.list', compact(['user']));
     }
 
