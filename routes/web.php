@@ -93,7 +93,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 Route::group(['middleware' => ['role:supervisor']], function () {
     // Supervisor routes
     Route::prefix('supervisor')->group(function () {
-        Route::get('/', [HomeController::class, 'index'])->name('supervisor.home');
+        Route::get('/home', [HomeController::class, 'index'])->name('spv.index');
         Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
         Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');
         Route::get('competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
