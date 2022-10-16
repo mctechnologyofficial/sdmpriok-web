@@ -15,3 +15,22 @@ user_id, |  submitting, | progress | answer_id
 if(question == 50 & submit_time < 50){
     progress = 80%
 }
+
+
+// var dataTeamSpv = {{ Js::from($data) }}
+        // var labelTeamSpv = {{ Js::from($label) }}
+        // var labelToolsSpv = {{ Js::from($labels) }}
+// var rand = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];
+        // var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
+
+        // var teamData = {
+        // labels: labelToolsSpv,
+        // datasets: [
+        //         {
+        //             label: labelTeamSpv,
+        //             backgroundColor: color,
+        //             data: dataTeamSpv
+        //         }
+        //     ]
+        // };
+

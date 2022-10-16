@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('competency_id');
             $table->string('submit_time');
             $table->string('progress');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('competency_id')->references('id')->on('competencies');
         });
     }
 

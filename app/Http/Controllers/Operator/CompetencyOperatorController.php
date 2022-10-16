@@ -41,6 +41,7 @@ class CompetencyOperatorController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->validate([
+            'competencyid'  => 'required|integer',
             'questionid'    => 'required|integer',
             'essay'         => '',
             'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
@@ -51,18 +52,24 @@ class CompetencyOperatorController extends Controller
         }else{
             $path = null;
         }
-        
+
         AnswerOperator::create([
-            'user_id'       => 2,
+            'user_id'       => 3,
+            'competency_id' => $attrs['competencyid'],
             'question_id'   => $attrs['questionid'],
             'essay'         => $attrs['essay'],
             'file'          => $path
         ]);
-        
-        $total_question = QuestionOperator::count();
-        $total_submit = AnswerOperator::where('user_id', '2')->count();
-        $validation = Progress::where('user_id', '2')->count();
-        
+
+        $competency = Competency::find($attrs['competencyid']);
+        $total_question = QuestionOperator::where('competency', $competency->name)->count();
+        $total_submit = AnswerOperator::where('user_id', '=' ,'3')
+                        ->where('competency_id', '=', $competency->id)
+                        ->count();
+        $validation = Progress::where('user_id', '=' ,'3')
+                    ->where('competency_id', '=', $competency->name)
+                    ->count();
+
         function get_percentage($total, $number)
         {
             if ( $total > 0 ) {
@@ -71,16 +78,18 @@ class CompetencyOperatorController extends Controller
                 return 0;
             }
         }
-        // dd(get_percentage($total_question, $total_submit));
 
         if($validation == 0){
             Progress::create([
-                'user_id'       => 2,
+                'user_id'       => 3,
+                'competency_id'    => $competency->id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);
         }else{
-            Progress::where('user_id', '2')->update([
+            Progress::where('user_id', '=' ,'3')
+            ->where('competency_id', '=', $competency->id)
+            ->update([
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);
@@ -167,6 +176,22 @@ class CompetencyOperatorController extends Controller
         $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$lesson.'%')->get();
 
         $response['data'] = $question;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get id competency
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getIdCompetency(Request $request){
+        $competency = $request->competency;
+
+        $id = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
+
+        $response['data'] = $id;
 
         return response()->json($response);
     }

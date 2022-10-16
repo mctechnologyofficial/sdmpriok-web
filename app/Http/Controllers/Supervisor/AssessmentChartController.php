@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Competency;
+use App\Models\Progress;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,16 +18,7 @@ class AssessmentChartController extends Controller
      */
     public function index()
     {
-        $user = User::select(DB::raw('COUNT(*) as count'), DB::raw("progress.progress as progressdata"))
-                    ->join('progress', 'progress.user_id', '=', 'users.id')
-                    ->where('team_id', '1')
-                    ->groupBy(DB::raw("progressdata"))
-                    ->orderBy('users.id','ASC')
-                    ->pluck('count');
-
-        $label = $user->keys();
-        $data = $user->values();
-        return view('layouts.supervisor.assessment-chart.team', compact(['label', 'data']));
+        return view('layouts.supervisor.assessment-chart.team');
     }
 
     /**
@@ -92,5 +85,36 @@ class AssessmentChartController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get radar chart data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDataRadarChart(){
+        $competency = Competency::select('name')
+                                ->where('role', 'Operator')->pluck('name');
+
+        $user = User::select('name')
+                    ->join('progress', 'progress.user_id', '=', 'users.id')
+                    ->groupBy('name')
+                    ->orderBy('users.id', 'ASC')
+                    ->pluck('name');
+
+        $progress = Progress::select('progress')
+                    ->get()
+                    ->pluck('progress')
+                    ->toArray();
+
+        $label = $user->values();
+        // $data = $progress->values();
+        $labels = $competency->values();
+
+        $response['labeluser'] = $label;
+        $response['dataprogress'] = $progress;
+        $response['labelcompetency'] = $labels;
+
+        return response()->json($response);
     }
 }

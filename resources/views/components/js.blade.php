@@ -1,6 +1,5 @@
 <!-- Jquery js-->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
 <!-- Bootstrap js-->
 <script src="{{ asset('assets/plugins/bootstrap/js/popper.min.js') }}"></script>
@@ -55,7 +54,7 @@
 {{-- <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<!-- Editable Script -->
+<!-- chart Script -->
 <script>
     // bar chart progress-chart.blade.php //
     var marksCanvas = document.getElementById("chartBar");
@@ -94,67 +93,46 @@
         },
     });
 
-    // var personalChart = document.getElementById("personalChart");
-    var personalChart = $('#personalChart')[0];
-    var personalData = {
-        labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
-        datasets: [
-            {
-                label: "Sistem Proteksi",
-                backgroundColor: "rgba(200,0,0,0.2)",
-                data: [65, 75, 70, 80, 60]
-            },
-            {
-                label: "Pengaturan Daya Dan Eksitasi",
-                backgroundColor: "rgba(0,0,200,0.2)",
-                data: [54, 65, 60, 70, 70]
-            },
-            {
-                label: "Perencanaan Dan Pengendalian Operasi",
-                backgroundColor: "rgba(76,255,0, 0.2)",
-                data: [20, 50, 80, 90, 10]
-            },
-            {
-                label: "Optimalisasi Operasi PLTGU",
-                backgroundColor: "rgba(255,180,0,0.2)",
-                data: [15, 40, 20, 40, 90]
-            },
-            {
-                label: "Analisa Air Pembangkit",
-                backgroundColor: "rgba(255,600,0,0.2)",
-                data: [15, 40, 20, 40, 90]
-            },
-        ]
-    };
+    var personalChart = document.getElementById("personalChart");
+        var personalChart = $('#personalChart')[0];
+        var personalData = {
+            labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
+            datasets: [
+                {
+                    label: "Sistem Proteksi",
+                    backgroundColor: "rgba(200,0,0,0.2)",
+                    data: [65, 75, 70, 80, 60]
+                },
+                {
+                    label: "Pengaturan Daya Dan Eksitasi",
+                    backgroundColor: "rgba(0,0,200,0.2)",
+                    data: [54, 65, 60, 70, 70]
+                },
+                {
+                    label: "Perencanaan Dan Pengendalian Operasi",
+                    backgroundColor: "rgba(76,255,0, 0.2)",
+                    data: [20, 50, 80, 90, 10]
+                },
+                {
+                    label: "Optimalisasi Operasi PLTGU",
+                    backgroundColor: "rgba(255,180,0,0.2)",
+                    data: [15, 40, 20, 40, 90]
+                },
+                {
+                    label: "Analisa Air Pembangkit",
+                    backgroundColor: "rgba(255,600,0,0.2)",
+                    data: [15, 40, 20, 40, 90]
+                },
+            ]
+        };
 
-    var radarPersonalChart = new Chart(personalChart, {
-        type: 'radar',
-        data: personalData
-    });
-
-    var labelTeamSpv = {{ Js::from($label) }}
-    var dataTeamSpv = {{ Js::from($data) }}
-    var rand = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];
-    var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
-
-    var teamChart = $('#teamChart')[0];
-    var teamData = {
-        labels: ["Sistem Proteksi", "Pengaturan Daya Dan Eksitasi", "Perencanaan Dan Pengendalian Operasi", "Optimalisasi Operasi PLTGU", "Analisa Air Pembangkit"],
-        datasets: [
-            {
-                label: labelTeamSpv,
-                backgroundColor: color,
-                data: dataTeamSpv
-            },
-        ]
-    };
-
-    var radarTeamChart = new Chart(teamChart, {
-        type: 'radar',
-        data: teamData
-    });
+        var radarPersonalChart = new Chart(personalChart, {
+            type: 'radar',
+            data: personalData
+        });
 </script>
 
+<!-- editable script -->
 <script>
     $('#fileSlider').on('change', function(){
         var value = $(this).val().replace(/C:\\fakepath\\/i, '');
@@ -201,6 +179,31 @@
         }else{
             var opt = "<option value='' selected disabled>Choose lesson</option>";
             $("#lesson").empty().append(opt).trigger('change');
+        }
+    }
+
+    function createValue(response){
+        var len = 0;
+        // $("#lesson").find('option:not(:first)').remove();
+        $('#idcompetency').empty();
+
+        if(response['data'] != null){
+            len = response['data'].length;
+        }
+
+        if(len > 0){
+            for(var i = 0; i < len; i++){
+                var id =response['data'][i].id;
+                $('#idcompetency').val(id);
+                // $("#lesson").append($('<option>', {
+                //     value: lesson,
+                //     text: lesson
+                // }));
+            }
+        }else{
+            // var opt = "<option value='' selected disabled>Choose lesson</option>";
+            // $("#lesson").empty().append(opt).trigger('change');
+            $('#idcompetency').val('');
         }
     }
 
@@ -275,6 +278,19 @@
             success: function(response){
                 // createRows(response);
                 createOption(response);
+            }
+        });
+
+        $.ajax({
+            url: '/operator/competency-tools/getIdCompetency',
+            type: 'GET',
+            data: {
+                _token: CSRF_TOKEN,
+                competency: valueCompetencyOp
+            },
+            dataType: 'json',
+            success: function(response){
+                createValue(response);
             }
         });
     });

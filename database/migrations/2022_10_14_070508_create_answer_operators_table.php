@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('answer_operators', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('competency_id');
             $table->unsignedBigInteger('question_id');
             $table->string('essay')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('competency_id')->references('id')->on('competencies');
             $table->foreign('question_id')->references('id')->on('question_operators');
         });
     }

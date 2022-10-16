@@ -81,11 +81,13 @@ Route::get('/supervisor/competency-tools/getsubcategory', [CompetencySupervisorC
 Route::get('/supervisor/competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
 
 Route::get('/supervisor/assessment-chart', [AssessmentChartController::class, 'index'])->name('assessment.index');
+Route::get('/supervisor/getradar', [AssessmentChartController::class, 'getDataRadarChart']);
 
 Route::get('/operator/competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
 Route::post('/operator/competency-tools', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
 Route::get('/operator/competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
 Route::get('/operator/competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
+Route::get('/operator/competency-tools/getIdCompetency', [CompetencyOperatorController::class, 'getIdCompetency']);
 
 require __DIR__.'/auth.php';
 
@@ -103,3 +105,4 @@ Route::get('/spv/detail-mentoring', function(){
 //     return view('layouts.supervisor.assessment-chart.team');
 // });
 // End Supervisor //
+

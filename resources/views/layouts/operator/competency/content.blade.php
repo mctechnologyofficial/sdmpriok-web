@@ -66,6 +66,7 @@
                                         </div>
                                         <div class="col-md-8 mg-t-5 mg-md-t-0">
                                             <input type="hidden" name="questionid" id="questionid">
+                                            <input type="hidden" name="competencyid" id="idcompetency">
                                             <input type="text" name="competency" class="form-control" id="competency" readonly>
                                         </div>
                                     </div>
