@@ -10,8 +10,8 @@
                         <h6 class="main-content-label mb-1">Edit Role</h6>
                     </div>
                     <div class="">
-                        <form action="{{ route('role.edit', $role->id) }}" method="POST">
-                            @method('put')
+                        <form action="{{ route('role.update', $role->id) }}" method="POST">
+                            @method('POST')
                             @csrf
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">

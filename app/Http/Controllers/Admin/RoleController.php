@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -41,11 +41,9 @@ class RoleController extends Controller
             'name'  => 'required|string'
         ]);
         Role::create([
-            'name'          => $attrs['name'],
-            'guard_name'    => $attrs['name']
+            'name'          => $attrs['name']
         ]);
         return redirect()->route('role.index')->with(['success' => 'Role has been created successfully.']);
-        // dd($request->all());
     }
 
     /**
@@ -82,7 +80,6 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
         $role->name = $request->name;
-        $role->guard_name = $request->name;
         $role->save();
         return redirect()->route('role.index')->with(['success' => 'Role has been updated successfully.']);
     }

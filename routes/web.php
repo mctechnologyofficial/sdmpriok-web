@@ -53,7 +53,7 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('create', [RoleController::class, 'create'])->name('role.create');
             Route::post('store', [RoleController::class, 'store'])->name('role.store');
             Route::get('{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
-            Route::put('{id}/update', [RoleController::class, 'update'])->name('role.update');
+            Route::post('{id}/update', [RoleController::class, 'update'])->name('role.update');
             Route::delete('{id}/delete', [RoleController::class, 'destroy'])->name('role.destroy');
         });
 
