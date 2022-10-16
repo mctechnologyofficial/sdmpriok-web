@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
             'phone' => '081122334455',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            'role_id' => 1,
+            // 'role_id' => 1,
             'team_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
