@@ -46,7 +46,6 @@
                                     <select name="role_id" class="form-control">
                                         <option value="" @if($user->roles->first() == null) selected disabled @endif>Choose position</option>
                                         @foreach ($role as $roles)
-                                            {{-- <option value="{{ $roles->id }}" @if($user->role_id == $roles->id) selected @endif>{{ $user->roles->first()->name }}</option> --}}
                                             <option value="{{ $roles->id }}">{{ $roles->name }}</option>
                                         @endforeach
                                     </select>

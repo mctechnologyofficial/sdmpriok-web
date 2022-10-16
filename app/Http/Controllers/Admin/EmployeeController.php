@@ -19,10 +19,6 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        // $user = User::join('roles', 'roles.id', '=', 'users.role_id')
-        //             ->join('teams', 'teams.id', '=', 'users.team_id')
-        //             ->get(['users.*', 'roles.name as role_name', 'teams.name as team_name']);
-
         // get user with direct relationsship roles and teams
         $user = User::with('roles', 'teams')->get();
         return view('layouts.admin.employee.list', compact(['user']));
@@ -53,8 +49,8 @@ class EmployeeController extends Controller
             'email'     => 'required|email',
             'phone'     => 'required|string',
             'password'  => 'required|string',
-            'role_id'   => 'required|exists:roles,id',
-            'team_id'   => 'required|exists:teams,id',
+            'role_id'   => 'required|exists:roles,id', //validation with existing roles tables
+            'team_id'   => 'required|exists:teams,id', //validation with existing teams tables
             'image'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
@@ -65,11 +61,11 @@ class EmployeeController extends Controller
             'email'     => $attrs['email'],
             'phone'     => $attrs['phone'],
             'password'  => Hash::make($attrs['password']),
-            // 'role_id'   => $attrs['role_id'],
             'team_id'   => $attrs['team_id'],
             'image'     => $image_path
         ]);
 
+        // assign role
         $role = Role::find($attrs['role_id']);
         $user->assignRole($role);
 
@@ -114,7 +110,6 @@ class EmployeeController extends Controller
             'name'      => 'required|string',
             'email'     => 'required|email',
             'phone'     => 'required|string',
-            // 'password'  => 'required|string',
             'role_id'   => 'required|exists:roles,id',
             'team_id'   => 'required|exists:teams,id',
         ]);
@@ -137,11 +132,10 @@ class EmployeeController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        // $user->password = Hash::make($request->password);
-        // $user->role_id = $request->role_id;
         $user->team_id = $request->team_id;
         $user->save();
 
+        // update roles
         $role = Role::find($request->role_id);
         $user->syncRoles($role);
 

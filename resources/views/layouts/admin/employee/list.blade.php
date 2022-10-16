@@ -41,7 +41,7 @@
                                     <td>{{ $data->name }}</td>
                                     <td>{{ $data->email }}</td>
                                     <td>{{ $data->phone }}</td>
-                                    <td>{{ $data->roles->first()->name }}</td>
+                                    <td>{{ ucfirst($data->roles->first()->name) }}</td>
                                     <td>{{ $data->teams->name }}</td>
                                     <td class="text-center">
                                         <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">
