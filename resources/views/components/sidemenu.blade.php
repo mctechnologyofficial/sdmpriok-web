@@ -3,18 +3,25 @@
         <a class="main-logo" href="index.html">
             <img src="{{ asset('assets/img/brand/logo-ip.png') }}" class="header-brand-img desktop-logo" alt="logo">
             <img src="{{ asset('assets/img/brand/logo-pln.png') }}" class="header-brand-img icon-logo w-75" alt="logo">
-            <img src="{{ asset('assets/img/brand/logo-ip.png') }}" class="header-brand-img desktop-logo theme-logo" alt="logo">
-            <img src="{{ asset('assets/img/brand/logo-pln.png') }}" class="header-brand-img icon-logo theme-logo w-75" alt="logo">
+            <img src="{{ asset('assets/img/brand/logo-ip.png') }}" class="header-brand-img desktop-logo theme-logo"
+                alt="logo">
+            <img src="{{ asset('assets/img/brand/logo-pln.png') }}" class="header-brand-img icon-logo theme-logo w-75"
+                alt="logo">
         </a>
     </div>
     <div class="main-sidebar-body">
         <ul class="nav">
+            @role('admin')
             <li class="nav-header"><span class="nav-label">Admin</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.home') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Dashboard</span></a>
+                <a class="nav-link" href="{{ route('admin.home') }}"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
+                        class="sidemenu-label">Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Employee</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Employee</span><i
+                        class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
                         <a class="nav-sub-link" href="{{ route('employee.index') }}">List Employee</a>
@@ -28,10 +35,13 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Mentoring</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Mentoring</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i
+                        class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
                         <a class="nav-sub-link" href="/admin/progress-chart">Monitoring Progress Chart</a>
@@ -39,7 +49,9 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-wrench sidemenu-icon"></i><span class="sidemenu-label">Utilities</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-wrench sidemenu-icon"></i><span class="sidemenu-label">Utilities</span><i
+                        class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
                         <a class="nav-sub-link" href="{{ route('slider.index') }}">Slider</a>
@@ -49,18 +61,28 @@
                     </li>
                 </ul>
             </li>
+            @endrole
+            @role('supervisor')
             <li class="nav-header"><span class="nav-label">Supervisor</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('home.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
+                <a class="nav-link" href="{{ route('supervisor.home') }}"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
+                        class="sidemenu-label">Home</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/spv/coaching-mentoring"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Coaching Mentoring</span></a>
+                <a class="nav-link" href="/spv/coaching-mentoring"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span
+                        class="sidemenu-label">Coaching Mentoring</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('competency-tools-spv.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
+                <a class="nav-link" href="{{ route('competency-tools-spv.index') }}"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span
+                        class="sidemenu-label">Competency Tools</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
+                <a class="nav-link with-sub" href="#"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span
+                        class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item">
                         <a class="nav-sub-link" href="{{ route('chart-personal.personal') }}">Assessment Chart (Personal)</a>
@@ -70,16 +92,24 @@
                     </li>
                 </ul>
             </li>
+            @endrole
+            @role('operator')
             <li class="nav-header"><span class="nav-label">Operator</span></li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
+                <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
+                        class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
+                <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
+                        Score</span></a>
             </li>
+            @endrole
         </ul>
     </div>
 </div>
