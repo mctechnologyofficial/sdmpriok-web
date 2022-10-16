@@ -5,10 +5,10 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Operator\CompetencyOperatorController;
 use App\Http\Controllers\Supervisor\AssessmentChartController;
 use App\Http\Controllers\Supervisor\CompetencySupervisorController;
-use App\Http\Controllers\Supervisor\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 Route::group(['middleware' => ['role:supervisor']], function () {
     // Supervisor routes
     Route::prefix('supervisor')->group(function () {
-        Route::get('/home', [HomeController::class, 'index'])->name('spv.index');
+        Route::get('/home', [HomeController::class, 'IndexSupervisor'])->name('spv.index');
         Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
         Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');
         Route::get('competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
@@ -111,6 +111,7 @@ Route::group(['middleware' => ['role:supervisor']], function () {
 Route::group(['middleware' => ['role:operator']], function () {
     // operator routes
     Route::prefix('operator')->group(function () {
+        Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');
         Route::get('competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
         Route::post('competency-tools/store', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
         Route::get('competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
