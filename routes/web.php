@@ -30,11 +30,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-/** Admin Routes */
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/admin/add-employee', [EmployeeController::class, 'create'])->name('employee.create');
-// });
-
 Route::get('/admin/home', function () {
     return view('layouts.admin.index');
 })->name('admin.home');
@@ -104,8 +99,12 @@ Route::group(['middleware' => ['role:supervisor']], function () {
         Route::get('competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
         Route::get('competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
         Route::get('competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
+        Route::get('/supervisor/competency-tools/getidcompetency', [CompetencySupervisorController::class, 'getIdCompetency']);
 
-        Route::get('assessment-chart', [AssessmentChartController::class, 'index'])->name('assessment.index');
+        Route::get('assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal.personal');
+        Route::get('assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team.team');
+        Route::get('assessment-chart/getradarteam', [AssessmentChartController::class, 'getDataRadarChartTeam']);
+        Route::get('assessment-chart/getradarpersonal', [AssessmentChartController::class, 'getDataRadarChartPersonal']);
     });
 });
 
@@ -116,23 +115,16 @@ Route::group(['middleware' => ['role:operator']], function () {
         Route::post('competency-tools/store', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
         Route::get('competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
         Route::get('competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
+        Route::get('competency-tools/getIdCompetency', [CompetencyOperatorController::class, 'getIdCompetency']);
     });
 });
 
 require __DIR__ . '/auth.php';
 
-// Supervisor //
 Route::get('/spv/coaching-mentoring', function () {
     return view('layouts.supervisor.mentoring.list');
 });
 Route::get('/spv/detail-mentoring', function () {
     return view('layouts.supervisor.mentoring.detail');
 });
-// Route::get('/spv/chart-personal', function(){
-//     return view('layouts.supervisor.assessment-chart.personal');
-// });
-// Route::get('/spv/chart-team', function(){
-//     return view('layouts.supervisor.assessment-chart.team');
-// });
-// End Supervisor //
 
