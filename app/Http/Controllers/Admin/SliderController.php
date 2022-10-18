@@ -16,7 +16,7 @@ class SliderController extends Controller
      */
     public function index()
     {
-        $slider = Slide::all();
+        $slider = Slide::select('*')->orderBy('id', 'ASC')->get();
         return view('layouts.admin.utilities.slider.list', compact(['slider']));
     }
 
@@ -112,6 +112,20 @@ class SliderController extends Controller
 
             if(Storage::exists($request->image)){
                 Storage::delete($slider->image);
+                if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
+                    $path = $request->file('image')->store('public/images/slider/row1');
+                }
+                elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 2')
+                {
+                    $path = $request->file('image')->store('public/images/slider/row2');
+                }
+                elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 3')
+                {
+                    $path = $request->file('image')->store('public/images/slider/row3');
+                }
+                elseif($attrs['type'] == "Picture"){
+                    $path = $request->file('image')->store('public/images/picture');
+                }
             }else{
                 if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
                     $path = $request->file('image')->store('public/images/slider/row1');

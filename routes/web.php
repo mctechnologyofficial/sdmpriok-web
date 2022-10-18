@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Operator\CompetencyOperatorController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Supervisor\AssessmentChartController;
 use App\Http\Controllers\Supervisor\CompetencySupervisorController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,9 @@ Route::get('/admin/home', function () {
     return view('layouts.admin.index');
 })->name('admin.home');
 
+Route::get('/edit-profile', [ProfileController::class, 'index'])->name('profile.index');
+Route::put('/edit-profile/{id}/update', [ProfileController::class, 'update'])->name('profile.update');
+
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function () {
 
@@ -53,7 +57,7 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('create', [RoleController::class, 'create'])->name('role.create');
             Route::post('store', [RoleController::class, 'store'])->name('role.store');
             Route::get('{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
-            Route::post('{id}/update', [RoleController::class, 'update'])->name('role.update');
+            Route::put('{id}/update', [RoleController::class, 'update'])->name('role.update');
             Route::delete('{id}/delete', [RoleController::class, 'destroy'])->name('role.destroy');
         });
 
@@ -99,7 +103,7 @@ Route::group(['middleware' => ['role:supervisor']], function () {
         Route::get('competency-tools/getcategory', [CompetencySupervisorController::class, 'getCategoryByCompetency']);
         Route::get('competency-tools/getsubcategory', [CompetencySupervisorController::class, 'getSubCategoryByCategory']);
         Route::get('competency-tools/getquestion', [CompetencySupervisorController::class, 'getQuestionBySubCategory']);
-        Route::get('/supervisor/competency-tools/getidcompetency', [CompetencySupervisorController::class, 'getIdCompetency']);
+        Route::get('competency-tools/getidcompetency', [CompetencySupervisorController::class, 'getIdCompetency']);
 
         Route::get('assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal.personal');
         Route::get('assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team.team');

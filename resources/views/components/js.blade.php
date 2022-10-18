@@ -98,6 +98,10 @@
 
 <!-- editable script -->
 <script>
+    $('.a-logout').on('click', function(){
+        $('.btn-logout').click();
+    });
+
     $('#fileSlider').on('change', function(){
         var value = $(this).val().replace(/C:\\fakepath\\/i, '');
 

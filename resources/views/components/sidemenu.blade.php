@@ -64,7 +64,7 @@
             @endrole
             @role('supervisor')
                 <ul class="nav">
-                    <li class="nav-header"><span class="nav-label">Supervisor</span></li>
+                    {{-- <li class="nav-header"><span class="nav-label">Supervisor</span></li> --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('spv.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span class="sidemenu-label">Home</span></a>
                     </li>

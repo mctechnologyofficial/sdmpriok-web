@@ -20,7 +20,7 @@ class EmployeeController extends Controller
     public function index()
     {
         // get user with direct relationsship roles and teams
-        $user = User::with('roles', 'teams')->get();
+        $user = User::with('roles', 'teams')->orderBy('users.id', 'ASC')->get();
         return view('layouts.admin.employee.list', compact(['user']));
     }
 
@@ -123,6 +123,7 @@ class EmployeeController extends Controller
 
             if (Storage::exists($request->image)) {
                 Storage::delete($user->image);
+                $path = $request->file('image')->store('public/images/users');
             } else {
                 $path = $request->file('image')->store('public/images/users');
             }

@@ -7,6 +7,7 @@ use App\Models\Competency;
 use App\Models\Progress;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AssessmentChartController extends Controller
@@ -136,7 +137,7 @@ class AssessmentChartController extends Controller
     public function getDataRadarChartPersonal(){
         $competency = Competency::select('competencies.name', 'progress.progress')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
-                                ->where('progress.user_id', '1')
+                                ->where('progress.user_id', Auth::user()->id)
                                 ->groupBy('competencies.name', 'progress.progress')
                                 ->orderBy('competencies.id', 'ASC')
                                 ->pluck('competencies.name', 'progress.progress');

@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $role = Role::all();
+        $role = Role::select('*')->orderBy('id', 'ASC')->get();
         return view('layouts.admin.role.list', compact(['role']));
     }
 

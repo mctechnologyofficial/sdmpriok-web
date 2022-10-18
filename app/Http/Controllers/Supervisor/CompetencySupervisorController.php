@@ -41,6 +41,7 @@ class CompetencySupervisorController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $attrs = $request->validate([
             'idcompetency'  => 'required|integer',
             'questionid'    => 'required|integer',

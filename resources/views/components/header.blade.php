@@ -20,15 +20,15 @@
                         <h6 class="main-notification-title">{{ Auth::user()->name }}</h6>
                         <p class="main-notification-text">{{ Auth::user()->roles->pluck('name')[0] }}</p>
                     </div>
-                    <a class="dropdown-item" href="profile.html">
+                    <a class="dropdown-item" href="{{ route('profile.index') }}">
                         <i class="fe fe-edit"></i> Edit Profile
                     </a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button class="dropdown-item">
-                            <i class="fe fe-power"> Sign Out
-                            </i>
-                        </button>
+                        <a class="dropdown-item a-logout" href="javascript:void(0)">
+                            <i class="fe fe-power"></i> Sign Out
+                        </a>
+                        <button class="btn-logout" style="display: none;"></button>
                     </form>
                 </div>
             </div>

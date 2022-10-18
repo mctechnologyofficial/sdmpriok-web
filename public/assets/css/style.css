@@ -3135,7 +3135,7 @@ fieldset:disabled a.btn {
     }
 
     .card-group>.card:not(:first-child) .card-img-bottom,
-    .card-group>.card:not(:first-child) .card-footer {
+    .card-group>.card:not(:first-child) .card- {
         border-bottom-left-radius: 0;
     }
 }
@@ -73008,3 +73008,18 @@ body.horizontalmenu {
 
 /* ###### ie css ###### */
 /*# sourceMappingURL=style.css.map */
+.avatar-profile {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}

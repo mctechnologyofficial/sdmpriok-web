@@ -22,7 +22,7 @@
     <script>
         $(document).ready(function(){
             $.ajax({
-                url: '/supervisor/getradarpersonal',
+                url: '/supervisor/assessment-chart/getradarpersonal',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN
