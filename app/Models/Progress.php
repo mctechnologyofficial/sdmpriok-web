@@ -12,6 +12,7 @@ class Progress extends Model
     protected $table = 'progress';
     protected $fillable = [
         'user_id',
+        'team_id',
         'competency_id',
         'submit_time',
         'progress'

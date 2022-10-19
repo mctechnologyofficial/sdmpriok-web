@@ -111,3 +111,162 @@
         </div>
     </div>
 @endsection
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // OPERATOR COMPETENCY TOOLS
+        var valueCompetencyOp;
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        function createOption(response){
+            var len = 0;
+            $("#lesson").find('option:not(:first)').remove();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i = 0; i < len; i++){
+                    var lesson =response['data'][i].lesson;
+
+                    $("#lesson").append($('<option>', {
+                        value: lesson,
+                        text: lesson
+                    }));
+                }
+            }else{
+                var opt = "<option value='' selected disabled>Choose lesson</option>";
+                $("#lesson").empty().append(opt).trigger('change');
+            }
+        }
+
+        function createValue(response){
+            var len = 0;
+            // $("#lesson").find('option:not(:first)').remove();
+            $('#idcompetency').empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i = 0; i < len; i++){
+                    var id =response['data'][i].id;
+                    $('#idcompetency').val(id);
+                    // $("#lesson").append($('<option>', {
+                    //     value: lesson,
+                    //     text: lesson
+                    // }));
+                }
+            }else{
+                // var opt = "<option value='' selected disabled>Choose lesson</option>";
+                // $("#lesson").empty().append(opt).trigger('change');
+                $('#idcompetency').val('');
+            }
+        }
+
+        function createRows(response){
+            var len = 0;
+            $('#tblOperatorQuestion tbody').empty();
+
+        if(response['data'] != null){
+            len = response['data'].length;
+        }
+
+        if(len > 0){
+            for(var i=0; i < len; i++){
+            var id = response['data'][i].id;
+            var competency = response['data'][i].competency;
+            // var category = response['data'][i].category;
+            // var sub_category = response['data'][i].sub_category;
+            var lesson = response['data'][i].lesson;
+            var reference = response['data'][i].reference;
+            var lesson_plan = response['data'][i].lesson_plan;
+            var processing_time = response['data'][i].processing_time;
+            var realization = response['data'][i].realization;
+
+            var tr_str = "<tr>" +
+                "<td class='questionid' style='display: none;'>" + id + "</td>" +
+                "<td>" + competency + "</td>" +
+                // "<td>" + category + "</td>" +
+                // "<td>" + sub_category + "</td>" +
+                "<td>" + lesson + "</td>" +
+                "<td>" + reference + "</td>" +
+                "<td>" + lesson_plan + "</td>" +
+                "<td>" + processing_time + "</td>" +
+                "<td>" + realization + "</td>" +
+            "</tr>";
+
+            $("#tblOperatorQuestion tbody").append(tr_str);
+            }
+        }else{
+            var tr_str = "<tr>" +
+            "<td colspan='6' class='text-center'>No record found</td>" +
+            "</tr>";
+
+            $("#tblOperatorQuestion tbody").empty().append(tr_str);
+        }
+    }
+
+    $('.tools-competency-op').on('click', function(){
+        valueCompetencyOp = $(this).text();
+        $.ajax({
+            url: '/operator/competency-tools/getlesson',
+            type: 'GET',
+            data: {
+                _token: CSRF_TOKEN,
+                competency: valueCompetencyOp
+            },
+            dataType: 'json',
+            success: function(response){
+                // createRows(response);
+                createOption(response);
+            }
+        });
+
+        $.ajax({
+            url: '/operator/competency-tools/getIdCompetency',
+            type: 'GET',
+            data: {
+                _token: CSRF_TOKEN,
+                competency: valueCompetencyOp
+            },
+            dataType: 'json',
+            success: function(response){
+                createValue(response);
+            }
+        });
+    });
+
+    $('#lesson').on('change', function(){
+        var value = $(this).val();
+        $.ajax({
+            url: '/operator/competency-tools/getquestion',
+            type: 'GET',
+            data: {
+                _token: CSRF_TOKEN,
+                lesson: value
+            },
+            dataType: 'json',
+            success: function(response){
+                createRows(response);
+            }
+        });
+    });
+
+    $('#tblOperatorQuestion tbody').on('click', 'tr',function(){
+        var id = $(this).find('.questionid').html();
+
+        if(id == undefined){
+            // alert('oke');
+        }else{
+            $('#competency').val(valueCompetencyOp);
+            $('#textlesson').val($('#lesson').val());
+            $('#answerOperatorModal').modal('show');
+            $('#questionid').val(id);
+        }
+
+    });
+    </script>
+@endsection

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CompetencyController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\MonitoringProgressController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
@@ -71,6 +72,12 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::delete('{id}/delete', [TeamController::class, 'destroy'])->name('team.destroy');
         });
 
+        // monitoring chart route
+        Route::prefix('progress-chart')->group(function () {
+            Route::get('/', [MonitoringProgressController::class, 'index'])->name('progress-chart.index');
+            Route::get('/getdataprogress', [MonitoringProgressController::class, 'getDataProgress']);
+        });
+
         // sliders routes
         Route::prefix('slider')->group(function () {
 
@@ -132,4 +139,5 @@ Route::get('/spv/coaching-mentoring', function () {
 Route::get('/spv/detail-mentoring', function () {
     return view('layouts.supervisor.mentoring.detail');
 });
+
 

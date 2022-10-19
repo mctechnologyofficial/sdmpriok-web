@@ -68,7 +68,6 @@ class CompetencyOperatorController extends Controller
                         ->where('competency_id', '=', $competency->id)
                         ->count();
         $validation = Progress::where('user_id', '=' , Auth::user()->id)
-                    // ->where('competency_id', '=', $competency->name)
                     ->count();
 
         function get_percentage($total, $number)
@@ -83,14 +82,15 @@ class CompetencyOperatorController extends Controller
         if($validation == 0){
             Progress::create([
                 'user_id'       => Auth::user()->id,
-                // 'competency_id'    => $competency->id,
+                'team_id'       => Auth::user()->team_id,
+                'competency_id' => $competency->id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);
         }else{
             Progress::where('user_id', '=' , Auth::user()->id)
-            // ->where('competency_id', '=', $competency->id)
             ->update([
+                'team_id'       => Auth::user()->team_id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);

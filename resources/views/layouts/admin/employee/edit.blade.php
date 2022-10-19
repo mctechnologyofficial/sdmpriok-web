@@ -101,3 +101,26 @@
     </div>
 </div>
 @endsection
+@section('js')
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            var readURL = function(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            $("#fileSlider").on('change', function(){
+                readURL(this);
+            });
+        });
+    </script>
+@endsection
