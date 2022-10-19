@@ -84,6 +84,7 @@ class CompetencySupervisorController extends Controller
         if($validation == 0){
             Progress::create([
                 'user_id'       => Auth::user()->id,
+                'team_id'       => Auth::user()->team_id,
                 'competency_id' => $competency->id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
@@ -92,6 +93,7 @@ class CompetencySupervisorController extends Controller
             Progress::where('user_id', '=' , Auth::user()->id)
             ->where('competency_id', '=' , $competency->id)
             ->update([
+                'team_id'       => Auth::user()->team_id,
                 'submit_time'   => $total_submit,
                 'progress'      => get_percentage($total_question, $total_submit)
             ]);

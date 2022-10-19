@@ -18,8 +18,12 @@ class AssessmentChartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function team()
-    {
-        return view('layouts.supervisor.assessment-chart.team');
+    { 
+        $team = User::role('operator')
+        ->where('team_id', '=', Auth::user()->team_id)
+        ->get();
+
+        return view('layouts.supervisor.assessment-chart.team', compact(['team']));
     }
 
     /**
@@ -103,28 +107,17 @@ class AssessmentChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDataRadarChartTeam(){
-        $competency = Competency::select('name')
-                                ->where('role', 'Operator')->pluck('name');
+    public function getDataRadarChartTeam(Request $request){
+        $userid = $request->userid;
 
-        $user = User::select('name')
-                    ->join('progress', 'progress.user_id', '=', 'users.id')
-                    ->groupBy('name')
-                    ->orderBy('users.id', 'ASC')
-                    ->pluck('name');
+        $team  = Progress::select('progress.progress as progress', 'competencies.name as competency')
+        ->join('users', 'users.id', '=', 'progress.user_id')
+        ->join('competencies', 'competencies.id', '=', 'progress.competency_id')
+        ->where('progress.user_id', '=', $userid)
+        ->where('progress.team_id', Auth::user()->team_id)
+        ->get();
 
-        $progress = Progress::select('progress')
-                    ->get()
-                    ->pluck('progress')
-                    ->toArray();
-
-        $label = $user->values();
-        // $data = $progress->values();
-        $labels = $competency->values();
-
-        $response['labeluser'] = $label;
-        $response['dataprogress'] = $progress;
-        $response['labelcompetency'] = $labels;
+        $response['team'] = $team;
 
         return response()->json($response);
     }
@@ -142,24 +135,10 @@ class AssessmentChartController extends Controller
                                 ->orderBy('competencies.id', 'ASC')
                                 ->pluck('competencies.name', 'progress.progress');
 
-        // $user = User::select('name')
-        //             ->join('progress', 'progress.user_id', '=', 'users.id')
-        //             ->where('users.id', '1')
-        //             ->groupBy('name')
-        //             ->orderBy('users.id', 'ASC')
-        //             ->pluck('name');
-
-    // $progress = Progress::select('progress')
-        //             ->get()
-        //             ->pluck('progress')
-        //             ->toArray();
-
-        // $label = $user->values();
         $label = $competency->values();
         $data = $competency->keys();
 
         $response['label'] = $label;
-        // $response['dataprogress'] = $progress;
         $response['data'] = $data;
 
         return response()->json($response);

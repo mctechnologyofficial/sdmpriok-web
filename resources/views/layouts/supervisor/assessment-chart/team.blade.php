@@ -6,10 +6,24 @@
         <div class="col-lg-12">
             <div class="card custom-card">
                 <div class="card-body">
-                    <div>
-                        <h6 class="main-content-label mb-1">Assessment Chart (Team)</h6>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h6 class="main-content-label mb-1">Assessment Chart (Team)</h6>
+                        </div>
                     </div>
-                    <canvas id="teamChart"></canvas>
+                    <div class="row m-2 border">
+                        <div class="float-left">
+                            <select name="userid" id="userid" class="form-control">
+                                <option value="" selected disabled>Choose Team Name</option>
+                                @foreach ($team as $data)
+                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-12 container-canvas">
+                            <canvas id="teamChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,63 +35,71 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function(){
-            $.ajax({
-                url: '/supervisor/getradarteam',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN
-                },
-                dataType: 'json',
-                success: function(response){
-                    ChartData = {};
-                    ChartData.labels = response['labelcompetency'];
-                    ChartData.datasets = [];
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-                    var color = ["rgba(241,28,39,0.8)", //red
-                                "rgba(231,221,28,0.8)", //yellow
-                                "rgba(28,145,241,0.8)",//blue
-                                "rgba(38,231,28,0.8)", //green
-                                "rgba(28,231,221,0.8)", //cyan
-                                "rgba(231,228,211,0.8)", //pink
-                                "rgba(3,1,3,0.8)", // black
-                                "rgba(236,176,179,0.8)", //light pink
-                                "rgba(239,107,51,0.8)", //orange
-                                "rgba(157,51,239,0.8)", //violet
-                                "rgba(16,82,248,0.8)", //royalblue
-                                "rgba(241,28,39,0.8)"];
+            function createChart(response){
+                $('#teamChart').remove();
+                $('.container-canvas').append('<canvas id="teamChart"><canvas>');
+                
+                let json = response['team'];
+                let progressdata = [];
+                let kompetensi = [];
 
-                    for(var i = 0; i < response['labeluser'].length; i++){
-                        ChartData.datasets.push({});
-                        dataset = ChartData.datasets[i]
-                        dataset.backgroundColor = color[i],
-                        dataset.data = [10, 20, 30, 40]; //data on Y-Axis
-                        dataset.label =  response['labeluser'][i]; //labels
-                        // ChartData.datasets[i].data = response['dataprogress'][i];
+                json.forEach(e => {
+                    progressdata.push([+e.progress]);
+                    kompetensi.push(e.competency);
+                });
+
+                var uniqueCompetency = [];
+                $.each(kompetensi, function(i, el){
+                    if($.inArray(el, uniqueCompetency) === -1) uniqueCompetency.push(el);
+                });
+
+                var teamChart = document.getElementById('teamChart').getContext('2d');
+                
+                teamChart.canvas.width = 300;
+                teamChart.canvas.height = 300;
+
+                var radarTeamChart = new Chart(teamChart, {
+                    type: 'pie',
+                    data: {
+                        labels: uniqueCompetency,
+                        datasets: [{
+                            label: 'Competency Progress',
+                            data: progressdata,
+                            backgroundColor: [
+                                "rgba(241,28,39)",
+                                "rgba(28,145,241)",
+                                "rgba(231,221,28)",
+                                "rgba(38,231,28)"
+                            ],
+                            hoverOffset: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
                     }
+                });    
+            }
 
+            $('#userid').on('change', function(){
+                var id = $(this).val();
 
-                    var teamChart = document.getElementById('teamChart');;
-                    var radarTeamChart = new Chart(teamChart, {
-                        type: 'radar',
-                        data: ChartData
-                    });
-                }
+                $.ajax({
+                    url: '/supervisor/assessment-chart/getradarteam',
+                    type: 'GET',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        userid: id
+                    },
+                    dataType: 'json',
+                    success: function(response){
+                        createChart(response);
+                    }
+                });
             });
+
         });
-        // var rand = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' ];
-        // var color = '#' + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)] + rand[Math.ceil(Math.random() * 15)];
-
-        // var teamData = {
-        // labels: labelToolsSpv,
-        // datasets: [
-        //         {
-        //             label: labelTeamSpv,
-        //             backgroundColor: color,
-        //             data: dataTeamSpv
-        //         }
-        //     ]
-        // };
-
-
     </script>
 @endsection

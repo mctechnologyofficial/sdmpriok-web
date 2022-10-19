@@ -34,3 +34,36 @@ if(question == 50 & submit_time < 50){
         //     ]
         // };
 
+
+
+
+// ChartData = {};
+                    // ChartData.labels = uniqueCompetency;
+                    // ChartData.datasets = [];
+                    // console.log(data);
+
+                    var color = [
+                                "rgba(241,28,39,0.8)", //red
+                                "rgba(231,221,28,0.8)", //yellow
+                                "rgba(28,145,241,0.8)",//blue
+                                "rgba(38,231,28,0.8)", //green
+                                "rgba(28,231,221,0.8)", //cyan
+                                "rgba(231,228,211,0.8)", //pink
+                                "rgba(3,1,3,0.8)", // black
+                                "rgba(236,176,179,0.8)", //light pink
+                                "rgba(239,107,51,0.8)", //orange
+                                "rgba(157,51,239,0.8)", //violet
+                                "rgba(16,82,248,0.8)", //royalblue
+                                "rgba(241,28,39,0.8)"
+                    ];
+                    //
+                    
+                    // for(var i = 0; i < uniqueCompetency.length; i++){
+                    //     temp = [];
+                    //     ChartData.datasets.push({});
+                    //     dataset = ChartData.datasets[i]
+                    //     dataset.backgroundColor = color[i],
+                    //     dataset.data = data[i];
+                    //     dataset.label =  uniqueCompetency[i];
+                    //     // ChartData.datasets[i].data = data[i];
+                    // }

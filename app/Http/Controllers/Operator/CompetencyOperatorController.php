@@ -64,11 +64,14 @@ class CompetencyOperatorController extends Controller
 
         $competency = Competency::find($attrs['competencyid']);
         $total_question = QuestionOperator::where('competency', $competency->name)->count();
+
         $total_submit = AnswerOperator::where('user_id', '=' , Auth::user()->id)
-                        ->where('competency_id', '=', $competency->id)
-                        ->count();
+        ->where('competency_id', '=', $competency->id)
+        ->count();
+
         $validation = Progress::where('user_id', '=' , Auth::user()->id)
-                    ->count();
+        ->where('competency_id', '=', $competency->id)
+        ->count();
 
         function get_percentage($total, $number)
         {
@@ -89,6 +92,7 @@ class CompetencyOperatorController extends Controller
             ]);
         }else{
             Progress::where('user_id', '=' , Auth::user()->id)
+            ->where('competency_id', '=', $competency->id)
             ->update([
                 'team_id'       => Auth::user()->team_id,
                 'submit_time'   => $total_submit,

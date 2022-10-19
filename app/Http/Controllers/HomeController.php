@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AnswerSupervisor;
+use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use App\Models\Slide;
 use Illuminate\Http\Request;
@@ -26,7 +27,15 @@ class HomeController extends Controller
         }
 
         $total_progress = get_percentage($total_question, $total_submit);
-        return view('layouts.supervisor.index', compact(['slide', 'total_progress']));
+
+        $teams = Progress::selectRaw('SUM(progress) as total')
+                         ->where('team_id', Auth::user()->team_id)
+                         ->pluck('total');
+
+        $total = $teams->values();
+
+        $result_total = str_replace(str_split('[]'), '', $total);
+        return view('layouts.supervisor.index', compact(['slide', 'total_progress', 'result_total']));
     }
 
     public function IndexOperator(){

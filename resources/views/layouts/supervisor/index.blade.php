@@ -10,11 +10,11 @@
                             <div class="col-lg-12">
                                 <h4 class="mb-2">Competency Progress (Personal)</h4>
                                 <div class="progress mg-b-10">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $total_progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $total_progress }}%"></div>
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $total_progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $total_progress }}%">{{ $total_progress }}%</div>
                                 </div>
                                 <h4 class="mt-3 mb-2">Competency Progress (Team)</h4>
                                 <div class="progress mg-b-10">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $result_total }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $result_total }}%;">{{ $result_total }}%</div>
                                 </div>
                             </div>
                         </div>
@@ -68,4 +68,10 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script>
+        
+    </script>
 @endsection
