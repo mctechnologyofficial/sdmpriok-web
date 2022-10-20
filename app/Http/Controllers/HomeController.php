@@ -6,6 +6,7 @@ use App\Models\AnswerSupervisor;
 use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use App\Models\Slide;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,8 +16,7 @@ class HomeController extends Controller
         $slide = Slide::all();
 
         $total_question = QuestionSupervisor::count();
-        $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)
-                        ->count();
+        $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)->count();
         function get_percentage($total, $number)
         {
             if ( $total > 0 ) {
@@ -28,9 +28,10 @@ class HomeController extends Controller
 
         $total_progress = get_percentage($total_question, $total_submit);
 
-        $teams = Progress::selectRaw('SUM(progress) as total')
-                         ->where('team_id', Auth::user()->team_id)
-                         ->pluck('total');
+        $teams = User::role('operator')->selectRaw('SUM(progress.progress) as total')
+        ->join('progress', 'progress.user_id', '=', 'users.id')
+        ->where('progress.team_id', Auth::user()->team_id)
+        ->pluck('total');
 
         $total = $teams->values();
 

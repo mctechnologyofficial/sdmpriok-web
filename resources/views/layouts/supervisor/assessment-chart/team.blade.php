@@ -11,7 +11,7 @@
                             <h6 class="main-content-label mb-1">Assessment Chart (Team)</h6>
                         </div>
                     </div>
-                    <div class="row m-2 border">
+                    <div class="row m-2">
                         <div class="float-left">
                             <select name="userid" id="userid" class="form-control">
                                 <option value="" selected disabled>Choose Team Name</option>
