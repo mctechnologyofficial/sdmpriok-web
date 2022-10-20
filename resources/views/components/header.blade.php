@@ -6,8 +6,8 @@
         </div>
         <div class="main-header-center">
             <div class="responsive-logo">
-                <a href="/"><img src="{{ asset('assets/img/brand/logo.png') }}" class="mobile-logo" alt="logo"></a>
-                <a href="/"><img src="{{ asset('assets/img/brand/logo.png') }}" class="mobile-logo-dark" alt="logo"></a>
+                <a href="javascript:void(0)"><img src="{{ asset('assets/img/brand/logo.png') }}" class="mobile-logo" alt="logo"></a>
+                <a href="javascript:void(0)"><img src="{{ asset('assets/img/brand/logo.png') }}" class="mobile-logo-dark" alt="logo"></a>
             </div>
         </div>
         <div class="main-header-right">
