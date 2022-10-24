@@ -56,7 +56,7 @@ class AuthController extends Controller
                 'code' => 200,
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'access_token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -115,5 +115,23 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Logout the user 
+     * @param Request $request
+     * @return Json Response 
+    */
+    public function logout(Request $request)
+    {
+        // $user = $request->user();
+        $user = auth('sanctum')->user();
+        $user->tokens()->delete();
+
+        return response()->json([
+            'code' => 200,
+            'status' => true,
+            'message' => 'User Logout Successfully',
+        ], 200);
     }
 }
