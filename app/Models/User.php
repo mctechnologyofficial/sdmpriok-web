@@ -7,12 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
+use Veelasky\LaravelHashId\Eloquent\HashableId;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles; // get roles from this trait
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HashableId;
+
+    /**
+     * User instance
+     * @property int $id
+     */
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +43,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'id',
+        'created_at', 
+        'updated_at',
+        'deleted_at',
+        'email_verified_at'
     ];
 
     /**
@@ -47,7 +59,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // get relation to teams model with belongsto
+    protected $appends = [
+        'hash'
+    ];
+
+    /**
+     * Relation to teams model
+     * With relation belongsTo
+     */ 
     public function teams(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,22 @@ Route::post('/tokens/create', function (Request $request) {
 });
 
 // Authentication Routes
-Route::post('auth/register', [AuthController::class, 'register']);
-Route::post('auth/login', [AuthController::class, 'login']);
-Route::post('auth/logout', [AuthController::class, 'logout']);
+Route::prefix('auth')->group(function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('register', 'register');
+        Route::post('login', 'login');
+        Route::post('logout', 'logout');
+    });
+});
+
+// Profile Users
+Route::prefix('user/profile')->group(function () {
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('login', 'login');
+        Route::post('logout', 'logout');
+    });
+});
+
+    
+
