@@ -20,12 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/tokens/create', function (Request $request) {
-    
-    $token = $request->user()->createToken($request->token_name);
-    return ['token' => $token->plainTextToken];
-});
-
 // Authentication Routes
 Route::prefix('auth')->group(function () {
     Route::controller(AuthController::class)->group(function () {
@@ -39,10 +33,11 @@ Route::prefix('auth')->group(function () {
 Route::prefix('user/profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/', 'index');
-        Route::post('login', 'login');
-        Route::post('logout', 'logout');
+        Route::post('edit/{user_hash}', 'update');
     });
 });
+
+// Todo employee 
 
     
 

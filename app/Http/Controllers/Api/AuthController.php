@@ -76,13 +76,15 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'email' => 'required|email|exists:users,email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'email' => 'required|email|exists:users,email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'code' => 401,
                     'status' => false,
@@ -91,7 +93,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'code' => 401,
                     'status' => false,
@@ -107,7 +109,6 @@ class AuthController extends Controller
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 500,
@@ -121,17 +122,24 @@ class AuthController extends Controller
      * Logout the user 
      * @param Request $request
      * @return Json Response 
-    */
-    public function logout(Request $request)
+     */
+    public function logout()
     {
-        // $user = $request->user();
-        $user = auth('sanctum')->user();
-        $user->tokens()->delete();
+        try {
+            $user = auth('sanctum')->user();
+            $user->tokens()->delete();
 
-        return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'User Logout Successfully',
-        ], 200);
+            return response()->json([
+                'code' => 200,
+                'status' => true,
+                'message' => 'User Logout Successfully',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 500,
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 }
