@@ -61,7 +61,7 @@ class EmployeeController extends Controller
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'Success',
+            'message' => 'Create Employee Successfully',
             'data' => $user
         ], 200);
     }
@@ -70,17 +70,17 @@ class EmployeeController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function update(Request $request, $userHash)
+    public function update(Request $request, User $userHash): JsonResponse
     {
-        $attrs = $request->validate([
-            'name'      => 'required|string',
-            'email'     => 'required|email',
-            'phone'     => 'required|string',
-            'role_id'   => 'required|exists:roles,id',
-            'team_id'   => 'required|exists:teams,id',
+        $request->validate([
+            'name'      => 'string',
+            'email'     => 'email',
+            'phone'     => 'string',
+            'role_id'   => 'exists:roles,id',
+            'team_id'   => 'exists:teams,id',
         ]);
 
-        $user = User::find($userHash);
+        $user = $userHash;
 
         if ($request->hasFile('image')) {
             $request->validate([
@@ -109,7 +109,7 @@ class EmployeeController extends Controller
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'Success',
+            'message' => 'Update Employee Successfully',
             'data' => $user
         ], 200);
     }
@@ -118,17 +118,16 @@ class EmployeeController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function delete(Request $request, $userHash)
+    public function delete(User $userHash): JsonResponse
     {
-        $user = User::find($userHash);
+        $user = $userHash;
         Storage::delete($user->image);
         $user->delete();
 
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'Success',
-            'data' => $user
+            'message' => 'Delete Employee Successfully',
         ], 200);
     }
 }
