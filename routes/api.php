@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,11 +36,31 @@ Route::prefix('auth')->group(function () {
 Route::prefix('user/profile')->group(function () {
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/', 'index');
-        Route::post('edit/{user_hash}', 'update');
+        Route::post('update/{user_hash}', 'update');
     });
 });
 
-// Todo employee 
+// Todo employee routes 
+Route::prefix('employee')->group(function () {
+    Route::controller(EmployeeController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::post('update/{user_hash}', 'update');
+        Route::post('delete/{user_hash}', 'delete');
+    });
+});
 
-    
+// Todo Roles Routes
+Route::prefix('role')->group(function () {
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('/', 'index');
+    });
+});
+
+// Todo Team Routes
+Route::prefix('team')->group(function () {
+    Route::controller(TeamController::class)->group(function () {
+        Route::get('/', 'index');
+    });
+});
 
