@@ -44,7 +44,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'id',
-        'created_at', 
+        'created_at',
         'updated_at',
         'deleted_at',
         'email_verified_at'
@@ -66,7 +66,7 @@ class User extends Authenticatable
     /**
      * Relation to teams model
      * With relation belongsTo
-     */ 
+     */
     public function teams(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');

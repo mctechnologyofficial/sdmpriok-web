@@ -61,10 +61,10 @@
                         </a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <a class="dropdown-item a-logout" href="javascript:void(0)">
+                            <a class="dropdown-item a-logout-m" href="javascript:void(0)">
                                 <i class="fe fe-power"></i> Sign Out
                             </a>
-                            <button class="btn-logout" style="display: none;"></button>
+                            <button class="btn-logout-m" style="display: none;"></button>
                         </form>
                     </div>
                 </div>

@@ -33,13 +33,25 @@
                         </select>
                     </div>
                     <div class="ml-auto">
-                        <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
+                        {{-- <a href="#" class="option-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                         <div class="dropdown-menu">
                             @foreach ($competency as $data)
                                 @if ($data->role == "Supervisor")
                                     <a class="dropdown-item tools-competency-spv" href="javascript:void(0)">{{ $data->name }}</a>
                                 @endif
                             @endforeach
+                        </div> --}}
+                        <div class="btn-group dropleft">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Competency
+                            </button>
+                            <div class="dropdown-menu">
+                                @foreach ($competency as $data)
+                                    @if ($data->role == "Supervisor")
+                                        <a class="dropdown-item tools-competency-spv" href="javascript:void(0)">{{ $data->name }}</a>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
