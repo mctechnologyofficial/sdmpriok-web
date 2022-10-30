@@ -55,6 +55,10 @@ Route::prefix('employee')->group(function () {
 Route::prefix('role')->group(function () {
     Route::controller(RoleController::class)->group(function () {
         Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::get('/show/{id}', 'show');
+        Route::post('/update/{id}', 'update');
+        Route::post('/delete/{id}', 'delete');
     });
 });
 
