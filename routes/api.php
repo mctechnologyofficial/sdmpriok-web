@@ -44,6 +44,7 @@ Route::prefix('user/profile')->group(function () {
 Route::prefix('employee')->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/', 'index');
+        Route::get('/show/{user_hash}', 'show');
         Route::post('/store', 'store');
         Route::post('update/{user_hash}', 'update');
         Route::post('delete/{user_hash}', 'delete');
@@ -61,6 +62,10 @@ Route::prefix('role')->group(function () {
 Route::prefix('team')->group(function () {
     Route::controller(TeamController::class)->group(function () {
         Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::get('/show/{id}', 'show');
+        Route::post('/update/{id}', 'update');
+        Route::post('/delete/{id}', 'delete');
     });
 });
 

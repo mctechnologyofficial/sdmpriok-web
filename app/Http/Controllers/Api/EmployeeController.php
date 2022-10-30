@@ -130,4 +130,20 @@ class EmployeeController extends Controller
             'message' => 'Delete Employee Successfully',
         ], 200);
     }
+
+    /**
+     * @param User $userHash
+     * @return JsonResponse
+     */
+    public function show(User $userHash): JsonResponse
+    {
+        $user = $userHash->load('teams', 'roles');
+        
+        return response()->json([
+            'code' => 200,
+            'status' => true,
+            'message' => 'Success',
+            'data' => $user
+        ], 200);
+    }
 }
