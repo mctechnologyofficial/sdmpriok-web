@@ -43,7 +43,10 @@
 <!-- editable script -->
 <script>
     $('.a-logout').on('click', function(){
-        $('.btn-logout').click();
+        $('.btn-logout').trigger('click');
+    });
+    $('.a-logout-m').on('click', function(){
+        $('.btn-logout-m').trigger('click');
     });
 
     $('#fileSlider').on('change', function(){
