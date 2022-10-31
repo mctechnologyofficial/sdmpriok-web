@@ -76,7 +76,7 @@ Route::prefix('team')->group(function () {
 });
 
 // Slider Routes
-Route::prefix('slider')->group(function () {
+Route::prefix('slide')->group(function () {
     Route::controller(SliderController::class)->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
