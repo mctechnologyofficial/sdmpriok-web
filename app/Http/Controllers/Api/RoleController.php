@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    protected $attributes = [];
     /**
      * @return Role Model
      */
@@ -30,27 +31,36 @@ class RoleController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        // todo
+        $this->attributes = $request->validate([
+            'name' => ['required', 'string'],
+            'guard_name' => ['required', 'in:web,api']
+        ]);
+        $data = Role::create([
+            'name' => $this->attributes['name'],
+            'guard_name' => $this->attributes['guard_name']
+        ]);
+
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'Success',
-            // 'data' => $data
+            'message' => 'Data Has Been Added',
+            'data' => $data
         ], 200);
     }
 
     /**
-     * @param Role $id
+     * @param int $id
      * @return JsonResponse
      */
     public function show($id): JsonResponse
     {
-        // todo
+        $data = Role::findById($id);
+
         return response()->json([
             'code' => 200,
             'status' => true,
             'message' => 'Success',
-            // 'data' => $data
+            'data' => $data
         ], 200);
     }
 
@@ -61,26 +71,36 @@ class RoleController extends Controller
      */
     public function Update(Request $request, $id): JsonResponse
     {
-        // todo
+        $this->attributes = $request->validate([
+            'name' => ['nullable', 'string'],
+            'guard_name' => ['nullable', 'in:web,api']
+        ]);
+        $data = Role::create([
+            'name' => $this->attributes['name'],
+            'guard_name' => $this->attributes['guard_name']
+        ]);
+
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'Success',
-            // 'data' => $data
+            'message' => 'Data Has Been Updated',
+            'data' => $data
         ], 200);
     }
 
     /**
-     * @param Role $id
+     * @param int $id
      * @return JsonResponse
      */
     public function delete($id): JsonResponse
     {
-        // todo
+        $data = Role::findById($id);
+        $data->delete();
+
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'Success',
+            'message' => 'Delete Success',
             // 'data' => $data
         ], 200);
     }
