@@ -13,7 +13,7 @@
                 <ul class="nav">
                     {{-- <li class="nav-header"><span class="nav-label">Admin</span></li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.home') }}"><span class="shape1"></span><span
+                        <a class="nav-link" href="{{ route('admin.index') }}"><span class="shape1"></span><span
                                 class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
                                 class="sidemenu-label">Dashboard</span></a>
                     </li>

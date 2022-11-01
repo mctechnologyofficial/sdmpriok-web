@@ -32,15 +32,17 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/admin/home', function () {
-    return view('layouts.admin.index');
-})->name('admin.home');
+// Route::get('/admin/home', function () {
+//     return view('layouts.admin.index');
+// })->name('admin.home');
 
 Route::get('/edit-profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/edit-profile/{id}/update', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function () {
+        //home route
+        Route::get('/home', [HomeController::class, 'IndexAdmin'])->name('admin.index');
 
         // employee routes
         Route::prefix('employee')->group(function () {

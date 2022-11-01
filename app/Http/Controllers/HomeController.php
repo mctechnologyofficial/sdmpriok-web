@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AnswerSupervisor;
+use App\Models\Competency;
 use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use App\Models\Slide;
@@ -41,5 +42,10 @@ class HomeController extends Controller
 
     public function IndexOperator(){
         return view('layouts.operator.index');
+    }
+    public function IndexAdmin(){
+        $totaluser = User::count();
+        $totalmodule = Competency::count();
+        return view('layouts.admin.index', compact(['totaluser', 'totalmodule']));
     }
 }
