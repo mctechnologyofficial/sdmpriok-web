@@ -91,7 +91,7 @@ class PermissionSeeder extends Seeder
 
         $spvSenior = \App\Models\User::factory()->create([
             'name' => 'Supervisor Senior',
-            'email' => 'supervisor_senior@gmail.com',
+            'email' => 'supervisor.senior@gmail.com',
             'phone' => '08587774444',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
