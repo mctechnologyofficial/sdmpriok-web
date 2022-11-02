@@ -36,6 +36,8 @@ class AuthenticatedSessionController extends Controller
 
         if ($user->hasRole('admin')) {
             return redirect()->intended(RouteServiceProvider::HOME);
+        } else if ($user->hasRole('supervisor senior')) {
+            return redirect()->route('spv.senior.index');
         } else if ($user->hasRole('supervisor')) {
             return redirect()->route('spv.index');
         } else {

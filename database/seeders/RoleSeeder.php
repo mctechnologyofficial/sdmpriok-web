@@ -16,32 +16,6 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        // $roles = [
-        //     [
-        //         'name' => 'Admin',
-        //         'guard_name' => 'adm',
-        //         'created_at' => Carbon::now(),
-        //         'updated_at' => Carbon::now(),
-        //     ],
-        //     [
-        //         'name' => 'Supervisor Senior',
-        //         'guard_name' => 'spv_senior',
-        //         'created_at' => Carbon::now(),
-        //         'updated_at' => Carbon::now(),
-        //     ],
-        //     [
-        //         'name' => 'Supervisor',
-        //         'guard_name' => 'spv',
-        //         'created_at' => Carbon::now(),
-        //         'updated_at' => Carbon::now(),
-        //     ],
-        //     [
-        //         'name' => 'Operator',
-        //         'guard_name' => 'opr',
-        //         'created_at' => Carbon::now(),
-        //         'updated_at' => Carbon::now(),
-        //     ]
-        // ];
-        // DB::table('roles')->insert($roles);
+        // todo create roles
     }
 }

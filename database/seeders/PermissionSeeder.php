@@ -31,6 +31,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'set slider']);
         Permission::create(['name' => 'set competency']);
 
+        // create permission for supervisor senior
+        Permission::create(['name' => 'spv senior home']);
+        Permission::create(['name' => 'manage coaching']);
+        Permission::create(['name' => 'manage assesment']);
+
         // create permission for supervisor
         Permission::create(['name' => 'spv home']);
         Permission::create(['name' => 'coaching mentoring']);
@@ -53,52 +58,65 @@ class PermissionSeeder extends Seeder
         $role1->givePermissionTo('set slider');
         $role1->givePermissionTo('set competency');
 
+        // create roles for supervisor senior
+        $role2 = Role::create(['name' => 'supervisor senior']);
+        $role2->givePermissionTo('spv senior home');
+        $role2->givePermissionTo('manage coaching');
+        $role2->givePermissionTo('manage assesment');
+
+
         // create roles supervisor and assign permission to this roles
-        $role2 = Role::create(['name' => 'supervisor']);
-        $role2->givePermissionTo('spv home');
-        $role2->givePermissionTo('coaching mentoring');
-        $role2->givePermissionTo('competency tools spv');
-        $role2->givePermissionTo('assesment chart');
+        $role3 = Role::create(['name' => 'supervisor']);
+        $role3->givePermissionTo('spv home');
+        $role3->givePermissionTo('coaching mentoring');
+        $role3->givePermissionTo('competency tools spv');
+        $role3->givePermissionTo('assesment chart');
 
         // create roles operator and assign permission to this roles
-        $role3 = Role::create(['name' => 'operator']);
-        // gets all permissions via Gate::before rule; see AuthServiceProvider
-        $role3->givePermissionTo('operator home');
-        $role3->givePermissionTo('competency tools operator');
-        $role3->givePermissionTo('competency score');
+        $role4 = Role::create(['name' => 'operator']);
+        $role4->givePermissionTo('operator home');
+        $role4->givePermissionTo('competency tools operator');
+        $role4->givePermissionTo('competency score');
 
         // create demo users
-        $user = \App\Models\User::factory()->create([
+        $admin = \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'phone' => '08112233445577',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            // 'role_id' => 1,
             'team_id' => 1
         ]);
-        $user->assignRole($role1);
+        $admin->assignRole($role1);
 
-        $user = \App\Models\User::factory()->create([
+        $spvSenior = \App\Models\User::factory()->create([
+            'name' => 'Supervisor Senior',
+            'email' => 'supervisor_senior@gmail.com',
+            'phone' => '08587774444',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('password'),
+            'team_id' => 2
+        ]);
+        $spvSenior->assignRole($role2);
+
+        $supervisor = \App\Models\User::factory()->create([
             'name' => 'Supervisor',
             'email' => 'supervisor@gmail.com',
             'phone' => '08112233445566',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            // 'role_id' => 2,
-            'team_id' => 2
+            'team_id' => 3
         ]);
-        $user->assignRole($role2);
+        $supervisor->assignRole($role3);
 
-        $user = \App\Models\User::factory()->create([
+        $operator = \App\Models\User::factory()->create([
             'name' => 'Operator',
             'email' => 'operator@gmail.com',
             'phone' => '0823343441100',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password'),
-            // 'role_id' => 3,
-            'team_id' => 2
+            'team_id' => 4
         ]);
-        $user->assignRole($role3);
+        $operator->assignRole($role4);
     }
 }
