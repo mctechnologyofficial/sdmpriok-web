@@ -34,6 +34,7 @@ class EmployeeController extends Controller
     public function store(Request $request): JsonResponse
     {
         $attrs = $request->validate([
+            'nip'      => 'required|string',
             'name'      => 'required|string',
             'email'     => 'required|email',
             'phone'     => 'required|string',
@@ -46,6 +47,7 @@ class EmployeeController extends Controller
         $image_path = $request->file('image')->store('public/images/users');
 
         $user = User::create([
+            'nip'      => $attrs['name'],
             'name'      => $attrs['name'],
             'email'     => $attrs['email'],
             'phone'     => $attrs['phone'],
@@ -73,6 +75,7 @@ class EmployeeController extends Controller
     public function update(Request $request, User $userHash): JsonResponse
     {
         $request->validate([
+            'nip'      => 'string',
             'name'      => 'string',
             'email'     => 'email',
             'phone'     => 'string',
@@ -96,6 +99,7 @@ class EmployeeController extends Controller
             $user->image = $path;
         }
 
+        $user->nip = $request->nip;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
@@ -138,7 +142,7 @@ class EmployeeController extends Controller
     public function show(User $userHash): JsonResponse
     {
         $user = $userHash->load('teams', 'roles');
-        
+
         return response()->json([
             'code' => 200,
             'status' => true,
