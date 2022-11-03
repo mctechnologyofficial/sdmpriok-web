@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AssessmentChartController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompetencyOperatorController;
 use App\Http\Controllers\Api\EmployeeController;
@@ -106,5 +107,14 @@ Route::prefix('competency-op')->group(function () {
         Route::get('/getlessonbycompetency', 'getLessonByCompetency');
         Route::get('/getquestionbylesson', 'getQuestionByLesson');
         Route::get('/getidcompetency', 'getIdCompetency');
+    });
+});
+
+// Competency Operator Routes
+Route::prefix('assessment-chart')->group(function () {
+    Route::controller(AssessmentChartController::class)->group(function () {
+        Route::get('/team', 'team');
+        Route::get('/getchartteam', 'getDataRadarChartTeam');
+        Route::get('/getchartpersonal', 'getDataRadarChartPersonal');
     });
 });
