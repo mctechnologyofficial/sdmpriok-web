@@ -27,7 +27,7 @@
                     </div>
                     <div class="table-responsive">
                         <table class="table" id="example1">
-                            <thead>
+                            <thead class="thead-dark">
                                 <tr>
                                     <th class="wd-20p">Name</th>
                                     <th class="wd-5p">Action</th>

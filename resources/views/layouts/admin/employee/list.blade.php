@@ -27,7 +27,7 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table" id="example1">
-                        <thead>
+                        <thead class="thead-dark">
                             <tr>
                                 <th>NIP</th>
                                 <th>Name</th>
