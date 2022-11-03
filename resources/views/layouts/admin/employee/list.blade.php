@@ -29,6 +29,7 @@
                     <table class="table" id="example1">
                         <thead>
                             <tr>
+                                <th>NIP</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -41,6 +42,7 @@
                         <tbody>
                             @foreach ($user as $data)
                                 <tr>
+                                    <td>{{ $data->nip }}</td>
                                     <td>{{ $data->name }}</td>
                                     <td>{{ $data->email }}</td>
                                     <td>{{ $data->phone }}</td>

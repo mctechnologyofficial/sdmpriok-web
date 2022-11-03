@@ -45,6 +45,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->validate([
+            'nip'      => 'required|string',
             'name'      => 'required|string',
             'email'     => 'required|email',
             'phone'     => 'required|string',
@@ -57,6 +58,7 @@ class EmployeeController extends Controller
         $image_path = $request->file('image')->store('public/images/users');
 
         $user = User::create([
+            'nip'      => $attrs['nip'],
             'name'      => $attrs['name'],
             'email'     => $attrs['email'],
             'phone'     => $attrs['phone'],
@@ -80,7 +82,7 @@ class EmployeeController extends Controller
      */
     public function show(User $userHash)
     {
-        
+
     }
 
     /**
@@ -107,6 +109,7 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         $attrs = $request->validate([
+            'nip'      => 'required|string',
             'name'      => 'required|string',
             'email'     => 'required|email',
             'phone'     => 'required|string',
@@ -130,6 +133,7 @@ class EmployeeController extends Controller
             $user->image = $path;
         }
 
+        $user->nip = $request->nip;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
