@@ -19,7 +19,7 @@ class CompetencyOperatorController extends Controller
      */
     public function index(): JsonResponse
     {
-        $data = Competency::all();
+        $data = Competency::where('role', 'Operator')->get();
 
         return response()->json([
             'code' => 200,

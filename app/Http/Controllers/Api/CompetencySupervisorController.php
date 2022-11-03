@@ -19,7 +19,7 @@ class CompetencySupervisorController extends Controller
      */
     public function index(): JsonResponse
     {
-        $data = Competency::all();
+        $data = Competency::where('role', 'Supervisor')->get();
 
         return response()->json([
             'code' => 200,
