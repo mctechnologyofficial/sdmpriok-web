@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AssessmentChartController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompetencyOperatorController;
+use App\Http\Controllers\Api\CompetencySupervisorController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RoleController;
@@ -104,13 +105,25 @@ Route::prefix('competency-op')->group(function () {
     Route::controller(CompetencyOperatorController::class)->group(function () {
         Route::get('/', 'index');
         Route::post('/store', 'store');
-        Route::get('/getlessonbycompetency', 'getLessonByCompetency');
-        Route::get('/getquestionbylesson', 'getQuestionByLesson');
+        Route::get('/getlesson', 'getLessonByCompetency');
+        Route::get('/getquestion', 'getQuestionByLesson');
         Route::get('/getidcompetency', 'getIdCompetency');
     });
 });
 
-// Competency Operator Routes
+// Competency Supervisor Routes
+Route::prefix('competency-spv')->group(function () {
+    Route::controller(CompetencySupervisorController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::get('/getcategory', 'getCategoryByCompetency');
+        Route::get('/getsubcategory', 'getSubCategoryByCategory');
+        Route::get('/getquestion', 'getQuestionBySubCategory');
+        Route::get('/getidcompetency', 'getIdCompetency');
+    });
+});
+
+// Assessment Chart Supervisor Routes
 Route::prefix('assessment-chart')->group(function () {
     Route::controller(AssessmentChartController::class)->group(function () {
         Route::get('/team', 'team');
