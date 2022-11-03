@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CompetencyOperatorController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RoleController;
@@ -42,7 +43,7 @@ Route::prefix('user/profile')->group(function () {
     });
 });
 
-// employee routes 
+// employee routes
 Route::prefix('employee')->group(function () {
     Route::controller(EmployeeController::class)->group(function () {
         Route::get('/', 'index');
@@ -97,3 +98,13 @@ Route::prefix('competency')->group(function () {
     });
 });
 
+// Competency Operator Routes
+Route::prefix('competency-op')->group(function () {
+    Route::controller(CompetencyOperatorController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::post('/store', 'store');
+        Route::get('/getlessonbycompetency', 'getLessonByCompetency');
+        Route::get('/getquestionbylesson', 'getQuestionByLesson');
+        Route::get('/getidcompetency', 'getIdCompetency');
+    });
+});

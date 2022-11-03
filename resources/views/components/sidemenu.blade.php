@@ -84,11 +84,11 @@
                             class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
                     <ul class="nav-sub">
                         <li class="nav-sub-item">
-                            <a class="nav-sub-link" href="{{ route('chart-personal.personal') }}">Assessment Chart
+                            <a class="nav-sub-link" href="{{ route('chart-personal-spvs.personal') }}">Assessment Chart
                                 (Personal)</a>
                         </li>
                         <li class="nav-sub-item">
-                            <a class="nav-sub-link" href="{{ route('chart-team.team') }}">Assessment Chart (Team)</a>
+                            <a class="nav-sub-link" href="{{ route('chart-team-spvs.team') }}">Assessment Chart (Team)</a>
                         </li>
                     </ul>
                 </li>
