@@ -52,7 +52,7 @@ Route::prefix('employee')->group(function () {
         Route::get('/show/{user_hash}', 'show');
         Route::post('/store', 'store');
         Route::post('update/{user_hash}', 'update');
-        Route::post('delete/{user_hash}', 'delete');
+        Route::post('delete/{user_hash}', 'destroy');
     });
 });
 
@@ -63,7 +63,7 @@ Route::prefix('role')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'delete');
+        Route::post('/delete/{id}', 'destroy');
     });
 });
 
@@ -74,7 +74,7 @@ Route::prefix('team')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'delete');
+        Route::post('/delete/{id}', 'destroy');
     });
 });
 
@@ -85,7 +85,7 @@ Route::prefix('slide')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'delete');
+        Route::post('/delete/{id}', 'destroy');
     });
 });
 
@@ -96,7 +96,7 @@ Route::prefix('competency')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'delete');
+        Route::post('/delete/{id}', 'destroy');
     });
 });
 
