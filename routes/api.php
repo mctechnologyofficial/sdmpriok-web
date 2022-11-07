@@ -131,3 +131,10 @@ Route::prefix('assessment-chart')->group(function () {
         Route::get('/getchartpersonal', 'getDataRadarChartPersonal');
     });
 });
+
+// Monitoring Progress Chart Admin Routes
+Route::prefix('monitoring-chart')->group(function () {
+    Route::controller(AssessmentChartController::class)->group(function () {
+        Route::get('/getprogresschart', 'getDataProgress');
+    });
+});
