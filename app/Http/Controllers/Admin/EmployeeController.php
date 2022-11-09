@@ -156,8 +156,12 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        Storage::delete($user->image);
-        $user->delete();
+        if ($user->image == null) {
+            $user->delete();
+        } else {
+            Storage::delete($user->image);
+            $user->delete();
+        }
 
         return redirect()->route('employee.index')->with('success', 'User has been deleted successfully');
     }
