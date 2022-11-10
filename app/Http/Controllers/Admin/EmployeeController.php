@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -48,7 +49,7 @@ class EmployeeController extends Controller
             'nip'      => 'required|string',
             'name'      => 'required|string',
             'email'     => 'required|email',
-            'phone'     => 'required|string',
+            'phone'     => 'required',
             'password'  => 'required|string',
             'role_id'   => 'required|exists:roles,id', //validation with existing roles tables
             'team_id'   => 'required|exists:teams,id', //validation with existing teams tables
@@ -56,6 +57,14 @@ class EmployeeController extends Controller
         ]);
 
         $image_path = $request->file('image')->store('public/images/users');
+
+        $validation_existing_phone = User::where('phone', $attrs['phone'])->count();
+        $validation_existing_email = User::where('email', $attrs['email'])->count();
+        $validation_existing_nip = User::where('nip', $attrs['nip'])->count();
+
+        if($validation_existing_phone > 0 || $validation_existing_email > 0 || $validation_existing_nip){
+            return redirect()->route('employee.index')->with('error', 'Duplicate data!');
+        }
 
         $user = User::create([
             'nip'      => $attrs['nip'],
