@@ -41,69 +41,88 @@ class CompetencyOperatorController extends Controller
      */
     public function store(Request $request)
     {
-        $attrs = $request->validate([
-            'competencyid'  => 'required|integer',
-            'questionid'    => 'required|integer',
-            'essay'         => '',
-            'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
-        ]);
+        if(isset($_POST['submit'])){
+            $attrs = $request->validate([
+                'competencyid'  => 'required|integer',
+                'questionid'    => 'required|integer',
+                'essay'         => '',
+                'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
+            ]);
 
-        if($request->hasFile('image')){
-            // $path = $request->file('image')->store('answer/operator-answer');
-            $file = $request->file('image');
-            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
-            $path = $file->move('storage/answer/operator-answer', $filename);
-        }else{
-            $path = null;
-        }
-
-        AnswerOperator::create([
-            'user_id'       => Auth::user()->id,
-            'competency_id' => $attrs['competencyid'],
-            'question_id'   => $attrs['questionid'],
-            'essay'         => $attrs['essay'],
-            'file'          => $path
-        ]);
-
-        $competency = Competency::find($attrs['competencyid']);
-        $total_question = QuestionOperator::where('competency', $competency->name)->count();
-
-        $total_submit = AnswerOperator::where('user_id', '=' , Auth::user()->id)
-        ->where('competency_id', '=', $competency->id)
-        ->count();
-
-        $validation = Progress::where('user_id', '=' , Auth::user()->id)
-        ->where('competency_id', '=', $competency->id)
-        ->count();
-
-        function get_percentage($total, $number)
-        {
-            if ( $total > 0 ) {
-                return round(($number * 100) / $total, 2);
-            } else {
-                return 0;
+            if($request->hasFile('image')){
+                // $path = $request->file('image')->store('answer/operator-answer');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $path = $file->move('storage/answer/operator-answer', $filename);
+            }else{
+                $path = null;
             }
-        }
 
-        if($validation == 0){
-            Progress::create([
-                'user_id'       => Auth::user()->id,
-                'team_id'       => Auth::user()->team_id,
-                'competency_id' => $competency->id,
-                'submit_time'   => $total_submit,
-                'progress'      => get_percentage($total_question, $total_submit)
-            ]);
-        }else{
-            Progress::where('user_id', '=' , Auth::user()->id)
+            $validation_answer = AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')->count();
+            if($validation_answer == 0){
+                AnswerOperator::create([
+                    'user_id'       => Auth::user()->id,
+                    'competency_id' => $attrs['competencyid'],
+                    'question_id'   => $attrs['questionid'],
+                    'essay'         => $attrs['essay'],
+                    'file'          => $path,
+                    'status'        => 0
+                ]);
+            }else{
+                AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')
+                ->update([
+                    'essay'         => $attrs['essay'],
+                    'file'          => $path,
+                    'status'        => 0
+                ]);
+            }
+
+            $competency = Competency::find($attrs['competencyid']);
+            $total_question = QuestionOperator::where('competency', $competency->name)->count();
+
+            $total_submit = AnswerOperator::where('user_id', '=' , Auth::user()->id)
             ->where('competency_id', '=', $competency->id)
-            ->update([
-                'team_id'       => Auth::user()->team_id,
-                'submit_time'   => $total_submit,
-                'progress'      => get_percentage($total_question, $total_submit)
-            ]);
-        }
+            ->count();
 
-        return redirect()->route('competency-tools-op.index')->with('success','Answer has been submitted successfully.');
+            $validation = Progress::where('user_id', '=' , Auth::user()->id)
+            ->where('competency_id', '=', $competency->id)
+            ->count();
+
+            function get_percentage($total, $number)
+            {
+                if ( $total > 0 ) {
+                    return round(($number * 100) / $total, 2);
+                } else {
+                    return 0;
+                }
+            }
+
+            if($validation == 0){
+                Progress::create([
+                    'user_id'       => Auth::user()->id,
+                    'team_id'       => Auth::user()->team_id,
+                    'competency_id' => $competency->id,
+                    'submit_time'   => $total_submit,
+                    'progress'      => get_percentage($total_question, $total_submit)
+                ]);
+            }else{
+                Progress::where('user_id', '=' , Auth::user()->id)
+                ->where('competency_id', '=', $competency->id)
+                ->update([
+                    'team_id'       => Auth::user()->team_id,
+                    'submit_time'   => $total_submit,
+                    'progress'      => get_percentage($total_question, $total_submit)
+                ]);
+            }
+
+            return redirect()->route('competency-tools-op.index')->with('success','Answer has been submitted successfully.');
+        }
+        else if(isset($_POST['publish'])){
+            AnswerOperator::where('question_id', 'LIKE', '%'.$request->questionid.'%')
+            ->update(['status' => 1]);
+
+            return redirect()->route('competency-tools-op.index')->with('success','Answer has been published successfully.');
+        }
     }
 
     /**
@@ -151,37 +170,54 @@ class CompetencyOperatorController extends Controller
         //
     }
 
-
     /**
-     * Get all operator lessons by competency
+     * Get all operator category by competency
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getLessonByCompetency(Request $request){
+    public function getCategory(Request $request){
         $competency = $request->competency;
 
-        $lesson = QuestionOperator::select('lesson')
-                    ->where('competency', 'LIKE', '%'.$competency.'%')
-                    ->groupBy('lesson')
-                    ->orderBy('id', 'asc')
+        $category = Competency::select('category')
+                    ->where('name', 'LIKE', '%'.$competency.'%')
+                    ->groupBy('category')
                     ->get();
 
-        $response['data'] = $lesson;
+        $response['data'] = $category;
 
         return response()->json($response);
     }
 
     /**
-     * Get all operator questions by competency
+     * Get all operator sub category by category
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getQuestionByLesson(Request $request){
-        $lesson = $request->lesson;
+    public function getSubCategory(Request $request){
+        $category = $request->category;
 
-        $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$lesson.'%')->get();
+        $subcategory = Competency::select('sub_category')
+                    ->where('category', 'LIKE', '%'.$category.'%')
+                    ->groupBy('sub_category')
+                    ->get();
+
+        $response['data'] = $subcategory;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all operator questions by sub category
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuestion(Request $request){
+        $subcategory = $request->subcategory;
+
+        $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$subcategory.'%')->get();
 
         $response['data'] = $question;
 
@@ -200,6 +236,23 @@ class CompetencyOperatorController extends Controller
         $id = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
 
         $response['data'] = $id;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all spesificied answer operator by questionid
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getAnswer(Request $request){
+        $questionid = $request->questionid;
+
+        $answer = AnswerOperator::where('question_id', 'LIKE', '%'.$questionid.'%')
+                                  ->get();
+
+        $response['data'] = $answer;
 
         return response()->json($response);
     }
