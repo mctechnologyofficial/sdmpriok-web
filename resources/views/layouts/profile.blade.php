@@ -26,7 +26,8 @@
                                     @method('PUT')
                                     <div class="col-lg-12 d-flex justify-content-center">
                                         <div class="circle">
-                                            <img class="profile-pic avatar-profile img-thumbnail mb-3 mt-2" src="{{ Storage::url($user->image) }}" width="150" height="150">
+                                            <!--<img class="profile-pic avatar-profile img-thumbnail mb-3 mt-2" src="{{ Storage::url($user->image) }}" width="150" height="150">-->
+                                            <img class="profile-pic avatar-profile img-thumbnail mb-3 mt-2" src="{{ asset($user->image) }}" width="150" height="150">
                                             <input class="file-upload" type="file" accept="image/*" style="display: none;" name="image" />
                                         </div>
                                     </div>

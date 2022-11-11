@@ -91,14 +91,20 @@ class ProfileController extends Controller
             ]);
             if(Storage::exists($user->image)){
                 Storage::delete($user->image);
-                $path = $request->file('image')->store('public/images/users');
+                // $image_path = $request->file('image')->store('public/images/users');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $image_path = $file->move('storage/images/users', $filename);
             }else{
-                $path = $request->file('image')->store('public/images/users');
+                // $image_path = $request->file('image')->store('public/images/users');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $image_path = $file->move('storage/images/users', $filename);
             }
         }else{
-            $path = $user->image;
+            $image_path = $user->image;
         }
-        $user->image = $path;
+        $user->image = $image_path;
 
         if($request->password == null){
             $user->password = $user->password;

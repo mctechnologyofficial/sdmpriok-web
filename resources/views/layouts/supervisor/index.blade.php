@@ -24,7 +24,8 @@
                                 <div class="d-flex justify-content-center">
                                     @foreach ($slide as $picture1)
                                         @if ($picture1->type == "Picture" && $picture1->row == "Row 1")
-                                            <img class="img-fluid rounded-circle w-75 mb-3" alt="100x100" src="{{ Storage::url($picture1->image) }}" data-holder-rendered="true">
+                                            <!--<img class="img-fluid rounded-circle w-75 mb-3" alt="100x100" src="{{ Storage::url($picture1->image) }}" data-holder-rendered="true">-->
+                                            <img class="img-fluid rounded-circle w-75 mb-3" alt="100x100" src="{{ asset($picture1->image) }}" data-holder-rendered="true">
                                         @endif
                                     @endforeach
                                 </div>
@@ -42,7 +43,8 @@
                                 <div class="d-flex justify-content-center">
                                     @foreach ($slide as $picture2)
                                         @if ($picture2->type == "Picture" && $picture2->row == "Row 2")
-                                            <img class="img-fluid rounded-circle w-75 mb-3 mt-3" alt="100x100" src="{{ Storage::url($picture2->image) }}" data-holder-rendered="true">
+                                            <!--<img class="img-fluid rounded-circle w-75 mb-3 mt-3" alt="100x100" src="{{ Storage::url($picture2->image) }}" data-holder-rendered="true">-->
+                                            <img class="img-fluid rounded-circle w-75 mb-3 mt-3" alt="100x100" src="{{ asset($picture2->image) }}" data-holder-rendered="true">
                                         @endif
                                     @endforeach
                                 </div>
@@ -54,7 +56,8 @@
                                 <div class="d-flex justify-content-center">
                                     @foreach ($slide as $picture3)
                                         @if ($picture3->type == "Picture" && $picture3->row == "Row 3")
-                                            <img class="img-fluid rounded-circle w-75 mb-3" alt="100x100" src="{{ Storage::url($picture3->image) }}" data-holder-rendered="true">
+                                            <!--<img class="img-fluid rounded-circle w-75 mb-3" alt="100x100" src="{{ Storage::url($picture3->image) }}" data-holder-rendered="true">-->
+                                            <img class="img-fluid rounded-circle w-75 mb-3" alt="100x100" src="{{ asset($picture3->image) }}" data-holder-rendered="true">
                                         @endif
                                     @endforeach
                                 </div>

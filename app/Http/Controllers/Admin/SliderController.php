@@ -45,16 +45,28 @@ class SliderController extends Controller
         ]);
         if($attrs['type'] == 'Slider Picture' && $attrs['row'] == 'Row 1')
         {
-            $image_path = $request->file('image')->store('public/images/slider/row1');
+            // $image_path = $request->file('image')->store('images/slider/row1');
+            $file = $request->file('image');
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $image_path = $file->move('storage/images/slider/row1', $filename);
         }
         elseif($attrs['type'] == 'Slider Picture' && $attrs['row'] == 'Row 2'){
-            $image_path = $request->file('image')->store('public/images/slider/row2');
+            // $image_path = $request->file('image')->store('images/slider/row2');
+            $file = $request->file('image');
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $image_path = $file->move('storage/images/slider/row2', $filename);
         }
         elseif($attrs['type'] == 'Slider Picture' && $attrs['row'] == 'Row 3'){
-            $image_path = $request->file('image')->store('public/images/slider/row3');
+            // $image_path = $request->file('image')->store('images/slider/row3');
+            $file = $request->file('image');
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $image_path = $file->move('storage/images/slider/row3', $filename);
         }
         elseif($attrs['type'] == 'Picture'){
-            $image_path = $request->file('image')->store('public/images/picture');
+            // $image_path = $request->file('image')->store('images/picture');
+            $file = $request->file('image');
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $image_path = $file->move('storage/images/picture', $filename);
         }
 
         Slide::create([
@@ -112,38 +124,65 @@ class SliderController extends Controller
 
             if(Storage::exists($request->image)){
                 Storage::delete($slider->image);
-                if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
-                    $path = $request->file('image')->store('public/images/slider/row1');
+                if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1')
+                {
+                    // $path = $request->file('image')->store('images/slider/row1');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/slider/row1', $filename);
                 }
                 elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 2')
                 {
-                    $path = $request->file('image')->store('public/images/slider/row2');
+                    // $path = $request->file('image')->store('images/slider/row2');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/slider/row2', $filename);
                 }
                 elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 3')
                 {
-                    $path = $request->file('image')->store('public/images/slider/row3');
+                    // $path = $request->file('image')->store('images/slider/row3');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/slider/row3', $filename);
                 }
-                elseif($attrs['type'] == "Picture"){
-                    $path = $request->file('image')->store('public/images/picture');
+                elseif($attrs['type'] == "Picture")
+                {
+                    // $path = $request->file('image')->store('images/picture');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/picture', $filename);
                 }
             }else{
-                if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1'){
-                    $path = $request->file('image')->store('public/images/slider/row1');
+                if($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 1')
+                {
+                    // $path = $request->file('image')->store('images/slider/row1');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/slider/row1', $filename);
                 }
                 elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 2')
                 {
-                    $path = $request->file('image')->store('public/images/slider/row2');
+                    // $path = $request->file('image')->store('images/slider/row2');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/slider/row2', $filename);
                 }
                 elseif($attrs['type'] == "Slider Picture" && $attrs['row'] == 'Row 3')
                 {
-                    $path = $request->file('image')->store('public/images/slider/row3');
+                    // $path = $request->file('image')->store('images/slider/row3');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/slider/row3', $filename);
                 }
                 elseif($attrs['type'] == "Picture"){
-                    $path = $request->file('image')->store('public/images/picture');
+                    // $path = $request->file('image')->store('images/picture');
+                    $file = $request->file('image');
+                    $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                    $image_path = $file->move('storage/images/picture', $filename);
                 }
             }
 
-            $slider->image = $path;
+            $slider->image = $image_path;
         }
 
         $slider->type = $request->type;

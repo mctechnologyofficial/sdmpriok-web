@@ -49,7 +49,10 @@ class CompetencyOperatorController extends Controller
         ]);
 
         if($request->hasFile('image')){
-            $path = $request->file('image')->store('public/answer/operator-answer');
+            // $path = $request->file('image')->store('answer/operator-answer');
+            $file = $request->file('image');
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $path = $file->move('storage/answer/operator-answer', $filename);
         }else{
             $path = null;
         }
