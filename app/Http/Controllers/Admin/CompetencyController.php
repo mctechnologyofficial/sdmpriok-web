@@ -16,7 +16,7 @@ class CompetencyController extends Controller
      */
     public function index()
     {
-        $competency = Competency::select('*')->orderBy('id', 'ASC')->get();
+        $competency = Competency::all();
         return view('layouts.admin.utilities.competency.list', compact(['competency']));
     }
 

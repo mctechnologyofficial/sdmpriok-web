@@ -16,22 +16,38 @@
                             @csrf
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
-                                    <label class="mg-b-0">Name</label>
+                                    <label class="mg-b-0">Role</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <select name="role" class="form-control cmbRole">
+                                        <option value="" selected disabled>Choose competency role</option>
+                                        <option value="Supervisor">Supervisor</option>
+                                        <option value="Operator">Operator</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20 competency-name">
+                                <div class="col-md-4">
+                                    <label class="mg-b-0">Competency Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
                                     <input class="form-control" placeholder="Enter competency name" type="text" name="name">
                                 </div>
                             </div>
-                            <div class="row row-xs align-items-center mg-b-20">
+                            <div class="row row-xs align-items-center mg-b-20 category-name">
                                 <div class="col-md-4">
-                                    <label class="mg-b-0">Role</label>
+                                    <label class="mg-b-0">Category Name</label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <select name="role" class="form-control">
-                                        <option value="" selected disabled>Choose competency role</option>
-                                        <option value="Supervisor">Supervisor</option>
-                                        <option value="Operator">Operator</option>
-                                    </select>
+                                    <input class="form-control" placeholder="Enter category name" type="text" name="category">
+                                </div>
+                            </div>
+                            <div class="row row-xs align-items-center mg-b-20 sub-category-name">
+                                <div class="col-md-4">
+                                    <label class="mg-b-0">Sub Category Name</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <input class="form-control" placeholder="Enter sub category name" type="text" name="sub_category">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end mb-0">
