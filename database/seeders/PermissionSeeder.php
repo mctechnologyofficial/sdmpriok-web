@@ -80,6 +80,7 @@ class PermissionSeeder extends Seeder
 
         // create demo users
         $admin = \App\Models\User::factory()->create([
+            'nip'   => '12345',
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'phone' => '08112233445577',
@@ -90,6 +91,7 @@ class PermissionSeeder extends Seeder
         $admin->assignRole($role1);
 
         $spvSenior = \App\Models\User::factory()->create([
+            'nip'   => '67890',
             'name' => 'Supervisor Senior',
             'email' => 'supervisor.senior@gmail.com',
             'phone' => '08587774444',
@@ -100,6 +102,7 @@ class PermissionSeeder extends Seeder
         $spvSenior->assignRole($role2);
 
         $supervisor = \App\Models\User::factory()->create([
+            'nip'   => '1112131415',
             'name' => 'Supervisor',
             'email' => 'supervisor@gmail.com',
             'phone' => '08112233445566',
@@ -110,6 +113,7 @@ class PermissionSeeder extends Seeder
         $supervisor->assignRole($role3);
 
         $operator = \App\Models\User::factory()->create([
+            'nip'   => '1617181920',
             'name' => 'Operator',
             'email' => 'operator@gmail.com',
             'phone' => '0823343441100',

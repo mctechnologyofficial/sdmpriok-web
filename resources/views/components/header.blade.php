@@ -13,8 +13,8 @@
         <div class="main-header-right">
             <div class="dropdown main-profile-menu">
                 <a class="d-flex" href="">
-                    <span class="main-img-user"><img alt="avatar"
-                            src="{{ Storage::url(Auth::user()->image) }}"></span>
+                    <!--<span class="main-img-user"><img alt="avatar" src="{{ Storage::url(Auth::user()->image) }}"></span>-->
+                    <span class="main-img-user"><img alt="avatar" src="{{ asset(Auth::user()->image) }}"></span>
                 </a>
                 <div class="dropdown-menu">
                     <div class="header-navheading">
@@ -49,7 +49,8 @@
             <div class="d-flex order-lg-2 ml-auto">
                 <div class="dropdown main-profile-menu">
                     <a class="d-flex" href="#">
-                        <span class="main-img-user"><img alt="avatar" src="{{ Storage::url(Auth::user()->image) }}"></span>
+                        <!--<span class="main-img-user"><img alt="avatar" src="{{ Storage::url(Auth::user()->image) }}"></span>-->
+                        <span class="main-img-user"><img alt="avatar" src="{{ asset(Auth::user()->image) }}"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="header-navheading">

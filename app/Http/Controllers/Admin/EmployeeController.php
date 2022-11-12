@@ -56,7 +56,10 @@ class EmployeeController extends Controller
             'image'     => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
-        $image_path = $request->file('image')->store('public/images/users');
+        // $image_path = $request->file('image')->store('images/users');
+        $file = $request->file('image');
+        $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+        $image_path = $file->move('storage/images/users', $filename);
 
         $validation_existing_phone = User::where('phone', $attrs['phone'])->count();
         $validation_existing_email = User::where('email', $attrs['email'])->count();
@@ -135,11 +138,17 @@ class EmployeeController extends Controller
 
             if (Storage::exists($request->image)) {
                 Storage::delete($user->image);
-                $path = $request->file('image')->store('public/images/users');
+                // $path = $request->file('image')->store('images/users');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $image_path = $file->move('storage/images/users', $filename);
             } else {
-                $path = $request->file('image')->store('public/images/users');
+                // $path = $request->file('image')->store('images/users');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $image_path = $file->move('storage/images/users', $filename);
             }
-            $user->image = $path;
+            $user->image = $image_path;
         }
 
         $user->nip = $request->nip;

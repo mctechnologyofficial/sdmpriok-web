@@ -31,6 +31,8 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th class="wd-20p">Competency</th>
+                                <th class="wd-20p">Category</th>
+                                <th class="wd-20p">Sub Category</th>
                                 <th class="wd-20p">Role</th>
                                 <th class="wd-5p">Action</th>
                             </tr>
@@ -39,6 +41,8 @@
                             @foreach ($competency as $data)
                             <tr>
                                 <td>{{ $data->name }}</td>
+                                <td>{{ $data->category }}</td>
+                                <td>{{ $data->sub_category }}</td>
                                 <td>{{ $data->role }}</td>
                                 <td>
                                     <a class="btn btn-outline-primary btn-block mb-2"href="{{ route('competency.edit', $data->id) }}">Edit</a>

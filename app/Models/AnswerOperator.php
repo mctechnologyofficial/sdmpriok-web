@@ -10,10 +10,10 @@ class AnswerOperator extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        // 'team_id',
         'competency_id',
         'question_id',
         'essay',
-        'file'
+        'file',
+        'status'
     ];
 }

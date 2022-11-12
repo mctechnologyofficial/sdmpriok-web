@@ -57,7 +57,8 @@
                                     <td>{{ $data->roles->first() ? ucfirst($data->roles->first()->name) : "-" }}</td>
                                     <td>{{ $data->teams->name }}</td>
                                     <td class="text-center">
-                                        <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">
+                                        <!--<img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">-->
+                                        <img src="{{ asset($data->image) }}" alt="..." class="img-fluid w-50">
                                     </td>
                                     <td>
                                         <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('employee.edit', $data->id) }}">Edit</a>

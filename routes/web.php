@@ -151,9 +151,11 @@ Route::group(['middleware' => ['role:operator']], function () {
         Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');
         Route::get('competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');
         Route::post('competency-tools/store', [CompetencyOperatorController::class, 'store'])->name('competency-tools-op.store');
-        Route::get('competency-tools/getlesson', [CompetencyOperatorController::class, 'getLessonByCompetency']);
-        Route::get('competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestionByLesson']);
-        Route::get('competency-tools/getIdCompetency', [CompetencyOperatorController::class, 'getIdCompetency']);
+        Route::get('competency-tools/getcategory', [CompetencyOperatorController::class, 'getCategory']);
+        Route::get('competency-tools/getsubcategory', [CompetencyOperatorController::class, 'getSubCategory']);
+        Route::get('competency-tools/getquestion', [CompetencyOperatorController::class, 'getQuestion']);
+        Route::get('competency-tools/getanswer', [CompetencyOperatorController::class, 'getAnswer']);
+        Route::get('competency-tools/getid', [CompetencyOperatorController::class, 'getIdCompetency']);
     });
 });
 

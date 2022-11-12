@@ -40,7 +40,8 @@
                             @foreach ($slider as $data)
                                 <tr>
                                     <td class="text-center">
-                                        <img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">
+                                        <!--<img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">-->
+                                        <img src="{{ asset($data->image) }}" alt="..." class="img-fluid w-50">
                                     </td>
                                     {{-- <td>{{ $data->name }}</td> --}}
                                     <td>{{ $data->type }}</td>

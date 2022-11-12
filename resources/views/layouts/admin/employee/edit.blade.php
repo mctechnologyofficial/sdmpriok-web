@@ -93,7 +93,8 @@
                                     <label class="mg-b-0"></label>
                                 </div>
                                 <div class="col-md-8">
-                                    <img src="{{ Storage::url($user->image) }}" alt="..." class="img-thumbnail w-50" id="image">
+                                    <!--<img src="{{ Storage::url($user->image) }}" alt="..." class="img-thumbnail w-50" id="image">-->
+                                    <img src="{{ asset($user->image) }}" alt="..." class="img-thumbnail w-50" id="image">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end mb-0">

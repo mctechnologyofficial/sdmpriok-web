@@ -62,7 +62,8 @@
                                     <label class="mg-b-0"></label>
                                 </div>
                                 <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                    <img src="{{ Storage::url($slider->image) }}" alt="..." class="img-thumbnail w-50" id="image">
+                                    <!--<img src="{{ Storage::url($slider->image) }}" alt="..." class="img-thumbnail w-50" id="image">-->
+                                    <img src="{{ asset($slider->image) }}" alt="..." class="img-thumbnail w-50" id="image">
                                 </div>
                             </div>
                             <div class="form-group row justify-content-end mb-0">
