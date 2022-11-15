@@ -14,6 +14,14 @@
                         </button>
                     </div>
                 @endif
+                @if ($message = Session::get('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ $message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <div class="card-header border-bottom-0 pt-0 pl-0 pr-0 d-flex">
                     <div>
                         <label class="main-content-label mb-2">List Competency</label>
@@ -34,6 +42,7 @@
                                 <th class="wd-20p">Category</th>
                                 <th class="wd-20p">Sub Category</th>
                                 <th class="wd-20p">Role</th>
+                                <th class="wd-20p">Image</th>
                                 <th class="wd-5p">Action</th>
                             </tr>
                         </thead>
@@ -44,6 +53,7 @@
                                 <td>{{ $data->category }}</td>
                                 <td>{{ $data->sub_category }}</td>
                                 <td>{{ $data->role }}</td>
+                                <td><img src="{{ asset($data->image) }}" alt="..." class="img-fluid w-50"></td>
                                 <td>
                                     <a class="btn btn-outline-primary btn-block mb-2"href="{{ route('competency.edit', $data->id) }}">Edit</a>
                                     <form action="{{ route('competency.destroy', $data->id) }}" method="post">

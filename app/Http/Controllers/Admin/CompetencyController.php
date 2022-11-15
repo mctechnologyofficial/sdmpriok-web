@@ -39,9 +39,22 @@ class CompetencyController extends Controller
      */
     public function store(Request $request)
     {
-        Competency::create(
-            $request->except(['_token'])
-        );
+        $file = $request->image;
+        $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+        $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
+
+        if(!$request->hasFile('image')) {
+            return redirect()->route('competency.index')->with(['error' => "Save data failed. Make sure you've filled all fields!"]);
+        }
+
+        Competency::create([
+            'role'          => $request->role,
+            'name'          => $request->name,
+            'category'      => $request->category,
+            'sub_category'  => $request->sub_category,
+            'image'         => $image_path
+        ]);
+
         return redirect()->route('competency.index')->with(['success' => 'Competency has been created successfully.']);
     }
 
@@ -78,7 +91,18 @@ class CompetencyController extends Controller
     public function update(Request $request, $id)
     {
         $competency = Competency::find($id);
-        $competency->update($request->except(['_token', '_method']));
+        $file = $request->image;
+        $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+        $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
+
+        $competency->update([
+            'role'          => $request->role,
+            'name'          => $request->name,
+            'category'      => $request->category,
+            'sub_category'  => $request->sub_category,
+            'image'         => $image_path
+        ]);
+
         return redirect()->route('competency.index')->with(['success' => 'Competency has been updated successfully.']);
     }
 

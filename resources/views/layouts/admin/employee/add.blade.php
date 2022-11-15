@@ -88,7 +88,7 @@
                                         <input type="text" class="form-control border-right-0 browse-file" placeholder="choose" readonly id="textFileSlider">
                                         <label class="input-group-btn">
                                             <span class="btn btn-primary">
-                                                Browse <input type="file" style="display: none;" name="image" id="fileSlider">
+                                                Browse <input type="file" style="display: none;" name="image" id="fileSlider" accept="image/png, image/gif, image/jpeg" />
                                             </span>
                                         </label>
                                     </div>
