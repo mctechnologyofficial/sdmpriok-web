@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSupervisor;
+use App\Models\Competency;
+use App\Models\Progress;
 use App\Models\QuestionSupervisor;
+use App\Models\Role;
 use App\Models\Slide;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class CoachingMentoringController extends Controller
 {
@@ -19,39 +23,17 @@ class CoachingMentoringController extends Controller
      */
     public function index()
     {
-        $slide = Slide::all();
-
-        $total_question = QuestionSupervisor::count();
-        $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)->count();
-        function get_percentage($total, $number)
-        {
-            if ( $total > 0 ) {
-                return round(($number * 100) / $total, 2);
-            } else {
-                return 0;
-            }
-        }
-
-        $total_progress = get_percentage($total_question, $total_submit);
-
-        $teams = User::role('operator')->selectRaw('SUM(progress.progress) as total')
-        ->join('progress', 'progress.user_id', '=', 'users.id')
-        ->where('progress.team_id', Auth::user()->team_id)
-        ->pluck('total');
-
-        $total = $teams->values();
-
-        $result_total = str_replace(str_split('[]'), '', $total);
-        return view('layouts.supervisor.index', compact(['slide', 'total_progress', 'result_total']));
-    }
-
-    /**
-     * Show list of data coaching mentoring
-     * @return \Illuminate\Http\Response
-     */
-    public function list()
-    {
-        return view('layouts.supervisor.mentoring.list');
+        $user = User::with('roles')
+                ->join('progress', 'progress.user_id', '=', 'users.id')
+                ->join('model_has_roles', function($join){
+                    $join->on('users.id', '=', 'model_has_roles.model_id')
+                    ->where('model_has_roles.model_type', User::class);
+                })
+                ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                ->where('users.team_id', Auth::user()->team_id)
+                ->groupBy('users.name')
+                ->get();
+        return view('layouts.supervisor.mentoring.list', compact(['user']));
     }
 
     /**
@@ -80,9 +62,121 @@ class CoachingMentoringController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('layouts.supervisor.mentoring.detail');
+        $user = User::find($id);
+        $competency = Competency::all();
+        $name = Competency::select('name')
+        ->groupBy('name')
+        ->get();
+        $category = Competency::select('category')
+        ->groupBy('category')
+        ->get();
+        $totalcompetency = Competency::select('name')
+        ->groupBy('name')
+        ->count();
+
+        $pgasturbin = Competency::select('progress.progress')
+                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+                                ->where('progress.user_id', $user->id)
+                                ->where('competencies.name', 'LIKE', '%Tools Gas Turbin%')
+                                ->groupBy('competencies.name')
+                                ->pluck('progress.progress');
+
+        $data = $pgasturbin->values();
+
+        $response['data'] = $data;
+
+        $gasturbin = app()->chartjs
+        ->name('gasturbin')
+        ->type('doughnut')
+        ->size(['width' => 200, 'height' => 200])
+        ->labels(['Tools Gas Turbin'])
+        ->datasets([
+            [
+                'backgroundColor' => ['#FF6384'],
+                'hoverBackgroundColor' => ['#FF6384'],
+                'data' => $response['data']
+            ]
+        ])
+        ->options([]);
+
+        $phrsg = Competency::select('progress.progress')
+                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+                                ->where('progress.user_id', $user->id)
+                                ->where('competencies.name', 'LIKE', '%Tools Gas Turbin%')
+                                ->groupBy('competencies.name')
+                                ->pluck('progress.progress');
+
+        $data = $phrsg->values();
+
+        $rhrsg['data'] = $data;
+
+        $hrsg = app()->chartjs
+        ->name('hrsg')
+        ->type('doughnut')
+        ->size(['width' => 200, 'height' => 200])
+        ->labels(['Tools HRSG'])
+        ->datasets([
+            [
+                'backgroundColor' => ['#36A2EB'],
+                'hoverBackgroundColor' => ['#36A2EB'],
+                'data' => $rhrsg['data']
+            ]
+        ])
+        ->options([]);
+
+        $ppltgu = Competency::select('progress.progress')
+                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+                                ->where('progress.user_id', $user->id)
+                                ->where('competencies.name', 'LIKE', '%Tools PLTGU%')
+                                ->groupBy('competencies.name')
+                                ->pluck('progress.progress');
+
+        $data = $ppltgu->values();
+
+        $rpltgu['data'] = $data;
+
+        $pltgu = app()->chartjs
+        ->name('pltgu')
+        ->type('doughnut')
+        ->size(['width' => 200, 'height' => 200])
+        ->labels(['Tools PLTGU'])
+        ->datasets([
+            [
+                'backgroundColor' => ['#ff00dc'],
+                'hoverBackgroundColor' => ['#ff00dc'],
+                'data' => $rpltgu['data']
+            ]
+        ])
+        ->options([]);
+
+        $psteamturbin = Competency::select('progress.progress')
+                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+                                ->where('progress.user_id', $user->id)
+                                ->where('competencies.name', 'LIKE', '%Tools PLTGU%')
+                                ->groupBy('competencies.name')
+                                ->pluck('progress.progress');
+
+        $data = $psteamturbin->values();
+
+        $rsteamturbin['data'] = $data;
+
+        $steamturbin = app()->chartjs
+        ->name('steamturbin')
+        ->type('doughnut')
+        ->size(['width' => 200, 'height' => 200])
+        ->labels(['Tools Stream Turbin'])
+        ->datasets([
+            [
+                'backgroundColor' => ['#1fff00'],
+                'hoverBackgroundColor' => ['#1fff00'],
+                'data' => $rsteamturbin['data']
+            ]
+        ])
+        ->options([]);
+
+        return view('layouts.supervisor.mentoring.detail', compact(['user', 'competency', 'name', 'category','totalcompetency', 'gasturbin', 'hrsg', 'pltgu', 'steamturbin']));
     }
 
     /**

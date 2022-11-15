@@ -104,7 +104,7 @@
                             class="sidemenu-label">Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('spv.coaching.list')}}"><span class="shape1"></span><span
+                    <a class="nav-link" href="{{route('spv.coaching.index')}}"><span class="shape1"></span><span
                             class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span
                             class="sidemenu-label">Coaching Mentoring</span></a>
                 </li>

@@ -19,7 +19,7 @@ class CompetencyOperatorController extends Controller
      */
     public function index()
     {
-        $competency = Competency::all();
+        $competency = Competency::select('*')->groupBy('name')->get();
         return view('layouts.operator.competency.content', compact(['competency']));
     }
 

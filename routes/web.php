@@ -128,8 +128,8 @@ Route::group(['middleware' => ['role:supervisor']], function () {
     // Supervisor routes
     Route::prefix('supervisor')->group(function () {
         Route::get('/home', [HomeController::class, 'IndexSupervisor'])->name('spv.index');
-        Route::get('coaching-mentoring/', [CoachingMentoringController::class, 'list'])->name('spv.coaching.list');
-        Route::get('coaching-mentoring/detail', [CoachingMentoringController::class, 'show'])->name('spv.coaching.detail');
+        Route::get('coaching-mentoring/', [CoachingMentoringController::class, 'index'])->name('spv.coaching.index');
+        Route::get('coaching-mentoring/show/{id}', [CoachingMentoringController::class, 'show'])->name('spv.coaching.show');
 
         Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
         Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');

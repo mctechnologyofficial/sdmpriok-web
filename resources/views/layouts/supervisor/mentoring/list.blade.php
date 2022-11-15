@@ -23,36 +23,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>3276062905020004</td>
-                                    <td>Fawwaz Hudzalfah Saputra</td>
-                                    <td>Senior Operator Control Room</td>
-                                    <td>
-                                        <div class="progress mg-b-10">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="/spv/detail-mentoring">
-                                            <p class="text-success">Complete</p>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3276061812810003</td>
-                                    <td>Agus Wijayanto</td>
-                                    <td>Operator GT RSG</td>
-                                    <td>
-                                        <div class="progress mg-b-10">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="/spv/detail-mentoring">
-                                            <p class="text-warning">In Progress</p>
-                                        </a>
-                                    </td>
-                                </tr>
+                                @foreach ($user as $data)
+                                    <tr>
+                                        <td>{{ $data->nip }}</td>
+                                        <td>{{ $data->name }}</td>
+                                        <td>{{ $data->roles->first()->name}}</td>
+                                        <td>
+                                            <a href="{{ route('spv.coaching.show', $data->id) }}">
+                                                <div class="progress mg-b-10">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $data->progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $data->progress }}%"></div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if ($data->progress == 0)
+                                                <p class="text-danger">Not working yet</p>
+                                            @elseif ($data->progress > 0 && $data->progress < 100)
+                                                <p class="text-warning">In progress</p>
+                                            @elseif ($data->progress >= 100)
+                                                <p class="text-success">Complete</p>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
