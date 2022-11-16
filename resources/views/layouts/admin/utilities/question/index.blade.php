@@ -50,7 +50,14 @@
 @endsection
 @section('js')
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script>
-        //
-    </script>
+    <!-- Internal Fileuploads js-->
+    <script src="{{ asset('assets/plugins/fileuploads/js/fileupload.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fileuploads/js/file-upload.js') }}"></script>
+
+    <!-- InternalFancy uploader js-->
+    <script src="{{ asset('assets/plugins/fancyuploder/jquery.ui.widget.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fancyuploder/jquery.fileupload.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fancyuploder/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fancyuploder/jquery.fancy-fileupload.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fancyuploder/fancy-uploader.js') }}"></script>
 @endsection

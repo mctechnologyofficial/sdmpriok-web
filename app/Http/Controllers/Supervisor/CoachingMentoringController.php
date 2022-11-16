@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSupervisor;
 use App\Models\Competency;
-use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use App\Models\Role;
+use App\Models\Progress;
 use App\Models\Slide;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,16 +23,16 @@ class CoachingMentoringController extends Controller
      */
     public function index()
     {
-        $user = User::with('roles')
-                ->join('progress', 'progress.user_id', '=', 'users.id')
-                ->join('model_has_roles', function($join){
-                    $join->on('users.id', '=', 'model_has_roles.model_id')
-                    ->where('model_has_roles.model_type', User::class);
-                })
-                ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                ->where('users.team_id', Auth::user()->team_id)
-                ->groupBy('users.name')
-                ->get();
+        $user = $user = User::select('users.id as userid', 'users.nip', 'users.name', 'progress.progress', 'roles.name as role')
+                            ->join('model_has_roles', function ($join) {
+                                $join->on('users.id', '=', 'model_has_roles.model_id')
+                                     ->where('model_has_roles.model_type', User::class);
+                            })
+                            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                            ->where('users.team_id', Auth::user()->team_id)
+                            ->join('progress', 'progress.user_id', '=', 'users.id')
+                            ->get();
+        //
         return view('layouts.supervisor.mentoring.list', compact(['user']));
     }
 
@@ -85,7 +85,7 @@ class CoachingMentoringController extends Controller
 
         $data = $pgasturbin->values();
 
-        $response['data'] = $data;
+        $rgasturbin['gasturbin'] = $data;
 
         $gasturbin = app()->chartjs
         ->name('gasturbin')
@@ -96,7 +96,7 @@ class CoachingMentoringController extends Controller
             [
                 'backgroundColor' => ['#FF6384'],
                 'hoverBackgroundColor' => ['#FF6384'],
-                'data' => $response['data']
+                'data' => $rgasturbin['gasturbin']
             ]
         ])
         ->options([]);
@@ -104,13 +104,13 @@ class CoachingMentoringController extends Controller
         $phrsg = Competency::select('progress.progress')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
                                 ->where('progress.user_id', $user->id)
-                                ->where('competencies.name', 'LIKE', '%Tools Gas Turbin%')
+                                ->where('competencies.name', 'LIKE', '%Tools HRSG%')
                                 ->groupBy('competencies.name')
                                 ->pluck('progress.progress');
 
         $data = $phrsg->values();
 
-        $rhrsg['data'] = $data;
+        $rhrsg['hrsg'] = $data;
 
         $hrsg = app()->chartjs
         ->name('hrsg')
@@ -121,7 +121,7 @@ class CoachingMentoringController extends Controller
             [
                 'backgroundColor' => ['#36A2EB'],
                 'hoverBackgroundColor' => ['#36A2EB'],
-                'data' => $rhrsg['data']
+                'data' => $rhrsg['hrsg']
             ]
         ])
         ->options([]);
@@ -135,7 +135,7 @@ class CoachingMentoringController extends Controller
 
         $data = $ppltgu->values();
 
-        $rpltgu['data'] = $data;
+        $rpltgu['pltgu'] = $data;
 
         $pltgu = app()->chartjs
         ->name('pltgu')
@@ -146,7 +146,7 @@ class CoachingMentoringController extends Controller
             [
                 'backgroundColor' => ['#ff00dc'],
                 'hoverBackgroundColor' => ['#ff00dc'],
-                'data' => $rpltgu['data']
+                'data' => $rpltgu['pltgu']
             ]
         ])
         ->options([]);
@@ -154,13 +154,13 @@ class CoachingMentoringController extends Controller
         $psteamturbin = Competency::select('progress.progress')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
                                 ->where('progress.user_id', $user->id)
-                                ->where('competencies.name', 'LIKE', '%Tools PLTGU%')
+                                ->where('competencies.name', 'LIKE', '%Tools Steam Turbin%')
                                 ->groupBy('competencies.name')
                                 ->pluck('progress.progress');
 
         $data = $psteamturbin->values();
 
-        $rsteamturbin['data'] = $data;
+        $rsteamturbin['steamturbin'] = $data;
 
         $steamturbin = app()->chartjs
         ->name('steamturbin')
@@ -171,7 +171,7 @@ class CoachingMentoringController extends Controller
             [
                 'backgroundColor' => ['#1fff00'],
                 'hoverBackgroundColor' => ['#1fff00'],
-                'data' => $rsteamturbin['data']
+                'data' => $rsteamturbin['steamturbin']
             ]
         ])
         ->options([]);
