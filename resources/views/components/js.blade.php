@@ -40,6 +40,17 @@
 <!-- Chart JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<!-- Internal Fileuploads js-->
+<script src="../../assets/plugins/fileuploads/js/fileupload.js"></script>
+<script src="../../assets/plugins/fileuploads/js/file-upload.js"></script>
+
+<!-- InternalFancy uploader js-->
+<script src="../../assets/plugins/fancyuploder/jquery.ui.widget.js"></script>
+<script src="../../assets/plugins/fancyuploder/jquery.fileupload.js"></script>
+<script src="../../assets/plugins/fancyuploder/jquery.iframe-transport.js"></script>
+<script src="../../assets/plugins/fancyuploder/jquery.fancy-fileupload.js"></script>
+<script src="../../assets/plugins/fancyuploder/fancy-uploader.js"></script>
+
 <!-- editable script -->
 <script>
     $('.a-logout').on('click', function(){

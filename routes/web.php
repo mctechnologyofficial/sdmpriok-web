@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CompetencyController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\MonitoringProgressController;
+use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeamController;
@@ -107,6 +108,12 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::put('{id}/update', [CompetencyController::class, 'update'])->name('competency.update');
             Route::delete('{id}/delete', [CompetencyController::class, 'destroy'])->name('competency.destroy');
         });
+
+        // question routes
+        Route::prefix('question')->group(function () {
+            Route::get('/', [QuestionController::class, 'index'])->name('question.index');
+            Route::post('store', [QuestionController::class, 'store'])->name('question.store');
+        });
     });
 });
 
@@ -160,12 +167,4 @@ Route::group(['middleware' => ['role:operator']], function () {
 });
 
 require __DIR__ . '/auth.php';
-
-Route::get('/spv/coaching-mentoring', function () {
-    return view('layouts.supervisor.mentoring.list');
-});
-Route::get('/spv/detail-mentoring', function () {
-    return view('layouts.supervisor.mentoring.detail');
-});
-
 
