@@ -213,6 +213,10 @@
             var len = 0;
             $('#essay').empty();
             $('#textFileSlider').empty();
+            $('#essay').prop('readonly', false);
+            $('#fileSlider').prop('disabled', false);
+            $('#btnSubmit').prop('disabled', false);
+            $('#btnPublish').prop('disabled', false);
 
             if(response['data'] != null){
                 len = response['data'].length;
@@ -224,20 +228,15 @@
                     var file = response['data'][i].file;
                     var status = response['data'][i].status;
 
-                    if(status == 0){
-                        $('#essay').prop('readonly', false);
-                        $('#fileSlider').prop('disabled', false);
-                        $('#btnSubmit').prop('disabled', false);
-                        $('#btnPublish').prop('disabled', false);
-
-                        $('#essay').val(essay);
-                        $('#textFileSlider').val(file);
-                    }else if(status == 1){
+                    if(status == 1){
                         $('#essay').prop('readonly', true);
                         $('#fileSlider').prop('disabled', true);
                         $('#btnSubmit').prop('disabled', true);
                         $('#btnPublish').prop('disabled', true);
 
+                        $('#essay').val(essay);
+                        $('#textFileSlider').val(file);
+                    }else if (status == 0){
                         $('#essay').val(essay);
                         $('#textFileSlider').val(file);
                     }
@@ -355,19 +354,6 @@
             category = $('#category').val();
             subcategory = $('#subcategory').val();
 
-            $.ajax({
-                url: '/operator/competency-tools/getanswer',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    questionid: id
-                },
-                dataType: 'json',
-                success: function(response){
-                    createAnswer(response);
-                }
-            });
-
             if(id == undefined){
                 // alert('oke');
             }else{
@@ -376,6 +362,19 @@
                 $('#textsubcategory').val(subcategory);
                 $('#answerOperatorModal').modal('show');
                 $('#questionid').val(id);
+
+                $.ajax({
+                url: '/operator/competency-tools/getanswer',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    questionid: $('#questionid').val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    createAnswer(response);
+                }
+            });
             }
 
         });

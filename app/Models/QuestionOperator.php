@@ -14,6 +14,7 @@ class QuestionOperator extends Model
         'sub_category',
         'lesson',
         'reference',
+        'lesson_plan',
         'processing_time',
         'realization',
         'total_time',

@@ -102,7 +102,7 @@ class EmployeeController extends Controller
                 $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
                 $image_path = $file->move('storage/images/users', $filename);
             }
-            $user->image = $path;
+            $user->image = $image_path;
         }
 
         $user->nip = $request->nip;
