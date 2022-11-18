@@ -48,10 +48,11 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-hover" id="tblOperatorQuestion">
+                        <table class="table table-hover text-wrap" id="tblOperatorQuestion">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>id</th>
+                                    <th>No</th>
                                     {{-- <th class="">Competency</th>
                                     <th class="">Lesson</th> --}}
                                     <th class="">Reference</th>
@@ -265,10 +266,11 @@
                     var lesson_plan = response['data'][i].lesson_plan;
                     var processing_time = response['data'][i].processing_time;
                     var realization = response['data'][i].realization;
+                    var no = i + 1;
 
                     var tr_str = "<tr>" +
                         "<td class='questionid' style='display: none;'>" + id + "</td>" +
-                        // "<td>" + competency + "</td>" +
+                        "<td>" + no  + "</td>" +
                         // "<td>" + lesson + "</td>" +
                         "<td>" + reference + "</td>" +
                         "<td>" + lesson_plan + "</td>" +

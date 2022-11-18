@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSupervisor;
 use App\Models\Competency;
+use App\Models\FormEvaluationOperator;
 use App\Models\QuestionSupervisor;
 use App\Models\Role;
 use App\Models\Progress;
@@ -12,10 +13,12 @@ use App\Models\Slide;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class CoachingMentoringController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -65,16 +68,12 @@ class CoachingMentoringController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $competency = Competency::all();
-        $name = Competency::select('name')
-        ->groupBy('name')
-        ->get();
-        $category = Competency::select('category')
-        ->groupBy('category')
-        ->get();
-        $totalcompetency = Competency::select('name')
-        ->groupBy('name')
-        ->count();
+        Session::put('usernip', $user->nip);
+        Session::put('username', $user->name);
+        Session::put('userrole', $user->roles->first()->name);
+
+        $competency = Competency::groupBy('name')->get();
+        $outercompetency = Competency::all();
 
         $pgasturbin = Competency::select('progress.progress')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
@@ -176,9 +175,24 @@ class CoachingMentoringController extends Controller
         ])
         ->options([]);
 
-        return view('layouts.supervisor.mentoring.detail', compact(['user', 'competency', 'name', 'category','totalcompetency', 'gasturbin', 'hrsg', 'pltgu', 'steamturbin']));
+        return view('layouts.supervisor.mentoring.detail', compact(['user', 'competency', 'outercompetency', 'gasturbin', 'hrsg', 'pltgu', 'steamturbin']));
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showEvaluation($id)
+    {
+        $competency = Competency::find($id);
+        $formevaluasi = FormEvaluationOperator::where('tools', 'LIKE','%'.$competency->sub_category.'%')->get();
+        $nip = Session::get('usernip');
+        $name = Session::get('username');
+        $role = Session::get('userrole');
+
+        return view('layouts.supervisor.mentoring.evaluation', compact(['formevaluasi', 'name', 'nip', 'role']));
+    }
     /**
      * Show the form for editing the specified resource.
      *
