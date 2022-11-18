@@ -48,7 +48,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'competency score']);
 
         // create roles admin and assign existing permissions
-        $role1 = Role::create(['name' => 'Admin']);
+        $role1 = Role::create(['name' => 'admin']);
         $role1->givePermissionTo('admin home');
         $role1->givePermissionTo('set employee');
         $role1->givePermissionTo('set team');
@@ -59,21 +59,21 @@ class PermissionSeeder extends Seeder
         $role1->givePermissionTo('set competency');
 
         // create roles for supervisor senior
-        $role2 = Role::create(['name' => 'Supervisor senior']);
+        $role2 = Role::create(['name' => 'supervisor senior']);
         $role2->givePermissionTo('spv senior home');
         $role2->givePermissionTo('manage coaching');
         $role2->givePermissionTo('manage assesment');
 
 
         // create roles supervisor and assign permission to this roles
-        $role3 = Role::create(['name' => 'Supervisor']);
+        $role3 = Role::create(['name' => 'supervisor']);
         $role3->givePermissionTo('spv home');
         $role3->givePermissionTo('coaching mentoring');
         $role3->givePermissionTo('competency tools spv');
         $role3->givePermissionTo('assesment chart');
 
         // create roles operator and assign permission to this roles
-        // $role4 = Role::create(['name' => 'Operator']);
+        // $role4 = Role::create(['name' => 'operator']);
         // $role4->givePermissionTo('operator home');
         // $role4->givePermissionTo('competency tools operator');
         // $role4->givePermissionTo('competency score');
@@ -121,6 +121,6 @@ class PermissionSeeder extends Seeder
             'password' => Hash::make('password'),
             'team_id' => 4
         ]);
-        $operator->assignRole('Senior Operator');
+        $operator->assignRole("Senior Operator");
     }
 }

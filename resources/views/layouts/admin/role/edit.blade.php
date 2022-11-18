@@ -13,6 +13,19 @@
                         <form action="{{ route('role.update', $role->id) }}" method="POST">
                             @method('POST')
                             @csrf
+                            {{-- <div class="row row-xs align-items-center mg-b-20">
+                                <div class="col-md-4">
+                                    <label class="mg-b-0">Type</label>
+                                </div>
+                                <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                    <select name="type" class="form-control">
+                                        <option value="" selected disabled>Choose type of role</option>
+                                        <option value="Supervisor Senior" @if($role->type == "Supervisor Senior") selected @endif>Supervisor Senior</option>
+                                        <option value="Supervisor" @if($role->type == "Supervisor") selected @endif>Supervisor</option>
+                                        <option value="Operator" @if($role->type == "Operator") selected @endif>Operator</option>
+                                    </select>
+                                </div>
+                            </div> --}}
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
                                     <label class="mg-b-0">Name</label>

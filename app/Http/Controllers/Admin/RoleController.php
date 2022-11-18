@@ -38,11 +38,13 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $attrs = $request->validate([
-            'name'  => 'required|string'
+            'name'  => 'required|string',
         ]);
-        Role::create([
-            'name'          => $attrs['name']
+
+        $role = Role::create([
+            'name'          => $attrs['name'],
         ]);
+
         return redirect()->route('role.index')->with(['success' => 'Role has been created successfully.']);
     }
 
