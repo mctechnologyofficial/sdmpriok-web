@@ -19,31 +19,31 @@ class RoleSeeder extends Seeder
         $roles = [
             [
                 'name' => 'Supervisor Operator',
-                'guard' => 'web',
+                'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Senior Operator',
-                'guard' => 'web',
+                'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Ahli Muda Operator',
-                'guard' => 'web',
+                'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Operator Senior Control Room',
-                'guard' => 'web',
+                'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'name' => 'Operator GT RSG',
-                'guard' => 'web',
+                'guard_name' => 'web',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
