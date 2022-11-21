@@ -70,6 +70,7 @@ class CompetencyOperatorController extends Controller
                 ]);
             }else{
                 AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')
+                ->where('user_id', Auth::user()->id)
                 ->update([
                     'essay'         => $attrs['essay'],
                     'file'          => $path,
@@ -119,6 +120,7 @@ class CompetencyOperatorController extends Controller
         }
         else if(isset($_POST['publish'])){
             AnswerOperator::where('question_id', 'LIKE', '%'.$request->questionid.'%')
+            ->where('user_id', Auth::user()->id)
             ->update(['status' => 1]);
 
             return redirect()->route('competency-tools-op.index')->with('success','Answer has been published successfully.');
@@ -250,9 +252,26 @@ class CompetencyOperatorController extends Controller
         $questionid = $request->questionid;
 
         $answer = AnswerOperator::where('question_id', 'LIKE', '%'.$questionid.'%')
-                                  ->get();
+        ->where('user_id', Auth::user()->id)
+        ->get();
 
         $response['data'] = $answer;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all image operator question by sub_category
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getImage(Request $request){
+        $subcategory = $request->subcategory;
+
+        $image = Competency::select('*')->where('sub_category', 'LIKE', '%'.$subcategory.'%')->get();
+
+        $response['data'] = $image;
 
         return response()->json($response);
     }

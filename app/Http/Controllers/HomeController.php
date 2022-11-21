@@ -29,7 +29,13 @@ class HomeController extends Controller
 
         $total_progress = get_percentage($total_question, $total_submit);
 
-        $teams = User::role('operator')->selectRaw('SUM(progress.progress) as total')
+        $teams = User::selectRaw('SUM(progress.progress) as total')
+        ->leftJoin('model_has_roles', function ($join) {
+         $join->on('model_has_roles.model_id', '=', 'users.id')
+               ->where('model_has_roles.model_type', '=', 'app\Models\User');
+     	 })
+      	->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+      	->where('roles.name', 'LIKE', '%Operator%')
         ->join('progress', 'progress.user_id', '=', 'users.id')
         ->where('progress.team_id', Auth::user()->team_id)
         ->pluck('total');
@@ -43,9 +49,15 @@ class HomeController extends Controller
     public function IndexOperator(){
         return view('layouts.operator.index');
     }
+
     public function IndexAdmin(){
         $totaluser = User::count();
         $totalmodule = Competency::count();
         return view('layouts.admin.index', compact(['totaluser', 'totalmodule']));
+    }
+
+    public function IndexSupervisorSenior()
+    {
+        return view('layouts.supervisor-senior.index');
     }
 }

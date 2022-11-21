@@ -134,27 +134,6 @@
             </ul>
         @endrole
 
-        @role('operator')
-            <ul class="nav">
-                {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
-                            class="sidemenu-label">Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
-                            class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
-                            Score</span></a>
-                </li>
-            </ul>
-        @endrole
-
         @role('Supervisor Operator')
             <ul class="nav">
                 {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
@@ -169,9 +148,7 @@
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
-                            Score</span></a>
+                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
                 </li>
             </ul>
         @endrole
@@ -190,9 +167,7 @@
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
-                            Score</span></a>
+                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
                 </li>
             </ul>
         @endrole
@@ -211,9 +186,7 @@
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
-                            Score</span></a>
+                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
                 </li>
             </ul>
         @endrole
@@ -232,9 +205,7 @@
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
-                            Score</span></a>
+                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
                 </li>
             </ul>
         @endrole
@@ -253,9 +224,7 @@
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
-                            Score</span></a>
+                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
                 </li>
             </ul>
         @endrole

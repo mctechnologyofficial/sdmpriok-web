@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\AnswerSupervisor;
 use App\Models\Competency;
+use App\Models\EvaluationOperator;
 use App\Models\FormEvaluationOperator;
+use App\Models\NoteOperator;
 use App\Models\QuestionSupervisor;
 use App\Models\Role;
 use App\Models\Progress;
@@ -26,14 +28,16 @@ class CoachingMentoringController extends Controller
      */
     public function index()
     {
-        $user = $user = User::select('users.id as userid', 'users.nip', 'users.name', 'progress.progress', 'roles.name as role')
+        $user = $user = User::selectRaw('users.id as userid, users.nip, users.name, SUM(progress.progress) as data, roles.name as role')
                             ->join('model_has_roles', function ($join) {
                                 $join->on('users.id', '=', 'model_has_roles.model_id')
                                      ->where('model_has_roles.model_type', User::class);
                             })
                             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                            ->where('users.team_id', Auth::user()->team_id)
                             ->join('progress', 'progress.user_id', '=', 'users.id')
+                            ->where('users.team_id', Auth::user()->team_id)
+                            ->where('roles.name', 'LIKE', '%Operator%')
+                            ->groupBy('users.name')
                             ->get();
         //
         return view('layouts.supervisor.mentoring.list', compact(['user']));
@@ -57,7 +61,14 @@ class CoachingMentoringController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $competencyid = Session::get('competencyid');
+
+        NoteOperator::create([
+            'competency_id' => $competencyid,
+            'note'          => $request->note
+        ]);
+
+        return redirect()->route('spv.coaching.evaluation', $competencyid);
     }
 
     /**
@@ -68,6 +79,7 @@ class CoachingMentoringController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        Session::put('userid', $user->id);
         Session::put('usernip', $user->nip);
         Session::put('username', $user->name);
         Session::put('userrole', $user->roles->first()->name);
@@ -75,12 +87,12 @@ class CoachingMentoringController extends Controller
         $competency = Competency::groupBy('name')->get();
         $outercompetency = Competency::all();
 
-        $pgasturbin = Competency::select('progress.progress')
+        $pgasturbin = Competency::selectRaw('SUM(progress.progress) as data')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
                                 ->where('progress.user_id', $user->id)
                                 ->where('competencies.name', 'LIKE', '%Tools Gas Turbin%')
                                 ->groupBy('competencies.name')
-                                ->pluck('progress.progress');
+                                ->pluck('data');
 
         $data = $pgasturbin->values();
 
@@ -100,12 +112,12 @@ class CoachingMentoringController extends Controller
         ])
         ->options([]);
 
-        $phrsg = Competency::select('progress.progress')
+        $phrsg = Competency::selectRaw('SUM(progress.progress) as data')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
                                 ->where('progress.user_id', $user->id)
                                 ->where('competencies.name', 'LIKE', '%Tools HRSG%')
                                 ->groupBy('competencies.name')
-                                ->pluck('progress.progress');
+                                ->pluck('data');
 
         $data = $phrsg->values();
 
@@ -125,12 +137,12 @@ class CoachingMentoringController extends Controller
         ])
         ->options([]);
 
-        $ppltgu = Competency::select('progress.progress')
+        $ppltgu = Competency::selectRaw('SUM(progress.progress) as data')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
                                 ->where('progress.user_id', $user->id)
                                 ->where('competencies.name', 'LIKE', '%Tools PLTGU%')
                                 ->groupBy('competencies.name')
-                                ->pluck('progress.progress');
+                                ->pluck('data');
 
         $data = $ppltgu->values();
 
@@ -150,12 +162,12 @@ class CoachingMentoringController extends Controller
         ])
         ->options([]);
 
-        $psteamturbin = Competency::select('progress.progress')
+        $psteamturbin = Competency::selectRaw('SUM(progress.progress) as data')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
                                 ->where('progress.user_id', $user->id)
                                 ->where('competencies.name', 'LIKE', '%Tools Steam Turbin%')
                                 ->groupBy('competencies.name')
-                                ->pluck('progress.progress');
+                                ->pluck('data');
 
         $data = $psteamturbin->values();
 
@@ -186,12 +198,18 @@ class CoachingMentoringController extends Controller
     public function showEvaluation($id)
     {
         $competency = Competency::find($id);
-        $formevaluasi = FormEvaluationOperator::where('tools', 'LIKE','%'.$competency->sub_category.'%')->get();
+        $note = NoteOperator::select('*')->where('competency_id', $competency->id)->get();
+        $formevaluasi = FormEvaluationOperator::select('form_evaluation_operators.*', 'evaluation_operators.result as evaluation_result', 'evaluation_operators.description as evaluation_description')
+            ->leftJoin('evaluation_operators', 'form_evaluation_operators.id', '=', 'evaluation_operators.formevaluation_id')
+            ->where('form_evaluation_operators.tools', 'LIKE','%'.$competency->sub_category.'%')
+            ->get();
+
+        $competencyid = Session::put('competencyid', $competency->id);
         $nip = Session::get('usernip');
         $name = Session::get('username');
         $role = Session::get('userrole');
 
-        return view('layouts.supervisor.mentoring.evaluation', compact(['formevaluasi', 'name', 'nip', 'role']));
+        return view('layouts.supervisor.mentoring.evaluation', compact(['note', 'competency','formevaluasi', 'name', 'nip', 'role']));
     }
     /**
      * Show the form for editing the specified resource.
@@ -225,5 +243,30 @@ class CoachingMentoringController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveEvaluation(Request $request)
+    {
+        $id = Session::get('userid');
+        $competencyid = $request->competencyid;
+        $formevaluationid = $request->formevaluationid;
+        $result = $request->result;
+        $description = $request->description;
+
+        EvaluationOperator::create([
+            'user_id'               => $id,
+            'competency_id'         => $competencyid,
+            'formevaluation_id'     => $formevaluationid,
+            'result'                => $result,
+            'description'           => $description
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

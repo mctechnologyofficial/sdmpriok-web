@@ -19,7 +19,7 @@ class CompetencySupervisorController extends Controller
      */
     public function index()
     {
-        $competency = Competency::all();
+        $competency = Competency::select('*')->groupBy('name')->get();
         return view('layouts.supervisor.competency.content', compact(['competency']));
     }
 
@@ -41,68 +41,88 @@ class CompetencySupervisorController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $attrs = $request->validate([
-            'idcompetency'  => 'required|integer',
-            'questionid'    => 'required|integer',
-            'essay'         => '',
-            'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
-        ]);
+        if(isset($_POST['submit'])){
+            $attrs = $request->validate([
+                'idcompetency'  => 'required|integer',
+                'questionid'    => 'required|integer',
+                'essay'         => '',
+                'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
+            ]);
 
-        if($request->hasFile('image')){
-            // $path = $request->file('image')->store('answer/supervisor-answer');
-            $file = $request->file('image');
-            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
-            $path = $file->move('storage/answer/supervisor/answer', $filename);
-        }else{
-            $path = null;
-        }
+            if($request->hasFile('image')){
+                // $path = $request->file('image')->store('answer/supervisor-answer');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $path = $file->move('storage/answer/supervisor/answer', $filename);
+            }else{
+                $path = null;
+            }
 
-        AnswerSupervisor::create([
-            'user_id'       => Auth::user()->id,
-            'competency_id' => $attrs['idcompetency'],
-            'question_id'   => $attrs['questionid'],
-            'essay'         => $attrs['essay'],
-            'file'          => $path
-        ]);
+            $validation_answer = AnswerSupervisor::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')->count();
+            if($validation_answer == 0){
+                AnswerSupervisor::create([
+                    'user_id'       => Auth::user()->id,
+                    'competency_id' => $attrs['idcompetency'],
+                    'question_id'   => $attrs['questionid'],
+                    'essay'         => $attrs['essay'],
+                    'file'          => $path,
+                    'status'        => 0
+                ]);
+            }else{
+                AnswerSupervisor::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')
+                ->where('user_id', Auth::user()->id)
+                ->update([
+                    'essay'         => $attrs['essay'],
+                    'file'          => $path,
+                    'status'        => 0
+                ]);
+            }
 
-        $competency = Competency::find($attrs['idcompetency']);
-        $total_question = QuestionSupervisor::where('competency', $competency->name)->count();
-        $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)
-                        ->where('competency_id', '=', $competency->id)
-                        ->count();
-        $validation = Progress::where('user_id', '=' , Auth::user()->id)
+            $competency = Competency::find($attrs['idcompetency']);
+            $total_question = QuestionSupervisor::where('competency', $competency->name)->count();
+            $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)
                             ->where('competency_id', '=', $competency->id)
                             ->count();
+            $validation = Progress::where('user_id', '=' , Auth::user()->id)
+                                ->where('competency_id', '=', $competency->id)
+                                ->count();
 
-        function get_percentage($total, $number)
-        {
-            if ( $total > 0 ) {
-                return round(($number * 100) / $total, 2);
-            } else {
-                return 0;
+            function get_percentage($total, $number)
+            {
+                if ( $total > 0 ) {
+                    return round(($number * 100) / $total, 2);
+                } else {
+                    return 0;
+                }
             }
-        }
 
-        if($validation == 0){
-            Progress::create([
-                'user_id'       => Auth::user()->id,
-                'team_id'       => Auth::user()->team_id,
-                'competency_id' => $competency->id,
-                'submit_time'   => $total_submit,
-                'progress'      => get_percentage($total_question, $total_submit)
-            ]);
-        }else{
-            Progress::where('user_id', '=' , Auth::user()->id)
-            ->where('competency_id', '=' , $competency->id)
-            ->update([
-                'team_id'       => Auth::user()->team_id,
-                'submit_time'   => $total_submit,
-                'progress'      => get_percentage($total_question, $total_submit)
-            ]);
-        }
+            if($validation == 0){
+                Progress::create([
+                    'user_id'       => Auth::user()->id,
+                    'team_id'       => Auth::user()->team_id,
+                    'competency_id' => $competency->id,
+                    'submit_time'   => $total_submit,
+                    'progress'      => get_percentage($total_question, $total_submit)
+                ]);
+            }else{
+                Progress::where('user_id', '=' , Auth::user()->id)
+                ->where('competency_id', '=' , $competency->id)
+                ->update([
+                    'team_id'       => Auth::user()->team_id,
+                    'submit_time'   => $total_submit,
+                    'progress'      => get_percentage($total_question, $total_submit)
+                ]);
+            }
 
-        return redirect()->route('competency-tools-spv.index')->with('success','Answer has been submitted successfully.');
+            return redirect()->route('competency-tools-spv.index')->with('success','Answer has been submitted successfully.');
+        }
+        else if(isset($_POST['publish'])){
+            AnswerSupervisor::where('question_id', 'LIKE', '%'.$request->questionid.'%')
+            ->where('user_id', Auth::user()->id)
+            ->update(['status' => 1]);
+
+            return redirect()->route('competency-tools-spv.index')->with('success','Answer has been published successfully.');
+        }
     }
 
     /**
@@ -156,15 +176,14 @@ class CompetencySupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getCategoryByCompetency(Request $request)
+    public function getCategory(Request $request)
     {
         $competency = $request->competency;
 
-        $category = QuestionSupervisor::select('category')
-                    ->where('competency', 'LIKE','%'.$competency.'%')
-                    ->groupBy('category')
-                    ->orderBy('category', 'desc')
-                    ->get();
+        $category = Competency::select('category')
+        ->where('name', 'LIKE','%'.$competency.'%')
+        ->groupBy('name')
+        ->get();
 
         $response['data'] = $category;
 
@@ -177,14 +196,12 @@ class CompetencySupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getSubCategoryByCategory(Request $request)
+    public function getSubCategory(Request $request)
     {
         $category = $request->category;
 
-        $category = QuestionSupervisor::select('sub_category')
+        $category = Competency::select('sub_category')
                     ->where('category', 'LIKE','%'.$category.'%')
-                    ->groupBy('sub_category')
-                    ->orderBy('sub_category', 'desc')
                     ->get();
 
         $response['data'] = $category;
@@ -198,11 +215,32 @@ class CompetencySupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getQuestionBySubCategory(Request $request)
+    public function getQuestion(Request $request)
     {
         $subcategory = $request->subcategory;
 
         $subcategory = QuestionSupervisor::select('*')
+                    ->where('sub_category', 'LIKE','%'.$subcategory.'%')
+                    ->get();
+
+        $response['data'] = $subcategory;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all image questions by sub category
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getImage(Request $request)
+    {
+        $competency = $request->competency;
+        $subcategory = $request->subcategory;
+
+        $subcategory = Competency::select('*')
+                    ->where('name', 'LIKE', '%'.$competency.'%')
                     ->where('sub_category', 'LIKE','%'.$subcategory.'%')
                     ->get();
 
@@ -223,6 +261,24 @@ class CompetencySupervisorController extends Controller
         $id = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
 
         $response['data'] = $id;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get all spesificied answer supervisor by questionid
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getAnswer(Request $request){
+        $questionid = $request->questionid;
+
+        $answer = AnswerSupervisor::where('question_id', 'LIKE', '%'.$questionid.'%')
+        ->where('user_id', Auth::user()->id)
+        ->get();
+
+        $response['data'] = $answer;
 
         return response()->json($response);
     }

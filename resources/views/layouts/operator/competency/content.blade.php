@@ -19,7 +19,7 @@
                             <select name="category" id="category" class="form-control">
                                 <option value="" selected disabled>Choose category</option>
                             </select>
-                            <select name="subcategory" id="subcategory" class="form-control ml-2">
+                            <select name="subcategory" id="subcategory" class="form-control ml-2 mr-2">
                                 <option value="" selected disabled>Choose sub category</option>
                             </select>
                         </div>
@@ -79,6 +79,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="row text-center">
+                                        <div class="col-lg-12">
+                                            <img src="" alt="..." class="img-fluid w-75 mb-3" id="imgQuestion">
+                                        </div>
+                                    </div>
                                     <div class="row row-xs align-items-center mg-b-20">
                                         <div class="col-md-4">
                                             <label class="mg-b-0">Competency</label>
@@ -142,6 +147,23 @@
         // OPERATOR COMPETENCY TOOLS
         var valueCompetencyOp;
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        function createImage(response) {
+            var len = 0;
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+                    var image = response['data'][i].image;
+
+                    $('#imgQuestion').attr('src', "<?php echo asset('" + image + "') ?>");
+                    // alert(image);
+                }
+            }
+        }
 
         function createCategory(response){
             var len = 0;
@@ -229,6 +251,7 @@
                     var file = response['data'][i].file;
                     var status = response['data'][i].status;
 
+
                     if(status == 1){
                         $('#essay').prop('readonly', true);
                         $('#fileSlider').prop('disabled', true);
@@ -266,6 +289,7 @@
                     var lesson_plan = response['data'][i].lesson_plan;
                     var processing_time = response['data'][i].processing_time;
                     var realization = response['data'][i].realization;
+
                     var no = i + 1;
 
                     var tr_str = "<tr>" +
@@ -337,6 +361,7 @@
 
         $('#subcategory').on('change', function(){
             var value = $(this).val();
+
             $.ajax({
                 url: '/operator/competency-tools/getquestion',
                 type: 'GET',
@@ -347,6 +372,18 @@
                 dataType: 'json',
                 success: function(response){
                     createRows(response);
+                    $.ajax({
+                        url: '/operator/competency-tools/getimage',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            subcategory: value
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            createImage(response);
+                        }
+                    });
                 }
             });
         });
@@ -366,17 +403,17 @@
                 $('#questionid').val(id);
 
                 $.ajax({
-                url: '/operator/competency-tools/getanswer',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    questionid: $('#questionid').val()
-                },
-                dataType: 'json',
-                success: function(response){
-                    createAnswer(response);
-                }
-            });
+                    url: '/operator/competency-tools/getanswer',
+                    type: 'GET',
+                    data: {
+                        _token: CSRF_TOKEN,
+                        questionid: $('#questionid').val()
+                    },
+                    dataType: 'json',
+                    success: function(response){
+                        createAnswer(response);
+                    }
+                });
             }
 
         });

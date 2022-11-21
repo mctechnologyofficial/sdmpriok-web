@@ -13,19 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evaluation_operators', function (Blueprint $table) {
+        Schema::create('note_operators', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('competency_id');
-            $table->unsignedBigInteger('formevaluation_id');
-            $table->string('result');
-            $table->longText('description')->nullable();
-            // $table->longText('note')->nullable();
+            $table->longText('note');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('competency_id')->references('id')->on('competencies');
-            $table->foreign('formevaluation_id')->references('id')->on('form_evaluation_operators');
         });
     }
 
@@ -36,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluation_operators');
+        Schema::dropIfExists('note_operators');
     }
 };
