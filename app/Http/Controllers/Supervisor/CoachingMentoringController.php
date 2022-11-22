@@ -84,7 +84,7 @@ class CoachingMentoringController extends Controller
         Session::put('username', $user->name);
         Session::put('userrole', $user->roles->first()->name);
 
-        $competency = Competency::groupBy('name')->get();
+        $competency = Competency::where('role', 'LIKE', '%Operator%')->groupBy('name')->get();
         $outercompetency = Competency::all();
 
         $pgasturbin = Competency::selectRaw('SUM(progress.progress) as data')
@@ -199,6 +199,7 @@ class CoachingMentoringController extends Controller
     {
         $competency = Competency::find($id);
         $note = NoteOperator::select('*')->where('competency_id', $competency->id)->get();
+        
         $formevaluasi = FormEvaluationOperator::select('form_evaluation_operators.*', 'evaluation_operators.result as evaluation_result', 'evaluation_operators.description as evaluation_description')
             ->leftJoin('evaluation_operators', 'form_evaluation_operators.id', '=', 'evaluation_operators.formevaluation_id')
             ->where('form_evaluation_operators.tools', 'LIKE','%'.$competency->sub_category.'%')

@@ -124,7 +124,10 @@ Route::group(['middleware' => ['role:supervisor senior']], function () {
     Route::prefix('supervisor-senior')->group(function () {
         Route::get('/home', [HomeController::class, 'IndexSupervisorSenior'])->name('spv.senior.index');
         Route::get('coaching-mentoring/', [SupervisorSeniorCoachingMentoringController::class, 'index'])->name('spv.senior.coaching.list');
-        Route::get('coaching-mentoring/detail', [CoachingMentoringController::class, 'show'])->name('spv.senior.coaching.detail');
+        Route::get('coaching-mentoring/show/{id}', [SupervisorSeniorCoachingMentoringController::class, 'show'])->name('spv.senior.coaching.show');
+        Route::post('coaching-mentoring/postresult', [SupervisorSeniorCoachingMentoringController::class, 'postResult'])->name('spv.senior.coaching.storeresult');
+        Route::post('coaching-mentoring/postdescription', [SupervisorSeniorCoachingMentoringController::class, 'postDescription'])->name('spv.senior.coaching.storedescription');
+        Route::get('coaching-mentoring/getevaluation', [SupervisorSeniorCoachingMentoringController::class, 'getEvaluation']);
 
         Route::get('assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal-spvs.personal');
         Route::get('assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team-spvs.team');

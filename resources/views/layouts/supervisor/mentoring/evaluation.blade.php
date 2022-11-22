@@ -90,6 +90,7 @@
             $(document).on('focusout', '#result', function(){
                 result = $(this).val();
             });
+            
             $(document).on('focusout', '#description', function(){
                 description = $(this).val();
 

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('evaluation_operators', function (Blueprint $table) {
+        Schema::create('evaluation_supervisors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('competency_id');
@@ -24,7 +24,7 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('competency_id')->references('id')->on('competencies');
-            $table->foreign('formevaluation_id')->references('id')->on('form_evaluation_operators');
+            $table->foreign('formevaluation_id')->references('id')->on('form_evaluation_supervisors');
         });
     }
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evaluation_operators');
+        Schema::dropIfExists('evaluation_supervisors');
     }
 };

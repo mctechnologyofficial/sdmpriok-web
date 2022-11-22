@@ -29,7 +29,7 @@
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->role }}</td>
                                         <td>
-                                            <a href="{{ route('spv.coaching.show', $data->userid) }}">
+                                            <a href="{{ route('spv.senior.coaching.show', $data->userid) }}">
                                                 <div class="progress mg-b-10">
                                                     <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $data->data }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $data->data }}%"></div>
                                                 </div>
