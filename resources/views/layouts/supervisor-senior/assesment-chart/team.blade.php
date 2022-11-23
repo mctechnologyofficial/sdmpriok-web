@@ -57,9 +57,8 @@
                 });
 
                 var teamChart = document.getElementById('teamChart').getContext('2d');
-                
-                teamChart.canvas.width = 300;
-                teamChart.canvas.height = 300;
+                teamChart.canvas.width = 500;
+                teamChart.canvas.height = 500;
 
                 var radarTeamChart = new Chart(teamChart, {
                     type: 'radar',
@@ -88,7 +87,7 @@
                 var id = $(this).val();
 
                 $.ajax({
-                    url: '/supervisor/assessment-chart/getradarteam',
+                    url: '/supervisor-senior/assessment-chart/getradarteam',
                     type: 'GET',
                     data: {
                         _token: CSRF_TOKEN,

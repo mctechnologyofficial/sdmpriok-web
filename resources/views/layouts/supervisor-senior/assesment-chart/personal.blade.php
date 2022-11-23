@@ -27,7 +27,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(document).ready(function() {
             $.ajax({
-                url: '/supervisor/assessment-chart/getradarpersonal',
+                url: '/supervisor-senior/assessment-chart/getradarpersonal',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN

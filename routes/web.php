@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Supervisor\AssessmentChartController;
 use App\Http\Controllers\Supervisor\CoachingMentoringController;
 use App\Http\Controllers\Supervisor\CompetencySupervisorController;
+use App\Http\Controllers\SupervisorSenior\AssesmentChartController as AssesmentSpvSeniorController;
 use App\Http\Controllers\SupervisorSenior\CoachingMentoringController as SupervisorSeniorCoachingMentoringController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -132,10 +133,10 @@ Route::group(['middleware' => ['role:supervisor senior']], function () {
         Route::post('coaching-mentoring/postdescription', [SupervisorSeniorCoachingMentoringController::class, 'postDescription'])->name('spv.senior.coaching.storedescription');
         Route::post('coaching-mentoring/savenote', [SupervisorSeniorCoachingMentoringController::class, 'saveNote'])->name('spv.senior.coaching.savenote');
 
-        Route::get('assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal-spvs.personal');
-        Route::get('assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team-spvs.team');
-        Route::get('assessment-chart/getradarteam', [AssessmentChartController::class, 'getDataRadarChartTeam']);
-        Route::get('assessment-chart/getradarpersonal', [AssessmentChartController::class, 'getDataRadarChartPersonal']);
+        Route::get('assessment-chart/personal', [AssesmentSpvSeniorController::class, 'personal'])->name('chart-personal-spvs.personal');
+        Route::get('assessment-chart/team', [AssesmentSpvSeniorController::class, 'team'])->name('chart-team-spvs.team');
+        Route::get('assessment-chart/getradarteam', [AssesmentSpvSeniorController::class, 'getDataRadarChartTeam']);
+        Route::get('assessment-chart/getradarpersonal', [AssesmentSpvSeniorController::class, 'getDataRadarChartPersonal']);
     });
 });
 
