@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Competency;
 use App\Models\EvaluationSupervisor;
 use App\Models\FormEvaluationSupervisor;
+use App\Models\NoteSupervisor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -244,8 +245,12 @@ class CoachingMentoringController extends Controller
     {
         $tools = $request->tools;
 
-        $data = FormEvaluationSupervisor::select('form_evaluation_supervisors.*', 'evaluation_supervisors.result as evaluation_result', 'evaluation_supervisors.description as evaluation_description')
-        ->leftJoin('evaluation_supervisors', 'form_evaluation_supervisors.id', '=', 'evaluation_supervisors.formevaluation_id')
+        $data = FormEvaluationSupervisor::select('tools', 'unit', 'competence_test', 'test_material', 'evaluation_supervisors.user_id', 'evaluation_supervisors.result as e_result', 'evaluation_supervisors.description as e_description')
+        ->leftJoin('evaluation_supervisors', function($join){
+            $id = Session::get('userid');
+            $join->on('evaluation_supervisors.formevaluation_id', '=', 'form_evaluation_supervisors.id');
+            $join->where('evaluation_supervisors.user_id', $id);
+        })
         ->where('form_evaluation_supervisors.tools', $tools)
         ->get();
 
@@ -266,7 +271,9 @@ class CoachingMentoringController extends Controller
         $formevaluationid = $request->formevaluationid;
         $result = $request->result;
 
-        $validation = EvaluationSupervisor::where('formevaluation_id', $formevaluationid)->count();
+        $validation = EvaluationSupervisor::where('formevaluation_id', $formevaluationid)
+        ->where('user_id', $id)
+        ->count();
 
         if($validation == 0){
             EvaluationSupervisor::create([
@@ -299,7 +306,9 @@ class CoachingMentoringController extends Controller
         $formevaluationid = $request->formevaluationid;
         $description = $request->description;
 
-        $validation = EvaluationSupervisor::where('formevaluation_id', $formevaluationid)->count();
+        $validation = EvaluationSupervisor::where('formevaluation_id', $formevaluationid)
+        ->where('user_id', $id)
+        ->count();
 
         if($validation == 0){
             EvaluationSupervisor::create([
@@ -318,5 +327,74 @@ class CoachingMentoringController extends Controller
 
         }
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * post note evaluation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveNote(Request $request)
+    {
+        $userid = Session::get('userid');
+        $validation = NoteSupervisor::where('competency_id', $request->competencyid)
+        ->where('user_id', $userid)
+        ->count();
+
+        if($validation == 0){
+            NoteSupervisor::create([
+                'user_id'       => $userid,
+                'competency_id' => $request->competencyid,
+                'note'          => $request->note
+            ]);
+        }else{
+            NoteSupervisor::where('competency_id', $request->competencyid)
+            ->where('user_id', $userid)->update([
+                'user_id'       => $userid,
+                'competency_id' => $request->competencyid,
+                'note'          => $request->note
+            ]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Get form evaluation by tools name.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCompetencyId(Request $request)
+    {
+        $subcategory = $request->sub_category;
+
+        $id = Competency::select('competencies.id')
+        // ->join('note_supervisors', function($join){
+        //     $userid = Session::get('userid');
+        //     $join->on('note_supervisors.competency_id', '=', 'competencies.id');
+        //     $join->where('note_supervisors.user_id', $userid);
+        // })
+        ->where('competencies.sub_category', $subcategory)
+        ->get();
+
+        $response['data'] = $id;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get form note by competency id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getnote(Request $request)
+    {
+        $competencyid = $request->competencyid;
+
+        $note = NoteSupervisor::where('competency_id', $competencyid)->get();
+
+        $response['data'] = $note;
+
+        return response()->json($response);
     }
 }

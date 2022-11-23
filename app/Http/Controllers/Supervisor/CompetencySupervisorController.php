@@ -58,7 +58,9 @@ class CompetencySupervisorController extends Controller
                 $path = null;
             }
 
-            $validation_answer = AnswerSupervisor::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')->count();
+            $validation_answer = AnswerSupervisor::where('question_id', $attrs['questionid'])
+            ->where('user_id', Auth::user()->id)
+            ->count();
             if($validation_answer == 0){
                 AnswerSupervisor::create([
                     'user_id'       => Auth::user()->id,
@@ -69,7 +71,7 @@ class CompetencySupervisorController extends Controller
                     'status'        => 0
                 ]);
             }else{
-                AnswerSupervisor::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')
+                AnswerSupervisor::where('question_id', $attrs['questionid'])
                 ->where('user_id', Auth::user()->id)
                 ->update([
                     'essay'         => $attrs['essay'],

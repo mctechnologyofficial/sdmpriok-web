@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('note_operators', function (Blueprint $table) {
+        Schema::create('note_supervisors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('competency_id');
             $table->longText('note');
             $table->timestamps();
 
-            $table->foreign('competency_id')->references('id')->on('competencies');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('competency_id')->references('id')->on('competencies');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('note_operators');
+        Schema::dropIfExists('note_supervisors');
     }
 };
