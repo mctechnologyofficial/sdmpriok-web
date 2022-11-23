@@ -18,10 +18,15 @@ class AssessmentChartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function team()
-    { 
-        $team = User::role('operator')
-        ->where('team_id', '=', Auth::user()->team_id)
-        ->get();
+    {
+        // $team = User::role('operator')
+        //     ->where('team_id', '=', Auth::user()->team_id)
+        //     ->get();
+
+            $team = User::role('supervisor')
+            ->where('team_id', '=', Auth::user()->team_id)
+            ->get();
+            // dd($team);
 
         return view('layouts.supervisor.assessment-chart.team', compact(['team']));
     }
@@ -107,17 +112,19 @@ class AssessmentChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDataRadarChartTeam(Request $request){
+    public function getDataRadarChartTeam(Request $request)
+    {
         $userid = $request->userid;
 
         $team  = Progress::select('progress.progress as progress', 'competencies.name as competency')
-        ->join('users', 'users.id', '=', 'progress.user_id')
-        ->join('competencies', 'competencies.id', '=', 'progress.competency_id')
-        ->where('progress.user_id', '=', $userid)
-        ->where('progress.team_id', Auth::user()->team_id)
-        ->get();
-
-        $response['team'] = $team;
+            ->join('users', 'users.id', '=', 'progress.user_id')
+            ->join('competencies', 'competencies.id', '=', 'progress.competency_id')
+            ->where('progress.user_id', '=', $userid)
+            ->where('progress.team_id', Auth::user()->team_id)
+            ->get();
+            
+            dd($team);
+            $response['team'] = $team;
 
         return response()->json($response);
     }
@@ -127,19 +134,23 @@ class AssessmentChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getDataRadarChartPersonal(){
-        $competency = Competency::select('competencies.name', 'progress.progress')
-                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
-                                ->where('progress.user_id', Auth::user()->id)
-                                ->groupBy('competencies.name', 'progress.progress')
-                                ->orderBy('competencies.id', 'ASC')
-                                ->pluck('competencies.name', 'progress.progress');
+    public function getDataRadarChartPersonal()
+    {
+        // $competency = Competency::select('competencies.name', 'progress.progress')
+        //     ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+        //     ->where('progress.user_id', Auth::user()->id)
+        //     ->groupBy('competencies.name', 'progress.progress')
+        //     ->orderBy('competencies.id', 'ASC')
+        //     ->pluck('competencies.name', 'progress.progress');
+
+        $competency = Competency::select('competencies.name', 'progress.progress')->leftjoin('progress', 'competencies.id', '=', 'progress.competency_id')->where('progress.user_id', Auth::user()->id)->groupBy('competencies.name')->orderBy('competencies.created_at', 'asc')->pluck('competencies.name', 'progress.progress');
 
         $label = $competency->values();
         $data = $competency->keys();
 
         $response['label'] = $label;
         $response['data'] = $data;
+        // dd($response);
 
         return response()->json($response);
     }
