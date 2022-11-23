@@ -16,14 +16,16 @@
 		<title>Indonesia Power - @yield('title')</title>
 
 		@include('components.css')
+
+        @yield('css')
 	</head>
 
 	<body class="main-body leftmenu">
 
 		<!-- Loader -->
-		{{-- <div id="global-loader">
+		<div id="global-loader">
 			<img src="{{ asset('assets/img/loader.svg') }}" class="loader-img" alt="Loader">
-		</div> --}}
+		</div>
 		<!-- End Loader -->
 
 		<!-- Page -->
