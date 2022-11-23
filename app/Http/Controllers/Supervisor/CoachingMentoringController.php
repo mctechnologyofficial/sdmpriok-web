@@ -7,6 +7,7 @@ use App\Models\AnswerSupervisor;
 use App\Models\Competency;
 use App\Models\EvaluationOperator;
 use App\Models\FormEvaluationOperator;
+use App\Models\FormEvaluationSupervisor;
 use App\Models\NoteOperator;
 use App\Models\QuestionSupervisor;
 use App\Models\Role;
@@ -86,6 +87,7 @@ class CoachingMentoringController extends Controller
 
         $competency = Competency::where('role', 'LIKE', '%Operator%')->groupBy('name')->get();
         $outercompetency = Competency::all();
+        $formevaluasi = FormEvaluationOperator::select('tools')->groupBy('tools')->get();
 
         $pgasturbin = Competency::selectRaw('SUM(progress.progress) as data')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
@@ -187,31 +189,9 @@ class CoachingMentoringController extends Controller
         ])
         ->options([]);
 
-        return view('layouts.supervisor.mentoring.detail', compact(['user', 'competency', 'outercompetency', 'gasturbin', 'hrsg', 'pltgu', 'steamturbin']));
+        return view('layouts.supervisor.mentoring.detail', compact(['user', 'formevaluasi', 'competency', 'outercompetency', 'gasturbin', 'hrsg', 'pltgu', 'steamturbin']));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showEvaluation($id)
-    {
-        $competency = Competency::find($id);
-        $note = NoteOperator::select('*')->where('competency_id', $competency->id)->get();
-        
-        $formevaluasi = FormEvaluationOperator::select('form_evaluation_operators.*', 'evaluation_operators.result as evaluation_result', 'evaluation_operators.description as evaluation_description')
-            ->leftJoin('evaluation_operators', 'form_evaluation_operators.id', '=', 'evaluation_operators.formevaluation_id')
-            ->where('form_evaluation_operators.tools', 'LIKE','%'.$competency->sub_category.'%')
-            ->get();
-
-        $competencyid = Session::put('competencyid', $competency->id);
-        $nip = Session::get('usernip');
-        $name = Session::get('username');
-        $role = Session::get('userrole');
-
-        return view('layouts.supervisor.mentoring.evaluation', compact(['note', 'competency','formevaluasi', 'name', 'nip', 'role']));
-    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -247,26 +227,157 @@ class CoachingMentoringController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Get competency id by sub category
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function saveEvaluation(Request $request)
+    public function getCompetencyId(Request $request)
+    {
+        $subcategory = $request->sub_category;
+
+        $id = Competency::select('competencies.id')->where('sub_category', $subcategory)->get();
+
+        $response['data'] = $id;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get form evaluation by tools name.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEvaluation(Request $request)
+    {
+        $tools = $request->tools;
+
+        $data = FormEvaluationOperator::select('form_evaluation_operators.id', 'tools', 'unit', 'competence_test', 'test_material', 'evaluation_operators.result as e_result', 'evaluation_operators.description as e_description')
+        ->leftJoin('evaluation_operators', function($join){
+            $id = Session::get('userid');
+            $join->on('evaluation_operators.formevaluation_id', '=', 'form_evaluation_operators.id');
+            $join->where('evaluation_operators.user_id', $id);
+        })
+        ->where('form_evaluation_operators.tools', $tools)
+        ->get();
+
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+
+    /**
+     * post result score evaluation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postResult(Request $request)
     {
         $id = Session::get('userid');
         $competencyid = $request->competencyid;
         $formevaluationid = $request->formevaluationid;
         $result = $request->result;
+
+        $validation = EvaluationOperator::where('formevaluation_id', $formevaluationid)
+        ->where('user_id', $id)
+        ->count();
+
+        if($validation == 0){
+            EvaluationOperator::create([
+                'user_id'               => $id,
+                'competency_id'         => $competencyid,
+                'formevaluation_id'     => $formevaluationid,
+                'result'                => $result
+            ]);
+        }else{
+            EvaluationOperator::where('formevaluation_id', $formevaluationid)->update([
+                'user_id'               => $id,
+                'competency_id'         => $competencyid,
+                'formevaluation_id'     => $formevaluationid,
+                'result'                => $result
+            ]);
+
+        }
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * post description score evaluation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postDescription(Request $request)
+    {
+        $id = Session::get('userid');
+        $competencyid = $request->competencyid;
+        $formevaluationid = $request->formevaluationid;
         $description = $request->description;
 
-        EvaluationOperator::create([
-            'user_id'               => $id,
-            'competency_id'         => $competencyid,
-            'formevaluation_id'     => $formevaluationid,
-            'result'                => $result,
-            'description'           => $description
-        ]);
+        $validation = EvaluationOperator::where('formevaluation_id', $formevaluationid)
+        ->where('user_id', $id)
+        ->count();
+
+        if($validation == 0){
+            EvaluationOperator::create([
+                'user_id'               => $id,
+                'competency_id'         => $competencyid,
+                'formevaluation_id'     => $formevaluationid,
+                'description'           => $description
+            ]);
+        }else{
+            EvaluationOperator::where('formevaluation_id', $formevaluationid)->update([
+                'user_id'               => $id,
+                'competency_id'         => $competencyid,
+                'formevaluation_id'     => $formevaluationid,
+                'description'           => $description
+            ]);
+
+        }
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Get form note by competency id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getnote(Request $request)
+    {
+        $competencyid = $request->competencyid;
+
+        $note = NoteOperator::where('competency_id', $competencyid)->get();
+
+        $response['data'] = $note;
+
+        return response()->json($response);
+    }
+
+    /**
+     * post note evaluation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function saveNote(Request $request)
+    {
+        $userid = Session::get('userid');
+        $validation = NoteOperator::where('competency_id', $request->competencyid)
+        ->where('user_id', $userid)
+        ->count();
+
+        if($validation == 0){
+            NoteOperator::create([
+                'user_id'       => $userid,
+                'competency_id' => $request->competencyid,
+                'note'          => $request->note
+            ]);
+        }else{
+            NoteOperator::where('competency_id', $request->competencyid)
+            ->where('user_id', $userid)->update([
+                'user_id'       => $userid,
+                'competency_id' => $request->competencyid,
+                'note'          => $request->note
+            ]);
+        }
 
         return response()->json(['success' => true]);
     }
