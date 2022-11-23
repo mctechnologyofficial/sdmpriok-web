@@ -1,5 +1,90 @@
 @extends('layouts.master')
 @section('title', 'Home')
+
+@section('css')
+    <style>
+        #progress {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #7F8C8C;
+            display: inline-block;
+            margin: 0 1em;
+            width: 120px;
+        }
+
+        #tp {
+            margin: 0;
+        }
+
+        [data-progress] {
+            width: 120px;
+            height: 60px;
+            border-radius: 180px 180px 0 0;
+            position: relative;
+            overflow: hidden;
+            background: #76C7C0
+        }
+
+        [data-progress]:before {
+            content: attr(data-progress);
+            display: block;
+            margin: 18px;
+            background: white;
+            text-align: center;
+            font-size: 30px;
+            line-height: 50px;
+            font-weight: bold;
+            font-family: helvetica;
+            border-radius: inherit;
+            position: relative;
+            z-index: 1;
+        }
+
+        [data-progress]:after {
+            content: '';
+            background: #E2534B;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 60px;
+            transform-origin: top center;
+            z-index:0;
+            border-radius:0 0 180px 180px ;
+            box-shadow: 0 0 5px black;
+        }
+
+        [data-progress="20"]:after {
+        transform: rotate(36deg);
+        }
+
+        [data-progress="50"]:after {
+        transform: rotate(90deg);
+        }
+
+        [data-progress="80"]:after {
+        transform: rotate(144deg);
+        }
+
+        [data-progress="100"]:after {
+        transform: rotate(180deg);
+        }
+
+        @keyframes color {
+            50% {
+                color:tomato;
+            }
+        }
+        @keyframes spin {
+            to{
+                content:'100';
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">
@@ -8,13 +93,15 @@
                     <div class="card-body">
                         <div class="row m-3">
                             <div class="col-lg-12">
-                                <h4 class="mb-2">Competency Progress (Personal)</h4>
-                                <div class="progress mg-b-10">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $total_progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $total_progress }}%">{{ $total_progress }}%</div>
+                                <h4 class="mb-3">Competency Progress</h4>
+                                <div id="progress">
+                                    <p id="tp" data-progress="{{ $total_progress }}">{{ $total_progress }}%</p>
+                                    <p id="tp">Personal</p>
                                 </div>
-                                <h4 class="mt-3 mb-2">Competency Progress (Team)</h4>
-                                <div class="progress mg-b-10">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated progress-bar-lg" role="progressbar" aria-valuenow="{{ $result_total }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $result_total }}%;">{{ $result_total }}%</div>
+
+                                <div id="progress">
+                                    <p id="tp" data-progress="{{ $result_total }}">{{ $result_total }}%</p>
+                                    <p id="tp">Team</p>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +162,8 @@
 @section('js')
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
     <script>
-        
+        const progress = document.querySelector('.progress-done');
+        progress.style.width = progress.getAttribute('data-done') + '%';
+        progress.style.opacity = 1;
     </script>
 @endsection

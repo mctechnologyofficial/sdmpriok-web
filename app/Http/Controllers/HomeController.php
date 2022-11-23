@@ -31,8 +31,8 @@ class HomeController extends Controller
 
         $teams = User::selectRaw('SUM(progress.progress) as total')
         ->leftJoin('model_has_roles', function ($join) {
-         $join->on('model_has_roles.model_id', '=', 'users.id')
-               ->where('model_has_roles.model_type', '=', 'app\Models\User');
+            $join->on('model_has_roles.model_id', '=', 'users.id');
+            $join->where('model_has_roles.model_type', '=', 'app\Models\User');
      	 })
       	->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
       	->where('roles.name', 'LIKE', '%Operator%')
