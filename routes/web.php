@@ -147,8 +147,12 @@ Route::group(['middleware' => ['role:supervisor']], function () {
         Route::get('coaching-mentoring/', [CoachingMentoringController::class, 'index'])->name('spv.coaching.index');
         Route::get('coaching-mentoring/show/{id}', [CoachingMentoringController::class, 'show'])->name('spv.coaching.show');
         Route::get('coaching-mentoring/evaluation/{id}', [CoachingMentoringController::class, 'showEvaluation'])->name('spv.coaching.evaluation');
-        Route::post('coaching-mentoring/evaluation/store', [CoachingMentoringController::class, 'saveEvaluation'])->name('spv.coaching.store');
-        Route::post('coaching-mentoring/evaluation/savenote', [CoachingMentoringController::class, 'store'])->name('spv.coaching.savenote');
+        Route::get('coaching-mentoring/getcompetencyid', [CoachingMentoringController::class, 'getCompetencyId']);
+        Route::get('coaching-mentoring/getevaluation', [CoachingMentoringController::class, 'getEvaluation']);
+        Route::get('coaching-mentoring/getnote', [CoachingMentoringController::class, 'getNote']);
+        Route::post('coaching-mentoring/evaluation/storeresult', [CoachingMentoringController::class, 'postResult'])->name('spv.coaching.storeresult');
+        Route::post('coaching-mentoring/evaluation/storedescription', [CoachingMentoringController::class, 'postDescription'])->name('spv.coaching.storedescription');
+        Route::post('coaching-mentoring/evaluation/savenote', [CoachingMentoringController::class, 'saveNote'])->name('spv.coaching.savenote');
 
         Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
         Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');

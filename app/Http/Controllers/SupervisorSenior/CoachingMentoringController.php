@@ -245,7 +245,7 @@ class CoachingMentoringController extends Controller
     {
         $tools = $request->tools;
 
-        $data = FormEvaluationSupervisor::select('tools', 'unit', 'competence_test', 'test_material', 'evaluation_supervisors.user_id', 'evaluation_supervisors.result as e_result', 'evaluation_supervisors.description as e_description')
+        $data = FormEvaluationSupervisor::select('form_evaluation_supervisors.id', 'tools', 'unit', 'competence_test', 'test_material', 'evaluation_supervisors.user_id', 'evaluation_supervisors.result as e_result', 'evaluation_supervisors.description as e_description')
         ->leftJoin('evaluation_supervisors', function($join){
             $id = Session::get('userid');
             $join->on('evaluation_supervisors.formevaluation_id', '=', 'form_evaluation_supervisors.id');
@@ -369,11 +369,6 @@ class CoachingMentoringController extends Controller
         $subcategory = $request->sub_category;
 
         $id = Competency::select('competencies.id')
-        // ->join('note_supervisors', function($join){
-        //     $userid = Session::get('userid');
-        //     $join->on('note_supervisors.competency_id', '=', 'competencies.id');
-        //     $join->where('note_supervisors.user_id', $userid);
-        // })
         ->where('competencies.sub_category', $subcategory)
         ->get();
 
