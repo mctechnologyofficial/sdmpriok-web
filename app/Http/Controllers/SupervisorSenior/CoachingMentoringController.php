@@ -27,7 +27,7 @@ class CoachingMentoringController extends Controller
                                      ->where('model_has_roles.model_type', User::class);
                             })
                             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                            ->join('progress', 'progress.user_id', '=', 'users.id')
+                            ->leftJoin('progress', 'progress.user_id', '=', 'users.id')
                             ->where('users.team_id', Auth::user()->team_id)
                             ->where('roles.name', '=', 'Supervisor')
                             ->groupBy('users.name')

@@ -29,13 +29,13 @@ class CoachingMentoringController extends Controller
      */
     public function index()
     {
-        $user = $user = User::selectRaw('users.id as userid, users.nip, users.name, SUM(progress.progress) as data, roles.name as role')
+        $user = User::selectRaw('users.id as userid, users.nip, users.name, SUM(progress.progress) as data, roles.name as role')
                             ->join('model_has_roles', function ($join) {
                                 $join->on('users.id', '=', 'model_has_roles.model_id')
                                      ->where('model_has_roles.model_type', User::class);
                             })
                             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                            ->join('progress', 'progress.user_id', '=', 'users.id')
+                            ->leftJoin('progress', 'progress.user_id', '=', 'users.id')
                             ->where('users.team_id', Auth::user()->team_id)
                             ->where('roles.name', 'LIKE', '%Operator%')
                             ->groupBy('users.name')
@@ -62,14 +62,7 @@ class CoachingMentoringController extends Controller
      */
     public function store(Request $request)
     {
-        $competencyid = Session::get('competencyid');
-
-        NoteOperator::create([
-            'competency_id' => $competencyid,
-            'note'          => $request->note
-        ]);
-
-        return redirect()->route('spv.coaching.evaluation', $competencyid);
+        //
     }
 
     /**
