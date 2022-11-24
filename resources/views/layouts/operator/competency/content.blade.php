@@ -129,8 +129,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-outline-success" id="btnSubmit" name="submit"><i class="fas fa-save"></i> Submit</button>
-                                    <button type="submit" class="btn btn-outline-info" id="btnPublish" name="publish"><i class="fas fa-globe"></i> Publish</button>
+                                    <button type="submit" class="btn btn-outline-success" id="btnSubmit" name="submit"><i class="fas fa-save"></i> Save</button>
+                                    <button type="submit" class="btn btn-outline-info" id="btnPublish" name="publish"><i class="fas fa-globe"></i> Submit</button>
                                 </div>
                                 </div>
                             </div>

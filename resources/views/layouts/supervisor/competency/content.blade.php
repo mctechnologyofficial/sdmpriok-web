@@ -134,8 +134,8 @@
                                         </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-outline-success" id="btnSubmit" name="submit"><i class="fas fa-save"></i> Submit</button>
-                                    <button type="submit" class="btn btn-outline-info" id="btnPublish" name="publish"><i class="fas fa-globe"></i> Publish</button>
+                                    <button type="submit" class="btn btn-outline-success" id="btnSubmit" name="submit"><i class="fas fa-save"></i> Save</button>
+                                    <button type="submit" class="btn btn-outline-info" id="btnPublish" name="publish"><i class="fas fa-globe"></i> Submit</button>
                                 </div>
                                 </div>
                             </div>
@@ -408,7 +408,7 @@
                     var essay = response['data'][i].essay;
                     var file = response['data'][i].file;
                     var status = response['data'][i].status;
-                    
+
                     if(status == 1){
                         $('#essay').prop('readonly', true);
                         $('#fileSlider').prop('disabled', true);
