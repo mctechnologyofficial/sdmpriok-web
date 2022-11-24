@@ -122,7 +122,7 @@ class AssessmentChartController extends Controller
             ->where('progress.user_id', '=', $userid)
             ->where('progress.team_id', Auth::user()->team_id)
             ->get();
-            
+
             dd($team);
             $response['team'] = $team;
 
@@ -143,7 +143,12 @@ class AssessmentChartController extends Controller
         //     ->orderBy('competencies.id', 'ASC')
         //     ->pluck('competencies.name', 'progress.progress');
 
-        $competency = Competency::select('competencies.name', 'progress.progress')->leftjoin('progress', 'competencies.id', '=', 'progress.competency_id')->where('progress.user_id', Auth::user()->id)->groupBy('competencies.name')->orderBy('competencies.created_at', 'asc')->pluck('competencies.name', 'progress.progress');
+        $competency = Competency::select('competencies.name', 'progress.progress')
+        ->leftjoin('progress', 'competencies.id', '=', 'progress.competency_id')
+        ->where('progress.user_id', Auth::user()->id)
+        ->groupBy('competencies.name')
+        ->orderBy('competencies.created_at', 'asc')
+        ->pluck('competencies.name', 'progress.progress');
 
         $label = $competency->values();
         $data = $competency->keys();
