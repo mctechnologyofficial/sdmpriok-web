@@ -61,6 +61,9 @@
                         <li class="nav-sub-item">
                             <a class="nav-sub-link" href="{{ route('question.index') }}">Question</a>
                         </li>
+                        <li class="nav-sub-item">
+                            <a class="nav-sub-link" href="{{ route('evaluation.index') }}">Evaluation Form</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

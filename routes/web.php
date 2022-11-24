@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CompetencyController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\EvaluationFormController;
 use App\Http\Controllers\Admin\MonitoringProgressController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -116,6 +117,12 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('/', [QuestionController::class, 'index'])->name('question.index');
             Route::post('store', [QuestionController::class, 'store'])->name('question.store');
         });
+
+        Route::prefix('evaluation-form')->group(function () {
+            Route::get('/', [EvaluationFormController::class, 'index'])->name('evaluation.index');
+            Route::post('store', [EvaluationFormController::class, 'store'])->name('evaluation.store');
+        });
+
     });
 });
 
