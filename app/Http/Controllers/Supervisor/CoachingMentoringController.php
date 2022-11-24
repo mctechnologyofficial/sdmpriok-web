@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
-use App\Models\AnswerSupervisor;
+use App\Models\AnswerOperator;
 use App\Models\Competency;
-use App\Models\EvaluationOperator;
 use App\Models\FormEvaluationOperator;
-use App\Models\FormEvaluationSupervisor;
-use App\Models\NoteOperator;
-use App\Models\QuestionSupervisor;
-use App\Models\Role;
-use App\Models\Progress;
-use App\Models\Slide;
+use App\Models\QuestionOperator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use PHPUnit\TextUI\XmlConfiguration\Group;
+use Illuminate\Support\Facades\Storage;
 
 class CoachingMentoringController extends Controller
 {
@@ -220,39 +214,16 @@ class CoachingMentoringController extends Controller
     }
 
     /**
-     * Get competency id by sub category
+     * Get question
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getCompetencyId(Request $request)
+    public function getQuestion(Request $request)
     {
-        $subcategory = $request->sub_category;
+        $reference = $request->reference;
 
-        $id = Competency::select('competencies.id')->where('sub_category', $subcategory)->get();
-
-        $response['data'] = $id;
-
-        return response()->json($response);
-    }
-
-    /**
-     * Get form evaluation by tools name.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getEvaluation(Request $request)
-    {
-        $tools = $request->tools;
-
-        $data = FormEvaluationOperator::select('form_evaluation_operators.id', 'tools', 'unit', 'competence_test', 'test_material', 'evaluation_operators.result as e_result', 'evaluation_operators.description as e_description')
-        ->leftJoin('evaluation_operators', function($join){
-            $id = Session::get('userid');
-            $join->on('evaluation_operators.formevaluation_id', '=', 'form_evaluation_operators.id');
-            $join->where('evaluation_operators.user_id', $id);
-        })
-        ->where('form_evaluation_operators.tools', $tools)
-        ->get();
+        $data = QuestionOperator::where('lesson', $reference)->get();
 
         $response['data'] = $data;
 
@@ -260,118 +231,19 @@ class CoachingMentoringController extends Controller
     }
 
     /**
-     * post result score evaluation
+     * Get answer
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postResult(Request $request)
+    public function getAnswer(Request $request)
     {
-        $id = Session::get('userid');
-        $competencyid = $request->competencyid;
-        $formevaluationid = $request->formevaluationid;
-        $result = $request->result;
+        $id = $request->formevaluationid;
 
-        $validation = EvaluationOperator::where('formevaluation_id', $formevaluationid)
-        ->where('user_id', $id)
-        ->count();
+        $data = AnswerOperator::where('question_id', $id)->get();
 
-        if($validation == 0){
-            EvaluationOperator::create([
-                'user_id'               => $id,
-                'competency_id'         => $competencyid,
-                'formevaluation_id'     => $formevaluationid,
-                'result'                => $result
-            ]);
-        }else{
-            EvaluationOperator::where('formevaluation_id', $formevaluationid)->update([
-                'user_id'               => $id,
-                'competency_id'         => $competencyid,
-                'formevaluation_id'     => $formevaluationid,
-                'result'                => $result
-            ]);
-
-        }
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * post description score evaluation
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function postDescription(Request $request)
-    {
-        $id = Session::get('userid');
-        $competencyid = $request->competencyid;
-        $formevaluationid = $request->formevaluationid;
-        $description = $request->description;
-
-        $validation = EvaluationOperator::where('formevaluation_id', $formevaluationid)
-        ->where('user_id', $id)
-        ->count();
-
-        if($validation == 0){
-            EvaluationOperator::create([
-                'user_id'               => $id,
-                'competency_id'         => $competencyid,
-                'formevaluation_id'     => $formevaluationid,
-                'description'           => $description
-            ]);
-        }else{
-            EvaluationOperator::where('formevaluation_id', $formevaluationid)->update([
-                'user_id'               => $id,
-                'competency_id'         => $competencyid,
-                'formevaluation_id'     => $formevaluationid,
-                'description'           => $description
-            ]);
-
-        }
-        return response()->json(['success' => true]);
-    }
-
-    /**
-     * Get form note by competency id.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getnote(Request $request)
-    {
-        $competencyid = $request->competencyid;
-
-        $note = NoteOperator::where('competency_id', $competencyid)->get();
-
-        $response['data'] = $note;
+        $response['data'] = $data;
 
         return response()->json($response);
-    }
-
-    /**
-     * post note evaluation
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function saveNote(Request $request)
-    {
-        $userid = Session::get('userid');
-        $validation = NoteOperator::where('competency_id', $request->competencyid)
-        ->where('user_id', $userid)
-        ->count();
-
-        if($validation == 0){
-            NoteOperator::create([
-                'user_id'       => $userid,
-                'competency_id' => $request->competencyid,
-                'note'          => $request->note
-            ]);
-        }else{
-            NoteOperator::where('competency_id', $request->competencyid)
-            ->where('user_id', $userid)->update([
-                'user_id'       => $userid,
-                'competency_id' => $request->competencyid,
-                'note'          => $request->note
-            ]);
-        }
-
-        return response()->json(['success' => true]);
     }
 }

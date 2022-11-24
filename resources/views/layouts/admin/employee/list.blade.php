@@ -57,7 +57,6 @@
                                     <td>{{ $data->roles->first() ? ucfirst($data->roles->first()->name) : "-" }}</td>
                                     <td>{{ $data->teams->name }}</td>
                                     <td class="text-center">
-                                        <!--<img src="{{ Storage::url($data->image) }}" alt="..." class="img-fluid w-50">-->
                                         <img src="{{ asset($data->image) }}" alt="..." class="img-fluid w-50">
                                     </td>
                                     <td>
