@@ -211,6 +211,7 @@
                 data: {
                     _token: CSRF_TOKEN,
                     competency: valueCompetencySpv,
+                    category: $('#category').val(),
                     subcategory: value
                 },
                 dataType: 'json',

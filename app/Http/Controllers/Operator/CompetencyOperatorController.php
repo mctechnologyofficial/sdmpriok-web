@@ -201,7 +201,6 @@ class CompetencyOperatorController extends Controller
 
         $subcategory = Competency::select('sub_category')
                     ->where('category', 'LIKE', '%'.$category.'%')
-                    ->groupBy('sub_category')
                     ->get();
 
         $response['data'] = $subcategory;
