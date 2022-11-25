@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Supervisor;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnswerOperator;
+use App\Models\Comment;
+use App\Models\CommentOperator;
 use App\Models\Competency;
 use App\Models\FormEvaluationOperator;
 use App\Models\QuestionOperator;
@@ -67,10 +69,6 @@ class CoachingMentoringController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        Session::put('userid', $user->id);
-        Session::put('usernip', $user->nip);
-        Session::put('username', $user->name);
-        Session::put('userrole', $user->roles->first()->name);
 
         $competency = Competency::where('role', 'LIKE', '%Operator%')->groupBy('name')->get();
         $outercompetency = Competency::all();
@@ -238,9 +236,59 @@ class CoachingMentoringController extends Controller
      */
     public function getAnswer(Request $request)
     {
-        $id = $request->formevaluationid;
+        $id = $request->questionid;
 
         $data = AnswerOperator::where('question_id', $id)->get();
+
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get comment by question id
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getComment(Request $request)
+    {
+        $id = $request->questionid;
+        $to = $request->userid;
+
+        $data = Comment::selectRaw('users.name, comments.comment, DATE_FORMAT(comments.created_at, "%d %M %Y %T") AS time')
+        ->join('users', function($join){
+            $join->on('users.id', '=', 'comments.from');
+        })
+        ->where('question_id', '=', $id)
+        ->where('to', $to)
+        ->where('from', Auth::user()->id)
+        ->orderBy('comments.created_at', 'DESC')
+        ->get();
+
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Post comment by question id
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postComment(Request $request)
+    {
+        $id = $request->questionid;
+        $user = $request->userid;
+        $comment = $request->comment;
+
+        $data = Comment::create([
+            'question_id'   => $id,
+            'from'          => Auth::user()->id,
+            'to'            => $user,
+            'comment'       => $comment
+        ]);
 
         $response['data'] = $data;
 

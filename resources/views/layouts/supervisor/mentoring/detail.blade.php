@@ -1,6 +1,14 @@
 @extends('layouts.master')
 @section('title', 'Coaching Mentoring')
 
+@section('css')
+    <style>
+        .swal2-container {
+            z-index: 20000 !important;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row row-sm">
         <div class="col-lg-12">
@@ -100,6 +108,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <input type="hidden" value="{{ $user->id }}" id="userid">
                                     <div class="row row-xs align-items-center mg-b-20">
                                         <div class="col-md-4">
                                             <label class="mg-b-0">Answer</label>
@@ -116,6 +125,40 @@
                                         <div class="col-md-8 mg-t-5 mg-md-t-0">
                                             <a class="btn btn-outline-info btn-block" id="downloadFile" download></a>
                                         </div>
+                                    </div>
+
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Score</label>
+                                        </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <input type="text" name="score" id="score" class="form-control mb-2">
+                                        </div>
+                                    </div>
+
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Description</label>
+                                        </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <textarea name="description" class="form-control mb-2" cols="30" rows="10" id="description"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Comment</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="commenttext">
+                                        <div class="input-group-prepend">
+                                            <button id="postcomment" type="button" class="btn btn-outline-primary">Post Comment</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <ul class="list-group list-group-flush" id="comment"></ul>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -136,7 +179,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var formevaluationid, competencyid, file;
+        var questionid, competencyid, file;
 
         $(document).on('click', '#subcategory', function(){
             var value = $(this).text();
@@ -157,7 +200,7 @@
         });
 
         $('#example-input').on('click', 'tr', function(){
-            formevaluationid = $(this).find("#evaluationid").text();
+            questionid = $(this).find("#evaluationid").text();
         });
 
         $(document).on('click', '#btnLihat', function(){
@@ -166,11 +209,61 @@
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
-                    formevaluationid: formevaluationid
+                    questionid: questionid
                 },
                 dataType: 'json',
                 success: function(response){
                     createAnswer(response);
+                }
+            });
+
+            $.ajax({
+                url: '/supervisor/coaching-mentoring/getcomment',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    questionid: questionid,
+                    userid: $('#userid').val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    createComment(response);
+                }
+            });
+        });
+
+        $(document).on('click', '#postcomment', function(){
+            $.ajax({
+                type:"POST",
+                url: "{{ route('spv.coaching.postcomment') }}",
+                data: {
+                    _token: CSRF_TOKEN,
+                    questionid: questionid,
+                    userid: $('#userid').val(),
+                    comment : $('#commenttext').val(),
+                },
+                dataType: 'json',
+                success: function(response){
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Your comment has been submitted successfully!',
+                        icon: 'success'
+                    }).then((value) => {
+                        $('#commenttext').val('');
+                        $.ajax({
+                            url: '/supervisor/coaching-mentoring/getcomment',
+                            type: 'GET',
+                            data: {
+                                _token: CSRF_TOKEN,
+                                questionid: questionid,
+                                userid: $('#userid').val()
+                            },
+                            dataType: 'json',
+                            success: function(response){
+                                createComment(response);
+                            }
+                        });
+                    });
                 }
             });
         });
@@ -208,6 +301,34 @@
             }
         }
 
+        function createComment(response){
+            var len = 0;
+            $('#comment').empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+
+                    var name = response['data'][i].name;
+                    var comment = response['data'][i].comment;
+                    var time = response['data'][i].time;
+
+                    var tr_str = "<li class='list-group-item' style='background-color: whitesmoke;'>" +
+                        "<h4>" + name + "</h4>" +
+                        "<p>" + comment + "</p>" +
+                        "<p>" + time + "</p>" +
+                        "</li>" + "<hr />";
+
+                    $("#comment").append(tr_str);
+                }
+            }else{
+                $("#comment tbody").empty();
+            }
+        }
+
         function createAnswer(response){
             var len = 0;
             $('#essay').val('');
@@ -225,13 +346,12 @@
 
                     $('#essay').val(essay);
 
-                    var url = '{{ asset(':file') }}';
-                    url = url.replace(':file', file);
-
                     if(file == null){
                         $('#downloadFile').text('User has not uploaded file yet.');
-                        $('#downloadFile').prop('href', '#');
+                        $('#downloadFile').prop('href', 'javascript:void(0)');
                     }else{
+                        var url = '{{ asset(':file') }}';
+                        url = url.replace(':file', file);
                         $('#downloadFile').text('Download');
                         $('#downloadFile').prop('href', url);
                     }
