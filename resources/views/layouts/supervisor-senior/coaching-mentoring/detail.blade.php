@@ -75,7 +75,7 @@
         <div class="card custom-card overflow-hidden evaluation-card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="example-input" class="table table-bordered text-wrap">
+                    <table id="example-input" class="table table-bordered text-wrap table-hover">
                         <thead>
                             <tr>
                                 <th class="d-none">id</th>
@@ -399,7 +399,7 @@
                     $('#essay').val('');
                 }
             }
-            
+
             function createCategory(response) {
                 var len = 0;
                 $("#competencyid").empty();

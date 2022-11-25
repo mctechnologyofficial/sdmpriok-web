@@ -185,6 +185,10 @@ Route::group(['middleware' => ['role:Operator GT RSG|Supervisor Operator|Senior 
         Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');
 
         Route::get('/competency-score', [CompetencyScoreController::class, 'index'])->name('competency-score.index');
+        Route::get('/competency-score/show/{id}', [CompetencyScoreController::class, 'show'])->name('competency-score.show');
+        Route::get('/competency-score/getevaluation', [CompetencyScoreController::class, 'getEvaluation']);
+        Route::get('/competency-score/getcomment', [CompetencyScoreController::class, 'getComment']);
+        Route::post('/competency-score/postcomment', [CompetencyScoreController::class, 'postComment'])->name('competency-score.postcomment');
 
         // Competency Route
         Route::get('competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');

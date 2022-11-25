@@ -283,11 +283,13 @@ class CoachingMentoringController extends Controller
      */
     public function postComment(Request $request)
     {
+        $competencyid = $request->competencyid;
         $id = $request->questionid;
         $user = $request->userid;
         $comment = $request->comment;
 
         $data = Comment::create([
+            'competency_id' => $competencyid,
             'question_id'   => $id,
             'from'          => Auth::user()->id,
             'to'            => $user,

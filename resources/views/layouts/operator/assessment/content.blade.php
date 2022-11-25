@@ -6,13 +6,13 @@
         <div class="card custom-card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table" id="example1">
+                    <table class="table table-hover" id="example1">
                         <thead class="thead-dark">
                             <tr>
                                 <th>Competency Name</th>
                                 <th>Competency Sub Category</th>
                                 <th>Average Score</th>
-                                <th>Note</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,7 +23,9 @@
                                     <td>
                                         {{ $data->avg_evaluation }}
                                     </td>
-                                    <td>{{ $data->note }}</td>
+                                    <td>
+                                        <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('competency-score.show', $data->id) }}">Detail</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
