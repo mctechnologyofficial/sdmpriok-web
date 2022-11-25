@@ -184,7 +184,7 @@ class CompetencySupervisorController extends Controller
 
         $category = Competency::select('category')
         ->where('name', 'LIKE','%'.$competency.'%')
-        ->groupBy('name')
+        ->groupBy('category')
         ->get();
 
         $response['data'] = $category;

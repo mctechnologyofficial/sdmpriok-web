@@ -157,7 +157,10 @@ Route::group(['middleware' => ['role:supervisor']], function () {
         Route::get('coaching-mentoring/getquestion', [CoachingMentoringController::class, 'getQuestion']);
         Route::get('coaching-mentoring/getanswer', [CoachingMentoringController::class, 'getAnswer']);
         Route::get('coaching-mentoring/getcomment', [CoachingMentoringController::class, 'getComment']);
+        Route::get('coaching-mentoring/getevaluation', [CoachingMentoringController::class, 'getEvaluation']);
+        Route::get('coaching-mentoring/getcompetencyid', [CoachingMentoringController::class, 'getCompetencyId']);
         Route::post('coaching-mentoring/postcomment', [CoachingMentoringController::class, 'postComment'])->name('spv.coaching.postcomment');
+        Route::post('coaching-mentoring/saveevaluation', [CoachingMentoringController::class, 'saveEvaluation'])->name('spv.coaching.saveevaluation');
 
         Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
         Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');

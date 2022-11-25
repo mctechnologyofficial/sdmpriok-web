@@ -7,6 +7,7 @@ use App\Models\AnswerOperator;
 use App\Models\Comment;
 use App\Models\CommentOperator;
 use App\Models\Competency;
+use App\Models\EvaluationOperator;
 use App\Models\FormEvaluationOperator;
 use App\Models\QuestionOperator;
 use App\Models\User;
@@ -291,6 +292,82 @@ class CoachingMentoringController extends Controller
         ]);
 
         $response['data'] = $data;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Save Evaluation
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveEvaluation(Request $request)
+    {
+        $competencyid = $request->competencyid;
+        $questionid = $request->questionid;
+        $user = $request->userid;
+        $result = $request->result;
+        // $description = $request->description;
+
+        $validation = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->count();
+
+        if($validation == 0){
+            $data = EvaluationOperator::create([
+                'user_id'               => $user,
+                'competency_id'         => $competencyid,
+                'formevaluation_id'     => $questionid,
+                'result'                => $result,
+                // 'description'           => $description,
+            ]);
+        }else{
+            $data = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->update([
+                'user_id'               => $user,
+                'competency_id'         => $competencyid,
+                'formevaluation_id'     => $questionid,
+                'result'                => $result,
+                // 'description'           => $description,
+            ]);
+        }
+
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get competency id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCompetencyId(Request $request)
+    {
+        $subcategory = $request->sub_category;
+
+        $id = Competency::select('competencies.id')
+        ->where('competencies.sub_category', $subcategory)
+        ->get();
+
+        $response['data'] = $id;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Get form evaluation by tools name.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getEvaluation(Request $request)
+    {
+        $questionid = $request->questionid;
+        $user = $request->userid;
+
+        $id = EvaluationOperator::where('user_id', $user)
+        ->where('formevaluation_id', $questionid)
+        ->get();
+
+        $response['data'] = $id;
 
         return response()->json($response);
     }

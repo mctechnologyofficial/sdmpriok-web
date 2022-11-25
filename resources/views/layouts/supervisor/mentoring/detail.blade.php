@@ -136,14 +136,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="row row-xs align-items-center mg-b-20">
+                                    {{-- <div class="row row-xs align-items-center mg-b-20">
                                         <div class="col-md-4">
                                             <label class="mg-b-0">Description</label>
                                         </div>
                                         <div class="col-md-8 mg-t-5 mg-md-t-0">
                                             <textarea name="description" class="form-control mb-2" cols="30" rows="10" id="description"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row row-xs align-items-center mg-b-20">
                                         <div class="col-md-4">
@@ -163,7 +163,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-primary" id="saveresult">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -195,6 +195,19 @@
                 success: function(response){
                     createRows(response);
                     $('.select2').prop('disabled', false);
+                }
+            });
+
+            $.ajax({
+                url: '/supervisor/coaching-mentoring/getcompetencyid',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    sub_category: value
+                },
+                dataType: 'json',
+                success: function(response){
+                    createCompetencyId(response);
                 }
             });
         });
@@ -230,6 +243,20 @@
                     createComment(response);
                 }
             });
+
+            $.ajax({
+                url: '/supervisor/coaching-mentoring/getevaluation',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    questionid: questionid,
+                    userid: $('#userid').val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    createEvaluation(response);
+                }
+            });
         });
 
         $(document).on('click', '#postcomment', function(){
@@ -263,6 +290,29 @@
                                 createComment(response);
                             }
                         });
+                    });
+                }
+            });
+        });
+
+        $(document).on('click', '#saveresult', function(){
+            $.ajax({
+                type:"POST",
+                url: "{{ route('spv.coaching.saveevaluation') }}",
+                data: {
+                    _token: CSRF_TOKEN,
+                    competencyid: $('#competencyid').val(),
+                    questionid: questionid,
+                    userid: $('#userid').val(),
+                    result : $('#score').val(),
+                    // description : $('#description').val(),
+                },
+                dataType: 'json',
+                success: function(response){
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Your evaluation has been submitted successfully!',
+                        icon: 'success'
                     });
                 }
             });
@@ -358,6 +408,44 @@
                 }
             }else{
                 $('#essay').val('');
+            }
+        }
+
+        function createCompetencyId(response) {
+            var len = 0;
+            $("#competencyid").empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+                    var id = response['data'][i].id;
+
+                    $('#competencyid').val(id).trigger('change');
+                }
+            }else{
+                $("#competencyid").empty();
+            }
+        }
+
+        function createEvaluation(response) {
+            var len = 0;
+            $("#score").empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+                    var result = response['data'][i].result;
+
+                    $('#score').val(result).trigger('change');
+                }
+            }else{
+                $("#score").empty();
             }
         }
     </script>
