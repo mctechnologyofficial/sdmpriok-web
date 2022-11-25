@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('competency_id');
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('from');
             $table->unsignedBigInteger('to');
             $table->longText('comment');
             $table->timestamps();
 
+            $table->foreign('competency_id')->references('id')->on('competencies');
             $table->foreign('question_id')->references('id')->on('question_operators');
             $table->foreign('from')->references('id')->on('users');
             $table->foreign('to')->references('id')->on('users');

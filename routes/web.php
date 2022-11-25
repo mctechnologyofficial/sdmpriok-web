@@ -132,12 +132,13 @@ Route::group(['middleware' => ['role:supervisor senior']], function () {
         Route::get('/home', [HomeController::class, 'IndexSupervisorSenior'])->name('spv.senior.index');
         Route::get('coaching-mentoring/', [SupervisorSeniorCoachingMentoringController::class, 'index'])->name('spv.senior.coaching.list');
         Route::get('coaching-mentoring/show/{id}', [SupervisorSeniorCoachingMentoringController::class, 'show'])->name('spv.senior.coaching.show');
+        Route::get('coaching-mentoring/getcategory', [SupervisorSeniorCoachingMentoringController::class, 'getCategory']);
+        Route::get('coaching-mentoring/getquestion', [SupervisorSeniorCoachingMentoringController::class, 'getQuestion']);
+        Route::get('coaching-mentoring/getanswer', [SupervisorSeniorCoachingMentoringController::class, 'getAnswer']);
+        Route::get('coaching-mentoring/getcomment', [SupervisorSeniorCoachingMentoringController::class, 'getComment']);
         Route::get('coaching-mentoring/getevaluation', [SupervisorSeniorCoachingMentoringController::class, 'getEvaluation']);
-        Route::get('coaching-mentoring/getcompetencyid', [SupervisorSeniorCoachingMentoringController::class, 'getCompetencyId']);
-        Route::get('coaching-mentoring/getnote', [SupervisorSeniorCoachingMentoringController::class, 'getNote']);
-        Route::post('coaching-mentoring/postresult', [SupervisorSeniorCoachingMentoringController::class, 'postResult'])->name('spv.senior.coaching.storeresult');
-        Route::post('coaching-mentoring/postdescription', [SupervisorSeniorCoachingMentoringController::class, 'postDescription'])->name('spv.senior.coaching.storedescription');
-        Route::post('coaching-mentoring/savenote', [SupervisorSeniorCoachingMentoringController::class, 'saveNote'])->name('spv.senior.coaching.savenote');
+        Route::post('coaching-mentoring/postcomment', [SupervisorSeniorCoachingMentoringController::class, 'postComment'])->name('spv.senior.coaching.postcomment');
+        Route::post('coaching-mentoring/saveevaluation', [SupervisorSeniorCoachingMentoringController::class, 'saveEvaluation'])->name('spv.senior.coaching.saveevaluation');
 
         Route::get('assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal-spvs.personal');
         Route::get('assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team-spvs.team');

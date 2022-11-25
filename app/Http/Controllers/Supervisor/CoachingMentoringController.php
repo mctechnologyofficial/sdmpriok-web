@@ -238,8 +238,9 @@ class CoachingMentoringController extends Controller
     public function getAnswer(Request $request)
     {
         $id = $request->questionid;
+        $user = $request->userid;
 
-        $data = AnswerOperator::where('question_id', $id)->get();
+        $data = AnswerOperator::where('user_id', $user)->where('question_id', $id)->get();
 
         $response['data'] = $data;
 
@@ -254,6 +255,7 @@ class CoachingMentoringController extends Controller
      */
     public function getComment(Request $request)
     {
+        $competencyid = $request->competencyid;
         $id = $request->questionid;
         $to = $request->userid;
 
@@ -261,6 +263,7 @@ class CoachingMentoringController extends Controller
         ->join('users', function($join){
             $join->on('users.id', '=', 'comments.from');
         })
+        ->where('competency_id', $competencyid)
         ->where('question_id', '=', $id)
         ->where('to', $to)
         ->where('from', Auth::user()->id)

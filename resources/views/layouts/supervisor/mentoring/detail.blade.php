@@ -20,6 +20,7 @@
             </div>
         </div>
     </div>
+
     <div class="row row-sm">
         @foreach ($competency as $key => $data)
             <div class="col-lg-6">
@@ -67,20 +68,10 @@
             </div>
         @endforeach
     </div>
+
     <div class="row row-sm">
         <div class="col-lg-12">
             <div class="card custom-card overflow-hidden evaluation-card">
-                {{-- <div class="card-header">
-                    <div class="mr-auto mb-2 d-flex">
-                        <input type="hidden" name="competencyid" id="competencyid">
-                        <select name="material" id="material" class="form-control select2">
-                            <option value="" selected disabled>Choose material</option>
-                            @foreach ($formevaluasi as $data)
-                                <option value="{{ $data->tools }}">{{ $data->tools }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> --}}
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example-input" class="table table-bordered text-wrap">
@@ -90,7 +81,6 @@
                                     <th>Test Material</th>
                                     <th>Competence Test</th>
                                     <th>Answer</th>
-                                    {{-- <th>Description</th> --}}
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -135,15 +125,6 @@
                                             <input type="text" name="score" id="score" class="form-control mb-2">
                                         </div>
                                     </div>
-
-                                    {{-- <div class="row row-xs align-items-center mg-b-20">
-                                        <div class="col-md-4">
-                                            <label class="mg-b-0">Description</label>
-                                        </div>
-                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
-                                            <textarea name="description" class="form-control mb-2" cols="30" rows="10" id="description"></textarea>
-                                        </div>
-                                    </div> --}}
 
                                     <div class="row row-xs align-items-center mg-b-20">
                                         <div class="col-md-4">
@@ -222,6 +203,7 @@
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
+                    userid: $('#userid').val(),
                     questionid: questionid
                 },
                 dataType: 'json',
@@ -235,6 +217,7 @@
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
+                    competencyid: $('#competencyid').val(),
                     questionid: questionid,
                     userid: $('#userid').val()
                 },
@@ -265,6 +248,7 @@
                 url: "{{ route('spv.coaching.postcomment') }}",
                 data: {
                     _token: CSRF_TOKEN,
+                    competencyid: $('#competencyid').val(),
                     questionid: questionid,
                     userid: $('#userid').val(),
                     comment : $('#commenttext').val(),
@@ -282,6 +266,7 @@
                             type: 'GET',
                             data: {
                                 _token: CSRF_TOKEN,
+                                competencyid: $('#competencyid').val(),
                                 questionid: questionid,
                                 userid: $('#userid').val()
                             },
