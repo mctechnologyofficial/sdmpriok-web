@@ -13,15 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('note_operators', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('competency_id');
-            $table->longText('note');
+            $table->unsignedBigInteger('question_id');
+            $table->unsignedBigInteger('from');
+            $table->unsignedBigInteger('to');
+            $table->longText('comment');
             $table->timestamps();
 
             $table->foreign('competency_id')->references('id')->on('competencies');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('question_id')->references('id')->on('question_operators');
+            $table->foreign('from')->references('id')->on('users');
+            $table->foreign('to')->references('id')->on('users');
+
         });
     }
 
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('note_operators');
+        Schema::dropIfExists('comments');
     }
 };

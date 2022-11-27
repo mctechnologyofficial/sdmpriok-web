@@ -1,6 +1,14 @@
 @extends('layouts.master')
 @section('title', 'Coaching Mentoring')
 
+@section('css')
+    <style>
+        .swal2-container {
+            z-index: 20000 !important;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row row-sm">
         <div class="col-lg-12">
@@ -12,6 +20,7 @@
             </div>
         </div>
     </div>
+
     <div class="row row-sm">
         @foreach ($competency as $key => $data)
             <div class="col-lg-6">
@@ -59,63 +68,85 @@
             </div>
         @endforeach
     </div>
+
     <div class="row row-sm">
         <div class="col-lg-12">
             <div class="card custom-card overflow-hidden evaluation-card">
-                <div class="card-header">
-                    <div class="mr-auto mb-2 d-flex">
-                        <input type="hidden" name="competencyid" id="competencyid">
-                        <select name="material" id="material" class="form-control select2">
-                            <option value="" selected disabled>Choose material</option>
-                            @foreach ($formevaluasi as $data)
-                                <option value="{{ $data->tools }}">{{ $data->tools }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example-input" class="table table-bordered text-wrap">
+                        <table id="example-input" class="table table-bordered text-wrap table-hover">
                             <thead>
                                 <tr>
                                     <th class="d-none">id</th>
                                     <th>Test Material</th>
                                     <th>Competence Test</th>
-                                    <th>Result</th>
-                                    <th>Description</th>
+                                    <th>Answer</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {{-- @foreach ($formevaluasi as $key => $data)
-                                    <tr>
-                                        <td class="d-none" id="idevaluation">{{ $data->id }}</td>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $data->test_material }}</td>
-                                        <td>{{ $data->competence_test }}</td>
-                                        <td>
-                                            <input class="form-control input-sm" type="text" name="row-1-age" id="result" value="{{ $data->evaluation_result }}">
-                                        </td>
-                                        <td>
-                                            <textarea class="form-control" name="row-1-comments" id="description" rows="1" spellcheck="false">{{ $data->evaluation_description }}</textarea>
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div class="row row-xs align-items-center mg-b-20">
-                        <div class="col-md-4">
-                            <label class="mg-b-0">Note</label>
-                        </div>
-                        <div class="col-md-8 mg-t-5 mg-md-t-0">
-                            <textarea name="note" class="form-control" id="note" cols="30" rows="10"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row justify-content-end mb-0">
-                        <div class="col-md-8 pl-md-2">
-                            <button class="btn ripple btn-primary pd-x-30 mg-r-5" type="submit" id="savenote">Save</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content ">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Evaluation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" value="{{ $user->id }}" id="userid">
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Answer</label>
+                                        </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <textarea name="essay" class="form-control mb-2" cols="30" rows="10" id="essay" readonly></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">File</label>
+                                        </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <a class="btn btn-outline-info btn-block" id="downloadFile" download></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Score</label>
+                                        </div>
+                                        <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                            <input type="text" name="score" id="score" class="form-control mb-2">
+                                        </div>
+                                    </div>
+
+                                    <div class="row row-xs align-items-center mg-b-20">
+                                        <div class="col-md-4">
+                                            <label class="mg-b-0">Comment</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="commenttext">
+                                        <div class="input-group-prepend">
+                                            <button id="postcomment" type="button" class="btn btn-outline-primary">Post Comment</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <ul class="list-group list-group-flush" id="comment"></ul>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="saveresult">Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -129,21 +160,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var formevaluationid, competencyid;
-        var empty = "<tr>" + "<td colspan='4' class='text-center'>Please select one of the competencies above</td>" + "</tr>";
-
-        $('#example-input tbody').empty().append(empty);
-
-        $('.select2').prop('disabled', true);
-        $('#note').prop('disabled', true);
-        $('#savenote').prop('disabled', true);
-
-        $('.select2').select2({
-            closeOnSelect: true,
-        });
+        var questionid, competencyid, file;
 
         $(document).on('click', '#subcategory', function(){
             var value = $(this).text();
+
+            $.ajax({
+                url: '/supervisor/coaching-mentoring/getquestion',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    reference: value
+                },
+                dataType: 'json',
+                success: function(response){
+                    createRows(response);
+                    $('.select2').prop('disabled', false);
+                }
+            });
 
             $.ajax({
                 url: '/supervisor/coaching-mentoring/getcompetencyid',
@@ -155,120 +189,212 @@
                 dataType: 'json',
                 success: function(response){
                     createCompetencyId(response);
-                    $('.select2').prop('disabled', false);
-                    $('#note').prop('disabled', false);
-                    $('#savenote').prop('disabled', false);
                 }
             });
         });
 
-        $('#material').on('change', function(){
-            var tools = $(this).val();
+        $('#example-input').on('click', 'tr', function(){
+            questionid = $(this).find("#evaluationid").text();
+        });
+
+        $(document).on('click', '#btnLihat', function(){
+            $.ajax({
+                url: '/supervisor/coaching-mentoring/getanswer',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    userid: $('#userid').val(),
+                    questionid: questionid
+                },
+                dataType: 'json',
+                success: function(response){
+                    createAnswer(response);
+                }
+            });
+
+            $.ajax({
+                url: '/supervisor/coaching-mentoring/getcomment',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    competencyid: $('#competencyid').val(),
+                    questionid: questionid,
+                    userid: $('#userid').val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    createComment(response);
+                }
+            });
 
             $.ajax({
                 url: '/supervisor/coaching-mentoring/getevaluation',
                 type: 'GET',
                 data: {
                     _token: CSRF_TOKEN,
-                    tools: tools
+                    questionid: questionid,
+                    userid: $('#userid').val()
                 },
                 dataType: 'json',
                 success: function(response){
-                    createRows(response);
+                    createEvaluation(response);
                 }
             });
         });
 
-        $('#example-input').on('click', 'tr', function(){
-            formevaluationid = $(this).find("#evaluationid").text();
-        });
-
-        $(document).on('focusout', '#result', function(){
-            result = $(this).val();
-
+        $(document).on('click', '#postcomment', function(){
             $.ajax({
                 type:"POST",
-                url: "{{ route('spv.coaching.storeresult') }}",
+                url: "{{ route('spv.coaching.postcomment') }}",
                 data: {
                     _token: CSRF_TOKEN,
                     competencyid: $('#competencyid').val(),
-                    formevaluationid : formevaluationid,
-                    result: result,
+                    questionid: questionid,
+                    userid: $('#userid').val(),
+                    comment : $('#commenttext').val(),
                 },
                 dataType: 'json',
                 success: function(response){
                     Swal.fire({
                         title: 'Success',
-                        text: 'Your result has been submitted successfully!',
-                        icon: 'success'
-                    })
-                }
-            });
-        });
-
-        $(document).on('focusout', '#description', function(){
-            description = $(this).val();
-
-            $.ajax({
-                type:"POST",
-                url: "{{ route('spv.coaching.storedescription') }}",
-                data: {
-                    _token: CSRF_TOKEN,
-                    competencyid: $('#competencyid').val(),
-                    formevaluationid : formevaluationid,
-                    description: description,
-                },
-                dataType: 'json',
-                success: function(response){
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'Your description has been submitted successfully!',
+                        text: 'Your comment has been submitted successfully!',
                         icon: 'success'
                     }).then((value) => {
-                        $("#example-input tbody").empty();
-                        $('.select2').prop('disabled', true);
-                        $(".select2").val("").change();
-                    })
+                        $('#commenttext').val('');
+                        $.ajax({
+                            url: '/supervisor/coaching-mentoring/getcomment',
+                            type: 'GET',
+                            data: {
+                                _token: CSRF_TOKEN,
+                                competencyid: $('#competencyid').val(),
+                                questionid: questionid,
+                                userid: $('#userid').val()
+                            },
+                            dataType: 'json',
+                            success: function(response){
+                                createComment(response);
+                            }
+                        });
+                    });
                 }
             });
         });
 
-        $('#competencyid').on('change', function(){
-            var value = $(this).val();
-
-            $.ajax({
-                url: '/supervisor/coaching-mentoring/getnote',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    competencyid: value
-                },
-                dataType: 'json',
-                success: function(response){
-                    createNote(response);
-                }
-            });
-        });
-
-        $('#savenote').on('click', function(){
+        $(document).on('click', '#saveresult', function(){
             $.ajax({
                 type:"POST",
-                url: "{{ route('spv.coaching.savenote') }}",
+                url: "{{ route('spv.coaching.saveevaluation') }}",
                 data: {
                     _token: CSRF_TOKEN,
                     competencyid: $('#competencyid').val(),
-                    note : $('#note').val(),
+                    questionid: questionid,
+                    userid: $('#userid').val(),
+                    result : $('#score').val(),
+                    // description : $('#description').val(),
                 },
                 dataType: 'json',
                 success: function(response){
                     Swal.fire({
                         title: 'Success',
-                        text: 'Your note has been submitted successfully!',
+                        text: 'Your evaluation has been submitted successfully!',
                         icon: 'success'
-                    })
+                    });
                 }
             });
         });
+
+        function createRows(response){
+            var len = 0;
+            $('#example-input tbody').empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+
+                    var id = response['data'][i].id;
+                    var reference = response['data'][i].reference;
+                    var lesson_plan = response['data'][i].lesson_plan;
+
+                    var tr_str = "<tr>" +
+                        "<td id='evaluationid' class='d-none'>" + id + "</td>" +
+                        "<td id='reference'>" + reference + "</td>" +
+                        "<td>" + lesson_plan + "</td>" +
+                        "<td><button id='btnLihat' class='btn btn-outline-info btn-block' data-toggle='modal' data-target='#exampleModalCenter'>Open</button></td>" +
+                        "</tr>";
+
+                    $("#example-input tbody").append(tr_str);
+                }
+            }else{
+                var tr_str = "<tr>" +
+                "<td colspan='4' class='text-center'>No record found</td>" +
+                "</tr>";
+
+                $("#example-input tbody").empty().append(tr_str);
+            }
+        }
+
+        function createComment(response){
+            var len = 0;
+            $('#comment').empty();
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+
+                    var name = response['data'][i].name;
+                    var comment = response['data'][i].comment;
+                    var time = response['data'][i].time;
+
+                    var tr_str = "<li class='list-group-item' style='background-color: whitesmoke;'>" +
+                        "<h4>" + name + "</h4>" +
+                        "<p>" + comment + "</p>" +
+                        "<p>" + time + "</p>" +
+                        "</li>" + "<hr />";
+
+                    $("#comment").append(tr_str);
+                }
+            }else{
+                $("#comment tbody").empty();
+            }
+        }
+
+        function createAnswer(response){
+            var len = 0;
+            $('#essay').val('');
+
+            if(response['data'] != null){
+                len = response['data'].length;
+            }
+
+            if(len > 0){
+                for(var i=0; i < len; i++){
+
+                    var id = response['data'][i].id;
+                    var essay = response['data'][i].essay;
+                    file = response['data'][i].file;
+
+                    $('#essay').val(essay);
+
+                    if(file == null){
+                        $('#downloadFile').text('User has not uploaded file yet.');
+                        $('#downloadFile').prop('href', 'javascript:void(0)');
+                    }else{
+                        var url = '{{ asset(':file') }}';
+                        url = url.replace(':file', file);
+                        $('#downloadFile').text('Download');
+                        $('#downloadFile').prop('href', url);
+                    }
+                }
+            }else{
+                $('#essay').val('');
+            }
+        }
 
         function createCompetencyId(response) {
             var len = 0;
@@ -289,9 +415,9 @@
             }
         }
 
-        function createRows(response){
+        function createEvaluation(response) {
             var len = 0;
-            $('#example-input tbody').empty();
+            $("#score").empty();
 
             if(response['data'] != null){
                 len = response['data'].length;
@@ -299,56 +425,12 @@
 
             if(len > 0){
                 for(var i=0; i < len; i++){
+                    var result = response['data'][i].result;
 
-                    var id = response['data'][i].id;
-                    var test_material = response['data'][i].test_material;
-                    var competence_test = response['data'][i].competence_test;
-                    var e_result = response['data'][i].e_result;
-                    var e_description = response['data'][i].e_description;
-
-                    if (e_result == null){
-                        e_result = "";
-                    }
-                    if(e_description == null){
-                        e_description = "";
-                    }
-
-                    // var no = i + 1;
-                    var tr_str = "<tr>" +
-                        "<td id='evaluationid' class='d-none'>" + id + "</td>" +
-                        "<td>" + test_material + "</td>" +
-                        "<td>" + competence_test + "</td>" +
-                        "<td> <input class='form-control input-sm' type='text' name='result' id='result' value='" + e_result + "'> </td>" +
-                        "<td> <textarea class='form-control' name='description' id='description' rows='1' spellcheck='false'>" + e_description + "</textarea> </td>" +
-                    "</tr>";
-
-                    $("#example-input tbody").append(tr_str);
+                    $('#score').val(result).trigger('change');
                 }
             }else{
-                var tr_str = "<tr>" +
-                "<td colspan='4' class='text-center'>No record found</td>" +
-                "</tr>";
-
-                $("#example-input tbody").empty().append(tr_str);
-            }
-        }
-
-        function createNote(response) {
-            var len = 0;
-            $("#note").empty();
-
-            if(response['data'] != null){
-                len = response['data'].length;
-            }
-
-            if(len > 0){
-                for(var i=0; i < len; i++){
-                    var note = response['data'][i].note;
-
-                    $('#note').val(note).trigger('change');
-                }
-            }else{
-                $("#note").empty();
+                $("#score").empty();
             }
         }
     </script>

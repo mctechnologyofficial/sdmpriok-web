@@ -91,9 +91,13 @@ class CompetencyController extends Controller
     public function update(Request $request, $id)
     {
         $competency = Competency::find($id);
-        $file = $request->image;
-        $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
-        $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
+        if($request->hasFile('image')){
+            $file = $request->image;
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
+        }else{
+            $image_path = $competency->image;
+        }
 
         $competency->update([
             'role'          => $request->role,

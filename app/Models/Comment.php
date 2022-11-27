@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NoteOperator extends Model
+class Comment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
         'competency_id',
-        'note'
+        'question_id',
+        'from',
+        'to',
+        'comment'
     ];
 }

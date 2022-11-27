@@ -184,7 +184,7 @@ class CompetencySupervisorController extends Controller
 
         $category = Competency::select('category')
         ->where('name', 'LIKE','%'.$competency.'%')
-        ->groupBy('name')
+        ->groupBy('category')
         ->get();
 
         $response['data'] = $category;
@@ -219,10 +219,11 @@ class CompetencySupervisorController extends Controller
      */
     public function getQuestion(Request $request)
     {
+        $category = $request->category;
         $subcategory = $request->subcategory;
 
-        $subcategory = QuestionSupervisor::select('*')
-                    ->where('sub_category', 'LIKE','%'.$subcategory.'%')
+        $subcategory = QuestionSupervisor::where('category', 'LIKE', '%'.$category.'%')
+                    ->where('sub_category', $subcategory)
                     ->get();
 
         $response['data'] = $subcategory;

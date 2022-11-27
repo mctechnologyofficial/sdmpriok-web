@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CompetencyController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\EvaluationFormController;
 use App\Http\Controllers\Admin\MonitoringProgressController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -117,6 +118,12 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('/', [QuestionController::class, 'index'])->name('question.index');
             Route::post('store', [QuestionController::class, 'store'])->name('question.store');
         });
+
+        Route::prefix('evaluation-form')->group(function () {
+            Route::get('/', [EvaluationFormController::class, 'index'])->name('evaluation.index');
+            Route::post('store', [EvaluationFormController::class, 'store'])->name('evaluation.store');
+        });
+
     });
 });
 
@@ -126,12 +133,13 @@ Route::group(['middleware' => ['role:supervisor senior']], function () {
         Route::get('/home', [HomeController::class, 'IndexSupervisorSenior'])->name('spv.senior.index');
         Route::get('coaching-mentoring/', [SupervisorSeniorCoachingMentoringController::class, 'index'])->name('spv.senior.coaching.list');
         Route::get('coaching-mentoring/show/{id}', [SupervisorSeniorCoachingMentoringController::class, 'show'])->name('spv.senior.coaching.show');
+        Route::get('coaching-mentoring/getcategory', [SupervisorSeniorCoachingMentoringController::class, 'getCategory']);
+        Route::get('coaching-mentoring/getquestion', [SupervisorSeniorCoachingMentoringController::class, 'getQuestion']);
+        Route::get('coaching-mentoring/getanswer', [SupervisorSeniorCoachingMentoringController::class, 'getAnswer']);
+        Route::get('coaching-mentoring/getcomment', [SupervisorSeniorCoachingMentoringController::class, 'getComment']);
         Route::get('coaching-mentoring/getevaluation', [SupervisorSeniorCoachingMentoringController::class, 'getEvaluation']);
-        Route::get('coaching-mentoring/getcompetencyid', [SupervisorSeniorCoachingMentoringController::class, 'getCompetencyId']);
-        Route::get('coaching-mentoring/getnote', [SupervisorSeniorCoachingMentoringController::class, 'getNote']);
-        Route::post('coaching-mentoring/postresult', [SupervisorSeniorCoachingMentoringController::class, 'postResult'])->name('spv.senior.coaching.storeresult');
-        Route::post('coaching-mentoring/postdescription', [SupervisorSeniorCoachingMentoringController::class, 'postDescription'])->name('spv.senior.coaching.storedescription');
-        Route::post('coaching-mentoring/savenote', [SupervisorSeniorCoachingMentoringController::class, 'saveNote'])->name('spv.senior.coaching.savenote');
+        Route::post('coaching-mentoring/postcomment', [SupervisorSeniorCoachingMentoringController::class, 'postComment'])->name('spv.senior.coaching.postcomment');
+        Route::post('coaching-mentoring/saveevaluation', [SupervisorSeniorCoachingMentoringController::class, 'saveEvaluation'])->name('spv.senior.coaching.saveevaluation');
 
         Route::get('assessment-chart/personal', [AssesmentSpvSeniorController::class, 'personal'])->name('chart-personal-spvs.personal');
         Route::get('assessment-chart/team', [AssesmentSpvSeniorController::class, 'team'])->name('chart-team-spvs.team');
@@ -148,12 +156,13 @@ Route::group(['middleware' => ['role:supervisor']], function () {
         Route::get('coaching-mentoring/', [CoachingMentoringController::class, 'index'])->name('spv.coaching.index');
         Route::get('coaching-mentoring/show/{id}', [CoachingMentoringController::class, 'show'])->name('spv.coaching.show');
         Route::get('coaching-mentoring/evaluation/{id}', [CoachingMentoringController::class, 'showEvaluation'])->name('spv.coaching.evaluation');
-        Route::get('coaching-mentoring/getcompetencyid', [CoachingMentoringController::class, 'getCompetencyId']);
+        Route::get('coaching-mentoring/getquestion', [CoachingMentoringController::class, 'getQuestion']);
+        Route::get('coaching-mentoring/getanswer', [CoachingMentoringController::class, 'getAnswer']);
+        Route::get('coaching-mentoring/getcomment', [CoachingMentoringController::class, 'getComment']);
         Route::get('coaching-mentoring/getevaluation', [CoachingMentoringController::class, 'getEvaluation']);
-        Route::get('coaching-mentoring/getnote', [CoachingMentoringController::class, 'getNote']);
-        Route::post('coaching-mentoring/evaluation/storeresult', [CoachingMentoringController::class, 'postResult'])->name('spv.coaching.storeresult');
-        Route::post('coaching-mentoring/evaluation/storedescription', [CoachingMentoringController::class, 'postDescription'])->name('spv.coaching.storedescription');
-        Route::post('coaching-mentoring/evaluation/savenote', [CoachingMentoringController::class, 'saveNote'])->name('spv.coaching.savenote');
+        Route::get('coaching-mentoring/getcompetencyid', [CoachingMentoringController::class, 'getCompetencyId']);
+        Route::post('coaching-mentoring/postcomment', [CoachingMentoringController::class, 'postComment'])->name('spv.coaching.postcomment');
+        Route::post('coaching-mentoring/saveevaluation', [CoachingMentoringController::class, 'saveEvaluation'])->name('spv.coaching.saveevaluation');
 
         Route::get('competency-tools', [CompetencySupervisorController::class, 'index'])->name('competency-tools-spv.index');
         Route::post('competency-tools/store', [CompetencySupervisorController::class, 'store'])->name('competency-tools-spv.store');
@@ -177,6 +186,10 @@ Route::group(['middleware' => ['role:Operator GT RSG|Supervisor Operator|Senior 
         Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');
 
         Route::get('/competency-score', [CompetencyScoreController::class, 'index'])->name('competency-score.index');
+        Route::get('/competency-score/show/{id}', [CompetencyScoreController::class, 'show'])->name('competency-score.show');
+        Route::get('/competency-score/getevaluation', [CompetencyScoreController::class, 'getEvaluation']);
+        Route::get('/competency-score/getcomment', [CompetencyScoreController::class, 'getComment']);
+        Route::post('/competency-score/postcomment', [CompetencyScoreController::class, 'postComment'])->name('competency-score.postcomment');
 
         // Competency Route
         Route::get('competency-tools', [CompetencyOperatorController::class, 'index'])->name('competency-tools-op.index');

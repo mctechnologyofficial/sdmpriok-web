@@ -46,11 +46,10 @@ class CompetencyOperatorController extends Controller
                 'competencyid'  => 'required|integer',
                 'questionid'    => 'required|integer',
                 'essay'         => '',
-                'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
+                // 'image'         => 'mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:2048'
             ]);
 
             if($request->hasFile('image')){
-                // $path = $request->file('image')->store('answer/operator-answer');
                 $file = $request->file('image');
                 $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
                 $path = $file->move('storage/answer/operator-answer', $filename);
@@ -202,7 +201,6 @@ class CompetencyOperatorController extends Controller
 
         $subcategory = Competency::select('sub_category')
                     ->where('category', 'LIKE', '%'.$category.'%')
-                    ->groupBy('sub_category')
                     ->get();
 
         $response['data'] = $subcategory;

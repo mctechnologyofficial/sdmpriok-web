@@ -38,7 +38,7 @@
                                         <td>
                                             @if ($data->data == 0)
                                                 <p class="text-danger">Not working yet</p>
-                                            @elseif ($data->data > 0 && $data->data < 100)
+                                            @elseif ($data->data < 100)
                                                 <p class="text-warning">In progress</p>
                                             @elseif ($data->data >= 100)
                                                 <p class="text-success">Complete</p>
