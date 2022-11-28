@@ -130,6 +130,15 @@
 
                                 <div class="row row-xs align-items-center mg-b-20">
                                     <div class="col-md-4">
+                                        <label class="mg-b-0">Development Area</label>
+                                    </div>
+                                    <div class="col-md-8 mg-t-5 mg-md-t-0">
+                                        <input type="text" name="area" id="area" class="form-control mb-2">
+                                    </div>
+                                </div>
+
+                                <div class="row row-xs align-items-center mg-b-20">
+                                    <div class="col-md-4">
                                         <label class="mg-b-0">Comment</label>
                                     </div>
                                 </div>
@@ -294,7 +303,7 @@
                         questionid: questionid,
                         userid: $('#userid').val(),
                         result : $('#score').val(),
-                        // description : $('#description').val(),
+                        area : $('#area').val(),
                     },
                     dataType: 'json',
                     success: function(response){
@@ -397,6 +406,8 @@
                     }
                 }else{
                     $('#essay').val('');
+                    $('#downloadFile').text('User has not uploaded file yet.');
+                    $('#downloadFile').prop('href', 'javascript:void(0)');
                 }
             }
 
@@ -434,11 +445,14 @@
                 if(len > 0){
                     for(var i=0; i < len; i++){
                         var result = response['data'][i].result;
+                        var description = response['data'][i].description;
 
                         $('#score').val(result).trigger('change');
+                        $('#area').val(description).trigger('change');
                     }
                 }else{
-                    $("#score").empty();
+                    $("#score").val('');
+                    $("#area").val('');
                 }
             }
         });

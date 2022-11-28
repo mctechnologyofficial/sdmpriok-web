@@ -313,7 +313,7 @@ class CoachingMentoringController extends Controller
         $questionid = $request->questionid;
         $user = $request->userid;
         $result = $request->result;
-        // $description = $request->description;
+        $area = $request->area;
 
         $validation = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->count();
 
@@ -323,7 +323,7 @@ class CoachingMentoringController extends Controller
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
                 'result'                => $result,
-                // 'description'           => $description,
+                'description'           => $area,
             ]);
         }else{
             $data = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->update([
@@ -331,7 +331,7 @@ class CoachingMentoringController extends Controller
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
                 'result'                => $result,
-                // 'description'           => $description,
+                'description'           => $area,
             ]);
         }
 
