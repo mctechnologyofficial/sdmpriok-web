@@ -38,6 +38,8 @@
                             <div class="form-group row justify-content-end mb-0">
                                 <div class="col-lg-12 mt-2">
                                     <button type="submit" class="btn ripple btn-primary btn-block">Upload</button>
+                                    <a class="btn btn-outline-info btn-block" href="{{ asset('assets/template/Template Questions Operator.csv') }}" download>Download Operator Questions Template</a>
+                                    <a class="btn btn-outline-info btn-block" href="{{ asset('assets/template/Template Questions Supervisor.csv') }}" download>Download Supervisor Questions Template</a>
                                 </div>
                             </div>
                         </form>
