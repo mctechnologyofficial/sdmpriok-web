@@ -19,9 +19,18 @@ class AssessmentChartController extends Controller
      */
     public function team()
     {
-        $team = User::role('supervisor')
-            ->where('team_id', '=', Auth::user()->team_id)
-            ->get();
+        // $team = User::role('supervisor')
+        //     ->where('team_id', '=', Auth::user()->team_id)
+        //     ->get();
+        $team = User::selectRaw('users.id, users.name')
+        ->join('model_has_roles', function ($join) {
+            $join->on('users.id', '=', 'model_has_roles.model_id')
+                    ->where('model_has_roles.model_type', User::class);
+        })
+        ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->where('users.team_id', Auth::user()->team_id)
+        ->where('roles.name', 'LIKE', '%Operator%')
+        ->get();
 
         return view('layouts.supervisor.assessment-chart.team', compact(['team']));
     }
@@ -34,72 +43,6 @@ class AssessmentChartController extends Controller
     public function personal()
     {
         return view('layouts.supervisor.assessment-chart.personal');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**

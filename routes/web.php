@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EvaluationFormController;
 use App\Http\Controllers\Admin\MentoringController;
 use App\Http\Controllers\Admin\MonitoringProgressController;
+use App\Http\Controllers\Admin\OrganizationController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
@@ -110,6 +111,13 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('/getcompetencyidop', [MentoringController::class, 'getCompetencyIdOp']);
             Route::post('/postcommentop', [MentoringController::class, 'postCommentOp'])->name('monitoring-op.postcomment');
             Route::post('/saveevaluationop', [MentoringController::class, 'saveEvaluationOp'])->name('monitoring-op.saveevaluation');
+        });
+
+        // organization routes
+        Route::prefix('organization')->group(function () {
+            Route::get('/', [OrganizationController::class, 'index'])->name('organization.index');
+            Route::get('/getteam', [OrganizationController::class, 'getTeam']);
+            Route::get('/getradar', [OrganizationController::class, 'getRadar']);
         });
 
         // monitoring chart route

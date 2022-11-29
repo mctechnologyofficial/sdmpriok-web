@@ -18,7 +18,7 @@ class AssesmentChartController extends Controller
      */
     public function team()
     {
-        $team = User::role('supervisor senior')
+        $team = User::role('supervisor')
             ->where('team_id', '=', Auth::user()->team_id)
             ->get();
 
@@ -45,7 +45,7 @@ class AssesmentChartController extends Controller
             ->where('progress.user_id', '=', $userid)
             ->where('progress.team_id', Auth::user()->team_id)
             ->get();
-        
+
         $response['team'] = $team;
         return response()->json($response);
     }

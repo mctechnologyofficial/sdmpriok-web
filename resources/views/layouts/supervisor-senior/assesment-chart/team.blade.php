@@ -53,6 +53,10 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(response) {
+                let team = Chart.getChart("teamChart"); // redraw chart if exist
+                if (team != undefined) {
+                    team.destroy();
+                }
                 let json = response['team'];
                 let progressdata = [];
                 let kompetensi = [];

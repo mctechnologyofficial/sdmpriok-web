@@ -53,6 +53,10 @@
                     },
                     dataType: 'json',
                     success: function(response) {
+                        let team = Chart.getChart("teamChart"); // redraw chart if exist
+                        if (team != undefined) {
+                            team.destroy();
+                        }
                         let json = response['team'];
                         let progressdata = [];
                         let kompetensi = [];
@@ -67,7 +71,7 @@
                             if ($.inArray(el, uniqueCompetency) === -1) uniqueCompetency
                                 .push(el);
                         });
-                        
+
                         const ChartData = {
                             labels: uniqueCompetency,
                             datasets: [{
