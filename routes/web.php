@@ -118,6 +118,7 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('/', [OrganizationController::class, 'index'])->name('organization.index');
             Route::get('/getteam', [OrganizationController::class, 'getTeam']);
             Route::get('/getradar', [OrganizationController::class, 'getRadar']);
+            Route::post('/moveemployee', [OrganizationController::class, 'moveEmployee'])->name('organization.update');
         });
 
         // monitoring chart route

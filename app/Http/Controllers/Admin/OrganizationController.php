@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Evaluation;
 use App\Models\Progress;
 use App\Models\Team;
 use App\Models\User;
@@ -32,7 +33,7 @@ class OrganizationController extends Controller
     {
         $id = $request->id;
 
-        $team = User::where('team_id', 1)->get();
+        $team = User::where('team_id', $id)->get();
 
         $response['data'] = $team;
 
@@ -49,14 +50,28 @@ class OrganizationController extends Controller
         // $userid = $request->userid;
         $teamid = $request->id;
 
-        $team  = Progress::selectRaw('SUM(progress.progress) as progress, users.name as users')
-            ->join('users', 'users.id', '=', 'progress.user_id')
-            // ->join('competencies', 'competencies.id', '=', 'progress.competency_id')
-            // ->where('progress.user_id', '=', $userid)
-            ->where('progress.team_id', $teamid)
-            ->groupBy('progress.user_id')
+        $team  = Evaluation::selectRaw('AVG(evaluations.result) as score, users.name as users')
+            ->join('users', 'users.id', '=', 'evaluations.user_id')
+            ->where('users.team_id', $teamid)
+            ->groupBy('evaluations.user_id')
             ->get();
             $response['team'] = $team;
+
+        return response()->json($response);
+    }
+
+    /**
+     * Move Employee
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function moveEmployee(Request $request)
+    {
+        $user = User::where('id', $request->id)->update([
+            'team_id'   => $request->tujuan,
+        ]);
+
+        $response['data'] = $user;
 
         return response()->json($response);
     }

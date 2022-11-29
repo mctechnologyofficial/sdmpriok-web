@@ -11,6 +11,9 @@
             overflow:scroll;
             -webkit-overflow-scrolling: touch;
         }
+        .ulbackground {
+            background-color : #dfdfdf;
+        }
     </style>
 @endsection
 
@@ -71,7 +74,7 @@
 
         function createTeamLeft(response) {
             var len = 0;
-            $('#teamleft-list').empty();
+            $("#teamleft-list").children('li').remove();
 
             if(response['data'] != null){
                 len = response['data'].length;
@@ -86,17 +89,16 @@
                         "<input type='hidden' id='useridleft' value='" + id + "'/>" +
                         "<a href='javascript:void(0)' class='text-dark'>" + name + "</a>" +
                         "</li>";
-
+                    
                     $("#teamleft-list").append(tr_str);
                 }
             }else{
-                $("#teamleft-list").empty();
+                $("#teamleft-list").children('li').remove();
             }
         }
-
         function createTeamRight(response) {
             var len = 0;
-            $('#teamright-list').empty();
+            $('#teamright-list').children('li').remove();
 
             if(response['data'] != null){
                 len = response['data'].length;
@@ -115,7 +117,7 @@
                     $("#teamright-list").append(tr_str);
                 }
             }else{
-                $("#teamright-list").empty();
+                $("#teamright-list").children('li').remove();
             }
         }
 
@@ -154,14 +156,14 @@
                     let user = [];
 
                     json.forEach(e => {
-                        progressdata.push(e.progress);
+                        progressdata.push(e.score);
                         user.push(e.users);
                     });
 
                     const ChartData = {
                         labels: user,
                         datasets: [{
-                            label: 'Team Progress',
+                            label: 'Team Score',
                             data: progressdata,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
@@ -188,13 +190,6 @@
                     var radarTeamChart = new Chart(radarleft, {
                         type: 'radar',
                         data: ChartData,
-                        options: {
-                            scales: {
-                                // y: {
-                                //     beginAtZero: true
-                                // }
-                            }
-                        },
                     });
                 }
             });
@@ -235,14 +230,14 @@
                     let user = [];
 
                     json.forEach(e => {
-                        progressdata.push(e.progress);
+                        progressdata.push(e.score);
                         user.push(e.users);
                     });
 
                     const ChartData = {
                         labels: user,
                         datasets: [{
-                            label: 'Team Progress',
+                            label: 'Team Score',
                             data: progressdata,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
@@ -283,10 +278,342 @@
 
         $(document).on('click', '#listteamleft', function(){
             idleft = $(this).find('#useridleft').val();
+            this.style.backgroundColor = this.style.backgroundColor == 'grey' ? '#f9f9f9' : 'grey';
         });
 
         $(document).on('click', '#listteamright', function(){
             idright = $(this).find('#useridright').val();
+            this.style.backgroundColor = this.style.backgroundColor == 'grey' ? '#f9f9f9' : 'grey';
+        });
+
+        $('#moveright').on('click', function(){
+            $.ajax({
+                type:"POST",
+                url: "{{ route('organization.update') }}",
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: idleft,
+                    tujuan: $('#teamright').val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    //show success message
+                    Swal.fire({
+                        title: 'Success',
+                        text: "You have successfully transferred the employee!",
+                        icon: 'success'
+                    });
+
+                    // update left radar team
+                    $.ajax({
+                        url: '/admin/organization/getradar',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamleft').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            let kiri = Chart.getChart("leftChart"); // redraw chart if exist
+                            if (kiri != undefined) {
+                                kiri.destroy();
+                            }
+
+                            let json = response['team'];
+                            let progressdata = [];
+                            let user = [];
+
+                            json.forEach(e => {
+                                progressdata.push(e.score);
+                                user.push(e.users);
+                            });
+
+                            const ChartData = {
+                                labels: user,
+                                datasets: [{
+                                    label: 'Team Score',
+                                    data: progressdata,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 205, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255, 159, 64)',
+                                        'rgb(255, 205, 86)',
+                                        'rgb(75, 192, 192)',
+                                        'rgb(54, 162, 235)',
+                                        'rgb(153, 102, 255)',
+                                        'rgb(201, 203, 207)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            var radarTeamChart = new Chart(radarleft, {
+                                type: 'radar',
+                                data: ChartData,
+                            });
+                        }
+                    });
+
+                    // update right radar team
+                    $.ajax({
+                        url: '/admin/organization/getradar',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamright').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            let kanan = Chart.getChart("rightChart"); // redraw chart if exist
+                            if (kanan != undefined) {
+                                kanan.destroy();
+                            }
+
+                            let json = response['team'];
+                            let progressdata = [];
+                            let user = [];
+
+                            json.forEach(e => {
+                                progressdata.push(e.score);
+                                user.push(e.users);
+                            });
+
+                            const ChartData = {
+                                labels: user,
+                                datasets: [{
+                                    label: 'Team Score',
+                                    data: progressdata,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 205, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255, 159, 64)',
+                                        'rgb(255, 205, 86)',
+                                        'rgb(75, 192, 192)',
+                                        'rgb(54, 162, 235)',
+                                        'rgb(153, 102, 255)',
+                                        'rgb(201, 203, 207)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            var radarTeamChart = new Chart(radarright, {
+                                type: 'radar',
+                                data: ChartData,
+                            });
+                        }
+                    });
+
+                    // update list left team
+                    $.ajax({
+                        url: '/admin/organization/getteam',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamleft').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            createTeamLeft(response);
+                        }
+                    });
+
+                    // update list right team
+                    $.ajax({
+                        url: '/admin/organization/getteam',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamright').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            createTeamRight(response);
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#moveleft').on('click', function(){
+            $.ajax({
+                type:"POST",
+                url: "{{ route('organization.update') }}",
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: idright,
+                    tujuan: $('#teamleft').val()
+                },
+                dataType: 'json',
+                success: function(response){
+                    //show success message
+                    Swal.fire({
+                        title: 'Success',
+                        text: "You have successfully transferred the employee!",
+                        icon: 'success'
+                    });
+                    
+                    // update left radar team
+                    $.ajax({
+                        url: '/admin/organization/getradar',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamleft').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            let kiri = Chart.getChart("leftChart"); // redraw chart if exist
+                            if (kiri != undefined) {
+                                kiri.destroy();
+                            }
+
+                            let json = response['team'];
+                            let progressdata = [];
+                            let user = [];
+
+                            json.forEach(e => {
+                                progressdata.push(e.score);
+                                user.push(e.users);
+                            });
+
+                            const ChartData = {
+                                labels: user,
+                                datasets: [{
+                                    label: 'Team Score',
+                                    data: progressdata,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 205, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255, 159, 64)',
+                                        'rgb(255, 205, 86)',
+                                        'rgb(75, 192, 192)',
+                                        'rgb(54, 162, 235)',
+                                        'rgb(153, 102, 255)',
+                                        'rgb(201, 203, 207)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            var radarTeamChart = new Chart(radarleft, {
+                                type: 'radar',
+                                data: ChartData,
+                            });
+                        }
+                    });
+
+                    // update right radar team
+                    $.ajax({
+                        url: '/admin/organization/getradar',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamright').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            let kanan = Chart.getChart("rightChart"); // redraw chart if exist
+                            if (kanan != undefined) {
+                                kanan.destroy();
+                            }
+
+                            let json = response['team'];
+                            let progressdata = [];
+                            let user = [];
+
+                            json.forEach(e => {
+                                progressdata.push(e.score);
+                                user.push(e.users);
+                            });
+
+                            const ChartData = {
+                                labels: user,
+                                datasets: [{
+                                    label: 'Team Score',
+                                    data: progressdata,
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)',
+                                        'rgba(255, 205, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(201, 203, 207, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255, 159, 64)',
+                                        'rgb(255, 205, 86)',
+                                        'rgb(75, 192, 192)',
+                                        'rgb(54, 162, 235)',
+                                        'rgb(153, 102, 255)',
+                                        'rgb(201, 203, 207)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            var radarTeamChart = new Chart(radarright, {
+                                type: 'radar',
+                                data: ChartData,
+                            });
+                        }
+                    });
+
+                    // update list left team
+                    $.ajax({
+                        url: '/admin/organization/getteam',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamleft').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            createTeamLeft(response);
+                        }
+                    });
+
+                    // update list right team
+                    $.ajax({
+                        url: '/admin/organization/getteam',
+                        type: 'GET',
+                        data: {
+                            _token: CSRF_TOKEN,
+                            id: $('#teamright').val()
+                        },
+                        dataType: 'json',
+                        success: function(response){
+                            createTeamRight(response);
+                        }
+                    });
+                }
+            });
         });
     });
 </script>
