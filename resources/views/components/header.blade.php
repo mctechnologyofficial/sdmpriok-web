@@ -19,7 +19,7 @@
                 <div class="dropdown-menu">
                     <div class="header-navheading">
                         <h6 class="main-notification-title">{{ Auth::user()->name }}</h6>
-                        <p class="main-notification-text">{{ Auth::user()->roles->pluck('name')[0] }}</p>
+                        <p class="main-notification-text">{{ ucfirst(Auth::user()->roles->pluck('name')[0]) }}</p>
                     </div>
                     <a class="dropdown-item" href="{{ route('profile.index') }}">
                         <i class="fe fe-edit"></i> Edit Profile

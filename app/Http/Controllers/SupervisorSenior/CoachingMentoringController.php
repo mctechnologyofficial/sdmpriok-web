@@ -39,27 +39,6 @@ class CoachingMentoringController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -75,7 +54,6 @@ class CoachingMentoringController extends Controller
 
         $competency = Competency::where('role', 'LIKE', '%Supervisor%')->groupBy('name')->get();
         $outercompetency = Competency::all();
-        $formevaluasi = FormEvaluationSupervisor::select('tools')->groupBy('tools')->get();
 
         $psistemproteksi = Competency::selectRaw('SUM(progress.progress) as data')
                                 ->join('progress', 'progress.competency_id', '=', 'competencies.id')
@@ -202,41 +180,7 @@ class CoachingMentoringController extends Controller
         ])
         ->options([]);
 
-        return view('layouts.supervisor-senior.coaching-mentoring.detail', compact(['user', 'formevaluasi', 'competency', 'outercompetency', 'sistemproteksi', 'pengaturandaya', 'perencanaan', 'optimalisasi', 'analisa']));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('layouts.supervisor-senior.coaching-mentoring.detail', compact(['user', 'competency', 'outercompetency', 'sistemproteksi', 'pengaturandaya', 'perencanaan', 'optimalisasi', 'analisa']));
     }
 
     /**
@@ -314,8 +258,13 @@ class CoachingMentoringController extends Controller
         })
         ->where('competency_id', $competencyid)
         ->where('question_id', '=', $id)
-        ->where('to', $to)
-        ->where('from', Auth::user()->id)
+        // ->where('to', $to)
+        // ->where('from', Auth::user()->id)
+        ->where(function($query){
+            return $query
+            ->where('from', Auth::user()->id)
+            ->orWhere('to', Auth::user()->id);
+        })
         ->orderBy('comments.created_at', 'DESC')
         ->get();
 

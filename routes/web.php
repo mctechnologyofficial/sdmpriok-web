@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CompetencyController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EvaluationFormController;
+use App\Http\Controllers\Admin\MentoringController;
 use App\Http\Controllers\Admin\MonitoringProgressController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -87,6 +88,30 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::delete('{id}/delete', [TeamController::class, 'destroy'])->name('team.destroy');
         });
 
+        // monitoring route
+        Route::prefix('monitoring')->group(function () {
+            Route::get('/', [MentoringController::class, 'index'])->name('mentoring.index');
+            Route::get('/show/{id}', [MentoringController::class, 'show'])->name('mentoring.show');
+
+            // monitoring route spv
+            Route::get('/getcategoryspv', [MentoringController::class, 'getCategorySpv']);
+            Route::get('/getquestionspv', [MentoringController::class, 'getQuestionSpv']);
+            Route::get('/getanswerspv', [MentoringController::class, 'getAnswerSpv']);
+            Route::get('/getcommentspv', [MentoringController::class, 'getCommentSpv']);
+            Route::get('/getevaluationspv', [MentoringController::class, 'getEvaluationSpv']);
+            Route::post('/postcommentspv', [MentoringController::class, 'postCommentSpv'])->name('monitoring-spv.postcomment');
+            Route::post('/saveevaluationspv', [MentoringController::class, 'saveEvaluationSpv'])->name('monitoring-spv.saveevaluation');
+
+            // monitoring route op
+            Route::get('/getquestionop', [MentoringController::class, 'getQuestionOp']);
+            Route::get('/getanswerop', [MentoringController::class, 'getAnswerOp']);
+            Route::get('/getcommentop', [MentoringController::class, 'getCommentOp']);
+            Route::get('/getevaluationop', [MentoringController::class, 'getEvaluationOp']);
+            Route::get('/getcompetencyidop', [MentoringController::class, 'getCompetencyIdOp']);
+            Route::post('/postcommentop', [MentoringController::class, 'postCommentOp'])->name('monitoring-op.postcomment');
+            Route::post('/saveevaluationop', [MentoringController::class, 'saveEvaluationOp'])->name('monitoring-op.saveevaluation');
+        });
+
         // monitoring chart route
         Route::prefix('progress-chart')->group(function () {
             Route::get('/', [MonitoringProgressController::class, 'index'])->name('progress-chart.index');
@@ -118,11 +143,6 @@ Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('question')->group(function () {
             Route::get('/', [QuestionController::class, 'index'])->name('question.index');
             Route::post('store', [QuestionController::class, 'store'])->name('question.store');
-        });
-
-        Route::prefix('evaluation-form')->group(function () {
-            Route::get('/', [EvaluationFormController::class, 'index'])->name('evaluation.index');
-            Route::post('store', [EvaluationFormController::class, 'store'])->name('evaluation.store');
         });
 
     });

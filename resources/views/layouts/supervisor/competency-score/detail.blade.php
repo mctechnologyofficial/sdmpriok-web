@@ -1,6 +1,14 @@
 @extends('layouts.master')
 @section('title', 'Competency Score')
 
+@section('css')
+    <style>
+        .swal2-container {
+            z-index: 20000 !important;
+        }
+    </style>
+@endsection
+
 @section('content')
 <div class="row row-sm">
     <div class="col-lg-12">
@@ -95,7 +103,7 @@
 
             $(document).on('click', '#openmodal', function(){
                 $.ajax({
-                    url: '/operator/competency-score/getevaluation',
+                    url: '/supervisor/competency-score/getevaluation',
                     type: 'GET',
                     data: {
                         _token: CSRF_TOKEN,
@@ -108,7 +116,7 @@
                 });
 
                 $.ajax({
-                    url: '/operator/competency-score/getcomment',
+                    url: '/supervisor/competency-score/getcomment',
                     type: 'GET',
                     data: {
                         _token: CSRF_TOKEN,
@@ -125,7 +133,7 @@
             $(document).on('click', '#postcomment', function(){
                 $.ajax({
                     type:"POST",
-                    url: "{{ route('competency-score.postcomment') }}",
+                    url: "{{ route('competency-score-spv.postcomment') }}",
                     data: {
                         _token: CSRF_TOKEN,
                         commentid: commentid,
@@ -145,7 +153,7 @@
                             $('#postcomment').prop('disabled', true);
 
                             $.ajax({
-                                url: '/operator/competency-score/getcomment',
+                                url: '/supervisor/competency-score/getcomment',
                                 type: 'GET',
                                 data: {
                                     _token: CSRF_TOKEN,

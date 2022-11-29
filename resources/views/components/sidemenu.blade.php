@@ -36,11 +36,11 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-chalkboard sidemenu-icon"></i><span class="sidemenu-label">Mentoring</span></a>
+                    <a class="nav-link" href="{{ route('mentoring.index') }}"><span class="shape1"></span><span class="shape2"></span><i
+                            class="fas fa-pencil-square-o sidemenu-icon"></i><span class="sidemenu-label">Mentoring</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-users sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i class="angle fe fe-chevron-right"></i></a>
+                    <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-desktop sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i class="angle fe fe-chevron-right"></i></a>
                     <ul class="nav-sub">
                         <li class="nav-sub-item">
                             <a class="nav-sub-link" href="{{ route('progress-chart.index') }}">Monitoring Progress Chart</a>
@@ -76,7 +76,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('spv.senior.coaching.list')}}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span
+                            class="shape2"></span><i class="fas fa-pencil-square-o sidemenu-icon"></i><span
                             class="sidemenu-label">Coaching Mentoring</span></a>
                 </li>
                 <li class="nav-item">
@@ -106,7 +106,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('spv.coaching.index')}}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-chalkboard sidemenu-icon"></i><span
+                            class="shape2"></span><i class="fas fa-pencil-square-o sidemenu-icon"></i><span
                             class="sidemenu-label">Coaching Mentoring</span></a>
                 </li>
                 <li class="nav-item">

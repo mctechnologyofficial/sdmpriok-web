@@ -6,6 +6,12 @@
         .swal2-container {
             z-index: 20000 !important;
         }
+        .list-group{
+            max-height: 200px;
+            margin-bottom: 10px;
+            overflow:scroll;
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 @endsection
 
@@ -15,7 +21,7 @@
             <div class="card custom-card">
                 <div class="card-body text-center">
                     <h4 class="font-weight-bold">{{ $user->name }} ({{ $user->nip }})</h4>
-                    <h5>{{ $user->roles->first()->name }}</h5>
+                    <h5>{{ ucfirst($user->roles->first()->name) }}</h5>
                 </div>
             </div>
         </div>
