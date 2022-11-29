@@ -40,6 +40,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'spv home']);
         Permission::create(['name' => 'coaching mentoring']);
         Permission::create(['name' => 'competency tools spv']);
+        Permission::create(['name' => 'competency score']);
         Permission::create(['name' => 'assesment chart']);
 
         // create permission for operator
@@ -70,6 +71,7 @@ class PermissionSeeder extends Seeder
         $role3->givePermissionTo('spv home');
         $role3->givePermissionTo('coaching mentoring');
         $role3->givePermissionTo('competency tools spv');
+        $role3->givePermissionTo('competency score');
         $role3->givePermissionTo('assesment chart');
 
         // create roles operator and assign permission to this roles

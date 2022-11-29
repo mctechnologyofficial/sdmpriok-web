@@ -114,6 +114,8 @@
                             class="shape1"></span><span class="shape2"></span><i
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('competency-score-spv.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link with-sub" href="#"><span class="shape1"></span><span

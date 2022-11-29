@@ -14,6 +14,7 @@ use App\Http\Controllers\Operator\CompetencyScoreController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Supervisor\AssessmentChartController;
 use App\Http\Controllers\Supervisor\CoachingMentoringController;
+use App\Http\Controllers\Supervisor\CompetencyScoreController as SupervisorCompetencyScoreController;
 use App\Http\Controllers\Supervisor\CompetencySupervisorController;
 use App\Http\Controllers\SupervisorSenior\AssesmentChartController as AssesmentSpvSeniorController;
 use App\Http\Controllers\SupervisorSenior\CoachingMentoringController as SupervisorSeniorCoachingMentoringController;
@@ -172,6 +173,12 @@ Route::group(['middleware' => ['role:supervisor']], function () {
         Route::get('competency-tools/getimage', [CompetencySupervisorController::class, 'getImage']);
         Route::get('competency-tools/getanswer', [CompetencySupervisorController::class, 'getAnswer']);
         Route::get('competency-tools/getidcompetency', [CompetencySupervisorController::class, 'getIdCompetency']);
+
+        Route::get('/competency-score', [SupervisorCompetencyScoreController::class, 'index'])->name('competency-score-spv.index');
+        Route::get('/competency-score/show/{id}', [SupervisorCompetencyScoreController::class, 'show'])->name('competency-score-spv.show');
+        Route::post('/competency-score/postcomment', [SupervisorCompetencyScoreController::class, 'postComment'])->name('competency-score-spv.postcomment');
+        Route::get('/competency-score/getevaluation', [SupervisorCompetencyScoreController::class, 'getEvaluation']);
+        Route::get('/competency-score/getcomment', [SupervisorCompetencyScoreController::class, 'getComment']);
 
         Route::get('assessment-chart/personal', [AssessmentChartController::class, 'personal'])->name('chart-personal.personal');
         Route::get('assessment-chart/team', [AssessmentChartController::class, 'team'])->name('chart-team.team');
