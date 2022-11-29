@@ -222,6 +222,7 @@
                     type: 'GET',
                     data: {
                         _token: CSRF_TOKEN,
+                        competencyid: $('#competencyid').val(),
                         userid: $('#userid').val(),
                         questionid: questionid
                     },

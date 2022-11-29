@@ -7,6 +7,7 @@ use App\Models\AnswerOperator;
 use App\Models\AnswerSupervisor;
 use App\Models\Comment;
 use App\Models\Competency;
+use App\Models\Evaluation;
 use App\Models\EvaluationOperator;
 use App\Models\EvaluationSupervisor;
 use App\Models\QuestionOperator;
@@ -382,10 +383,12 @@ class MentoringController extends Controller
      */
     public function getEvaluationSpv(Request $request)
     {
+        $competencyid = $request->competencyid;
         $questionid = $request->questionid;
         $user = $request->userid;
 
-        $id = EvaluationSupervisor::where('user_id', $user)
+        $id = Evaluation::where('user_id', $user)
+        ->where('competency_id', $competencyid)
         ->where('formevaluation_id', $questionid)
         ->get();
 
@@ -434,10 +437,13 @@ class MentoringController extends Controller
         $result = $request->result;
         $area = $request->area;
 
-        $validation = EvaluationSupervisor::where('user_id', $user)->where('formevaluation_id', $questionid)->count();
+        $validation = Evaluation::where('user_id', $user)
+        ->where('competency_id', $competencyid)
+        ->where('formevaluation_id', $questionid)
+        ->count();
 
         if($validation == 0){
-            $data = EvaluationSupervisor::create([
+            $data = Evaluation::create([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
@@ -445,7 +451,10 @@ class MentoringController extends Controller
                 'description'           => $area,
             ]);
         }else{
-            $data = EvaluationSupervisor::where('user_id', $user)->where('formevaluation_id', $questionid)->update([
+            $data = Evaluation::where('user_id', $user)
+            ->where('competency_id', $competencyid)
+            ->where('formevaluation_id', $questionid)
+            ->update([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
@@ -567,10 +576,13 @@ class MentoringController extends Controller
         $result = $request->result;
         $area = $request->area;
 
-        $validation = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->count();
+        $validation = Evaluation::where('user_id', $user)
+        ->where('competency_id', $competencyid)
+        ->where('formevaluation_id', $questionid)
+        ->count();
 
         if($validation == 0){
-            $data = EvaluationOperator::create([
+            $data = Evaluation::create([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
@@ -578,7 +590,10 @@ class MentoringController extends Controller
                 'description'           => $area,
             ]);
         }else{
-            $data = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->update([
+            $data = Evaluation::where('user_id', $user)
+            ->where('competency_id', $competencyid)
+            ->where('formevaluation_id', $questionid)
+            ->update([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
@@ -617,10 +632,12 @@ class MentoringController extends Controller
      */
     public function getEvaluationOp(Request $request)
     {
+        $competencyid = $request->competencyid;
         $questionid = $request->questionid;
         $user = $request->userid;
 
         $id = EvaluationOperator::where('user_id', $user)
+        ->where('competency_id', $competencyid)
         ->where('formevaluation_id', $questionid)
         ->get();
 

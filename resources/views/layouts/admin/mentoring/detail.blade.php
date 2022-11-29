@@ -397,6 +397,7 @@
                         type: 'GET',
                         data: {
                             _token: CSRF_TOKEN,
+                            competencyid: $('#competencyid').val(),
                             questionid: questionid,
                             userid: $('#userid').val()
                         },
@@ -685,6 +686,7 @@
                         type: 'GET',
                         data: {
                             _token: CSRF_TOKEN,
+                            competencyid: $('#competencyid').val(),
                             questionid: questionid,
                             userid: $('#userid').val()
                         },

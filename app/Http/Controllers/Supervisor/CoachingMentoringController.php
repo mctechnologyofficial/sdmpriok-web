@@ -7,6 +7,7 @@ use App\Models\AnswerOperator;
 use App\Models\Comment;
 use App\Models\CommentOperator;
 use App\Models\Competency;
+use App\Models\Evaluation;
 use App\Models\EvaluationOperator;
 use App\Models\FormEvaluationOperator;
 use App\Models\QuestionOperator;
@@ -264,10 +265,13 @@ class CoachingMentoringController extends Controller
         $result = $request->result;
         $area = $request->area;
 
-        $validation = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->count();
+        $validation = Evaluation::where('user_id', $user)
+        ->where('competency_id', $competencyid)
+        ->where('formevaluation_id', $questionid)
+        ->count();
 
         if($validation == 0){
-            $data = EvaluationOperator::create([
+            $data = Evaluation::create([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
@@ -275,7 +279,10 @@ class CoachingMentoringController extends Controller
                 'description'           => $area,
             ]);
         }else{
-            $data = EvaluationOperator::where('user_id', $user)->where('formevaluation_id', $questionid)->update([
+            $data = Evaluation::where('user_id', $user)
+            ->where('competency_id', $competencyid)
+            ->where('formevaluation_id', $questionid)
+            ->update([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
                 'formevaluation_id'     => $questionid,
@@ -314,10 +321,12 @@ class CoachingMentoringController extends Controller
      */
     public function getEvaluation(Request $request)
     {
+        $competencyid = $request->competencyid;
         $questionid = $request->questionid;
         $user = $request->userid;
 
-        $id = EvaluationOperator::where('user_id', $user)
+        $id = Evaluation::where('user_id', $user)
+        ->where('competency_id', $competencyid)
         ->where('formevaluation_id', $questionid)
         ->get();
 
