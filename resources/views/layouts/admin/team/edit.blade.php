@@ -22,9 +22,9 @@
                         <h6 class="main-content-label mb-1">Edit Team</h6>
                     </div>
                     <div class="">
-                        <form action="{{ route('team.edit', $team->id) }}" method="POST">
-                            @method('put')
+                        <form action="{{ route('team.update', $team->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="row row-xs align-items-center mg-b-20">
                                 <div class="col-md-4">
                                     <label class="mg-b-0">Name</label>

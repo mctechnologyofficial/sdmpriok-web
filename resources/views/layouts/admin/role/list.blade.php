@@ -36,7 +36,7 @@
                             <tbody>
                                 @foreach ($role as $data)
                                     <tr>
-                                        <td>{{ $data->name }}</td>
+                                        <td>{{ ucfirst($data->name) }}</td>
                                         <td>
                                             <a class="btn btn-outline-primary btn-block mb-2" href="{{ route('role.edit', $data->id) }}">Edit</a>
                                             <form action="{{ route('role.destroy', $data->id) }}" method="POST">
