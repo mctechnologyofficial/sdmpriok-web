@@ -270,6 +270,13 @@
                     comment : $('#commenttext').val(),
                 },
                 dataType: 'json',
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Post comment failed to process!',
+                        icon: 'error'
+                    })
+                },
                 success: function(response){
                     Swal.fire({
                         title: 'Success',
@@ -309,6 +316,13 @@
                     area : $('#area').val(),
                 },
                 dataType: 'json',
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Save evaluation failed to process!',
+                        icon: 'error'
+                    })
+                },
                 success: function(response){
                     Swal.fire({
                         title: 'Success',
