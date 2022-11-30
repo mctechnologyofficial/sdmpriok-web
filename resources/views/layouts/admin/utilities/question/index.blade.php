@@ -19,6 +19,18 @@
                                 </button>
                             </div>
                         @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <ul class="mb-0 font-weight-bold">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row justify-content-end mb-0">

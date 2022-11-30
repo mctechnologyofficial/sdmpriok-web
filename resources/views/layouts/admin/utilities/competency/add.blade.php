@@ -7,6 +7,18 @@
         <div class="card custom-card mg-b-20">
             <div class="card custom-card">
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul class="mb-0 font-weight-bold">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div>
                         <h6 class="main-content-label mb-1">Add Competency</h6>
                         {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}

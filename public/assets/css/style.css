@@ -193,12 +193,13 @@ body {
     position: relative;
 }
 
-.list-group{
-    max-height: 300px;
+/* .list-group{
+    max-height: 200px;
+
     margin-bottom: 10px;
     overflow:scroll;
     -webkit-overflow-scrolling: touch;
-}
+} */
 
 [tabindex="-1"]:focus {
     outline: 0 !important;

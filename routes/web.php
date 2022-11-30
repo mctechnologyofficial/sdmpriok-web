@@ -220,6 +220,7 @@ Route::group(['middleware' => ['role:Operator GT RSG|Supervisor Operator|Senior 
     // operator routes
     Route::prefix('operator')->group(function () {
         Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');
+        Route::get('/home/getradar', [HomeController::class, 'getRadarIndexOperator']);
 
         Route::get('/competency-score', [CompetencyScoreController::class, 'index'])->name('competency-score.index');
         Route::get('/competency-score/show/{id}', [CompetencyScoreController::class, 'show'])->name('competency-score.show');

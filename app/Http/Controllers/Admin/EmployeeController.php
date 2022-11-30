@@ -120,7 +120,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $attrs = $request->validate([
+        $request->validate([
             'nip'      => 'required|string',
             'name'      => 'required|string',
             'email'     => 'required|email',

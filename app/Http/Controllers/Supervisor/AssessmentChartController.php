@@ -55,12 +55,12 @@ class AssessmentChartController extends Controller
         $userid = $request->userid;
 
         $team  = Progress::select('progress.progress as progress', 'competencies.name as competency')
-            ->join('users', 'users.id', '=', 'progress.user_id')
-            ->join('competencies', 'competencies.id', '=', 'progress.competency_id')
-            ->where('progress.user_id', '=', $userid)
-            ->where('progress.team_id', Auth::user()->team_id)
-            ->get();
-            $response['team'] = $team;
+        ->join('users', 'users.id', '=', 'progress.user_id')
+        ->join('competencies', 'competencies.id', '=', 'progress.competency_id')
+        ->where('progress.user_id', '=', $userid)
+        ->where('progress.team_id', Auth::user()->team_id)
+        ->get();
+        $response['team'] = $team;
 
         return response()->json($response);
     }
