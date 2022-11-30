@@ -92,9 +92,9 @@
                                             </div>
                                             <button class="btn ripple btn-main-primary btn-block">Sign In</button>
                                         </form>
-                                        {{-- <div class="text-left mt-3 ml-0">
-                                            <div class="mb-1"><a href="">Forgot password?</a></div>
-                                        </div> --}}
+                                        <div class="text-left mt-3 ml-0">
+                                            <div class="mb-1"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
