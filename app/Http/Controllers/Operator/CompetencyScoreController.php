@@ -20,10 +20,10 @@ class CompetencyScoreController extends Controller
      */
     public function index()
     {
-        $evaluation = Evaluation::selectRaw('competencies.id, competencies.name, competencies.sub_category, FORMAT(AVG(evaluation_operators.result), 1) as avg_evaluation')
-        ->join('competencies', 'competencies.id', '=', 'evaluation_operators.competency_id')
-        ->where('evaluation_operators.user_id', Auth::user()->id)
-        ->groupBy('evaluation_operators.competency_id')
+        $evaluation = Evaluation::selectRaw('competencies.id, competencies.name, competencies.sub_category, FORMAT(AVG(evaluations.result), 1) as avg_evaluation')
+        ->join('competencies', 'competencies.id', '=', 'evaluations.competency_id')
+        ->where('evaluations.user_id', Auth::user()->id)
+        ->groupBy('evaluations.competency_id')
         ->get();
         return view('layouts.operator.assessment.content', compact(['evaluation']));
     }
