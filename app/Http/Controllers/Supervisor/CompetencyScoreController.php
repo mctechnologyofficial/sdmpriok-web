@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Supervisor;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Competency;
+use App\Models\Evaluation;
 use App\Models\EvaluationSupervisor;
 use App\Models\QuestionSupervisor;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CompetencyScoreController extends Controller
      */
     public function index()
     {
-        $evaluation = EvaluationSupervisor::selectRaw('competencies.id, competencies.name, competencies.sub_category, FORMAT(AVG(evaluation_supervisors.result), 1) as avg_evaluation')
+        $evaluation = Evaluation::selectRaw('competencies.id, competencies.name, competencies.sub_category, FORMAT(AVG(evaluation_supervisors.result), 1) as avg_evaluation')
         ->join('competencies', 'competencies.id', '=', 'evaluation_supervisors.competency_id')
         ->where('evaluation_supervisors.user_id', Auth::user()->id)
         ->groupBy('evaluation_supervisors.competency_id')
@@ -54,7 +55,7 @@ class CompetencyScoreController extends Controller
         $user = Auth::user()->id;
         $questionid = $request->questionid;
 
-        $data = EvaluationSupervisor::where('user_id', $user)->where('formevaluation_id', $questionid)->get();
+        $data = Evaluation::where('user_id', $user)->where('formevaluation_id', $questionid)->get();
 
         $response['data'] = $data;
 
