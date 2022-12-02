@@ -218,7 +218,7 @@ Route::group(['middleware' => ['role:supervisor']], function () {
 });
 
 // Route::group(['middleware' => ['role:Operator GT RSG|Supervisor Operator|Senior Operator|Ahli Muda Operator|Operator Senior Control Room']], function () {
-    Route::group(['middleware' => ['role:'. Role::getAllRolesByName()]], function () {
+    Route::group(['middleware' => ['role:'. Role::getOtherRolesByName()]], function () {
     // operator routes
     Route::prefix('operator')->group(function () {
         Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');
