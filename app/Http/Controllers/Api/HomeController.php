@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\AnswerSupervisor;
 use App\Models\Competency;
-use App\Models\Progress;
 use App\Models\QuestionSupervisor;
 use App\Models\Slide;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function IndexSupervisor()
+    public function IndexSupervisor(): JsonResponse
     {
         $slide = Slide::all();
 
         $total_question = QuestionSupervisor::count();
-        $total_submit = AnswerSupervisor::where('user_id', '=' , Auth::user()->id)->count();
+        $total_submit = AnswerSupervisor::where('user_id', '=' , auth('sanctum')->user()->id)->count();
         function get_percentage($total, $number)
         {
             if ( $total > 0 ) {
@@ -38,27 +38,42 @@ class HomeController extends Controller
       	->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
       	->where('roles.name', 'LIKE', '%Operator%')
         ->join('progress', 'progress.user_id', '=', 'users.id')
-        ->where('progress.team_id', Auth::user()->team_id)
+        ->where('progress.team_id', auth('sanctum')->user()->team_id)
         ->pluck('total');
 
         $total = $teams->values();
-
         $result_total = str_replace(str_split('[]'), '', $total);
-        return view('layouts.supervisor.index', compact(['slide', 'total_progress', 'result_total']));
+
+        $response['slide'] = $slide;
+        $response['personal_progress'] = $total_progress;
+        $response['team_progress'] = $result_total;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
     }
 
-    public function IndexOperator()
+    public function IndexOperator(): JsonResponse
     {
         $totalmodule = Competency::where('role', 'Operator')->count();
+        $response['total_module'] = $totalmodule;
 
-        return view('layouts.operator.index', compact(['totalmodule']));
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
     }
 
-    public function getRadarIndexOperator()
+    public function getRadar(): JsonResponse
     {
         $competency = Competency::select('competencies.name', 'progress.progress')
         ->join('progress', 'progress.competency_id', '=', 'competencies.id')
-        ->where('progress.user_id', Auth::user()->id)
+        ->where('progress.user_id', auth('sanctum')->user()->id)
         ->groupBy('competencies.name', 'progress.progress')
         ->orderBy('competencies.id', 'ASC')
         ->pluck('competencies.name', 'progress.progress');
@@ -69,18 +84,31 @@ class HomeController extends Controller
         $response['label'] = $label;
         $response['data'] = $data;
 
-        return response()->json($response);
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
     }
 
-    public function IndexAdmin()
+    public function IndexAdmin(): JsonResponse
     {
         $totaluser = User::count();
         $totalmodule = Competency::count();
 
-        return view('layouts.admin.index', compact(['totaluser', 'totalmodule']));
+        $response['total_user'] = $totaluser;
+        $response['total_module'] = $totalmodule;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
     }
 
-    public function IndexSupervisorSenior()
+    public function IndexSupervisorSenior(): JsonResponse
     {
         $slide = Slide::all();
 
@@ -92,12 +120,20 @@ class HomeController extends Controller
       	->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
       	->where('roles.name', 'LIKE', '%Operator%')
         ->join('progress', 'progress.user_id', '=', 'users.id')
-        ->where('progress.team_id', Auth::user()->team_id)
+        ->where('progress.team_id', auth('sanctum')->user()->team_id)
         ->pluck('total');
 
         $total = $teams->values();
-
         $result_total = str_replace(str_split('[]'), '', $total);
-        return view('layouts.supervisor-senior.index', compact(['result_total', 'slide']));
+
+        $response['slide'] = $slide;
+        $response['progress_team'] = $result_total;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
     }
 }

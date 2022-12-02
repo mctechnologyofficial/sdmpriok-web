@@ -1,31 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Operator;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Competency;
 use App\Models\Evaluation;
-use App\Models\EvaluationOperator;
 use App\Models\QuestionOperator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CompetencyScoreController extends Controller
+class CompetencyScoreOperatorController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $evaluation = Evaluation::selectRaw('competencies.id, competencies.name, competencies.sub_category, FORMAT(AVG(evaluations.result), 1) as avg_evaluation')
         ->join('competencies', 'competencies.id', '=', 'evaluations.competency_id')
-        ->where('evaluations.user_id', Auth::user()->id)
+        ->where('evaluations.user_id', auth('sanctum')->user()->id)
         ->groupBy('evaluations.competency_id')
         ->get();
-        return view('layouts.operator.assessment.content', compact(['evaluation']));
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $evaluation
+        ], 200);
     }
 
     /**
@@ -34,14 +39,22 @@ class CompetencyScoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $competency = Competency::find($id);
         $competencyid = $competency->id;
 
         $question = QuestionOperator::where('competency', $competency->name)->where('lesson', $competency->sub_category)->get();
 
-        return view('layouts.operator.assessment.detail', compact(['question', 'competencyid']));
+        $response['competencyid'] = $competencyid;
+        $response['question'] = $question;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
     }
 
     /**
@@ -50,16 +63,18 @@ class CompetencyScoreController extends Controller
      * @return \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function getEvaluation(Request $request)
+    public function getEvaluation(Request $request): JsonResponse
     {
-        $user = Auth::user()->id;
         $questionid = $request->questionid;
 
-        $data = Evaluation::where('user_id', $user)->where('formevaluation_id', $questionid)->get();
+        $data = Evaluation::where('user_id', auth('sanctum')->user()->id)->where('formevaluation_id', $questionid)->get();
 
-        $response['data'] = $data;
-
-        return response()->json($response);
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
     }
 
     /**
@@ -68,7 +83,7 @@ class CompetencyScoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getComment(Request $request)
+    public function getComment(Request $request): JsonResponse
     {
         $competencyid = $request->competencyid;
         $id = $request->questionid;
@@ -81,15 +96,18 @@ class CompetencyScoreController extends Controller
         ->where('question_id', $id)
         ->where(function($query){
             return $query
-            ->where('from', Auth::user()->id)
-            ->orWhere('to', Auth::user()->id);
+            ->where('from', auth('sanctum')->user()->id)
+            ->orWhere('to', auth('sanctum')->user()->id);
         })
         ->orderBy('comments.created_at', 'DESC')
         ->get();
 
-        $response['data'] = $data;
-
-        return response()->json($response);
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
     }
 
     /**
@@ -98,7 +116,7 @@ class CompetencyScoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postComment(Request $request)
+    public function postComment(Request $request): JsonResponse
     {
         $comments = Comment::find($request->commentid);
         $competencyid = $request->competencyid;
@@ -108,13 +126,16 @@ class CompetencyScoreController extends Controller
         $data = Comment::create([
             'competency_id' => $competencyid,
             'question_id'   => $id,
-            'from'          => Auth::user()->id,
+            'from'          => auth('sanctum')->user()->id,
             'to'            => $comments->from,
             'comment'       => $comment
         ]);
 
-        $response['data'] = $data;
-
-        return response()->json($response);
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
     }
 }

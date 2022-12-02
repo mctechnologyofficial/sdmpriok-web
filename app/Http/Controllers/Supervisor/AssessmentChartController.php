@@ -73,11 +73,11 @@ class AssessmentChartController extends Controller
     public function getDataRadarChartPersonal()
     {
         $competency = Competency::select('competencies.name', 'progress.progress')
-            ->join('progress', 'progress.competency_id', '=', 'competencies.id')
-            ->where('progress.user_id', Auth::user()->id)
-            ->groupBy('competencies.name', 'progress.progress')
-            ->orderBy('competencies.id', 'ASC')
-            ->pluck('competencies.name', 'progress.progress');
+        ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+        ->where('progress.user_id', Auth::user()->id)
+        ->groupBy('competencies.name', 'progress.progress')
+        ->orderBy('competencies.id', 'ASC')
+        ->pluck('competencies.name', 'progress.progress');
 
         $label = $competency->values();
         $data = $competency->keys();

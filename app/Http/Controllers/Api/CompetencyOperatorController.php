@@ -22,21 +22,11 @@ class CompetencyOperatorController extends Controller
         $data = Competency::where('role', 'Operator')->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -63,13 +53,25 @@ class CompetencyOperatorController extends Controller
             $path = null;
         }
 
-        $data = AnswerOperator::create([
-            'user_id'       => auth('sanctum')->user()->id,
-            'competency_id' => $attrs['competencyid'],
-            'question_id'   => $attrs['questionid'],
-            'essay'         => $attrs['essay'],
-            'file'          => $path
-        ]);
+        $validation_answer = AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')->count();
+        if($validation_answer == 0){
+            $data = AnswerOperator::create([
+                'user_id'       => auth('sanctum')->user()->id,
+                'competency_id' => $attrs['competencyid'],
+                'question_id'   => $attrs['questionid'],
+                'essay'         => $attrs['essay'],
+                'file'          => $path,
+                'status'        => 0
+            ]);
+        }else{
+            $data = AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')
+            ->where('user_id', auth('sanctum')->user()->id)
+            ->update([
+                'essay'         => $attrs['essay'],
+                'file'          => $path,
+                'status'        => 0
+            ]);
+        }
 
         $competency = Competency::find($attrs['competencyid']);
         $total_question = QuestionOperator::where('competency', $competency->name)->count();
@@ -110,103 +112,101 @@ class CompetencyOperatorController extends Controller
         }
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Answer has been submitted successfully.',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Answer has been submitted successfully.',
+            'data'      => $data
         ], 200);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    /**
-     * Get all operator lessons by competency
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getLessonByCompetency(Request $request): JsonResponse
+    public function publish(Request $request): JsonResponse
+    {
+        $data = AnswerOperator::where('question_id', 'LIKE', '%'.$request->questionid.'%')
+        ->where('user_id', auth('sanctum')->user()->id)
+        ->update(['status' => 1]);
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
+    }
+
+    /**
+     * Get all operator category by competency
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getCategory(Request $request): JsonResponse
     {
         $competency = $request->competency;
 
-        $lesson = QuestionOperator::select('lesson')
-                    ->where('competency', 'LIKE', '%'.$competency.'%')
-                    ->groupBy('lesson')
-                    ->orderBy('id', 'asc')
+        $category = Competency::select('category')
+                    ->where('name', 'LIKE', '%'.$competency.'%')
+                    ->groupBy('category')
                     ->get();
 
-        $response['data'] = $lesson;
+        $response['data'] = $category;
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
         ], 200);
     }
 
     /**
-     * Get all operator questions by competency
+     * Get all operator sub category by category
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getQuestionByLesson(Request $request): JsonResponse
+    public function getSubCategory(Request $request): JsonResponse
     {
-        $lesson = $request->lesson;
+        $category = $request->category;
 
-        $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$lesson.'%')->get();
+        $subcategory = Competency::select('sub_category')
+                    ->where('category', 'LIKE', '%'.$category.'%')
+                    ->get();
+
+        $response['data'] = $subcategory;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
+    }
+
+    /**
+     * Get all operator questions by sub category
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getQuestion(Request $request): JsonResponse
+    {
+        $subcategory = $request->subcategory;
+
+        $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$subcategory.'%')->get();
 
         $response['data'] = $question;
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
         ], 200);
     }
 
@@ -225,10 +225,56 @@ class CompetencyOperatorController extends Controller
         $response['data'] = $id;
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
+    }
+
+    /**
+     * Get all spesificied answer operator by questionid
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getAnswer(Request $request): JsonResponse
+    {
+        $questionid = $request->questionid;
+
+        $answer = AnswerOperator::where('question_id', 'LIKE', '%'.$questionid.'%')
+        ->where('user_id', auth('sanctum')->user()->id)
+        ->get();
+
+        $response['data'] = $answer;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
+        ], 200);
+    }
+
+    /**
+     * Get all image operator question by sub_category
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getImage(Request $request): JsonResponse
+    {
+        $subcategory = $request->subcategory;
+
+        $image = Competency::select('*')->where('sub_category', 'LIKE', '%'.$subcategory.'%')->get();
+
+        $response['data'] = $image;
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
         ], 200);
     }
 }

@@ -88,10 +88,10 @@
                             class="shape2"></span><i class="fas fa-chart-bar sidemenu-icon"></i><span
                             class="sidemenu-label">Assessment Chart</span><i class="angle fe fe-chevron-right"></i></a>
                     <ul class="nav-sub">
-                        <li class="nav-sub-item">
+                        {{-- <li class="nav-sub-item">
                             <a class="nav-sub-link" href="{{ route('chart-personal-spvs.personal') }}">Assessment Chart
                                 (Personal)</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-sub-item">
                             <a class="nav-sub-link" href="{{ route('chart-team-spvs.team') }}">Assessment Chart (Team)</a>
                         </li>

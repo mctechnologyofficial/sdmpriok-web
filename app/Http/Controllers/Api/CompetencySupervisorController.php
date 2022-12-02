@@ -22,30 +22,20 @@ class CompetencySupervisorController extends Controller
         $data = Competency::where('role', 'Supervisor')->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Submit answer and set status into 0
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): JsonResponse
+    public function submitAnswer(Request $request): JsonResponse
     {
         $attrs = $request->validate([
             'idcompetency'  => 'required|integer',
@@ -55,21 +45,35 @@ class CompetencySupervisorController extends Controller
         ]);
 
         if($request->hasFile('image')){
-            // $path = $request->file('image')->store('public/answer/supervisor-answer');
+            // $path = $request->file('image')->store('answer/supervisor-answer');
             $file = $request->file('image');
             $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
-            $path = $file->move('storage/answer/supervisor-answer', $filename);
+            $path = $file->move('storage/answer/supervisor/answer', $filename);
         }else{
             $path = null;
         }
 
-        $data = AnswerSupervisor::create([
-            'user_id'       => auth('sanctum')->user()->id,
-            'competency_id' => $attrs['idcompetency'],
-            'question_id'   => $attrs['questionid'],
-            'essay'         => $attrs['essay'],
-            'file'          => $path
-        ]);
+        $validation_answer = AnswerSupervisor::where('question_id', $attrs['questionid'])
+        ->where('user_id', auth('sanctum')->user()->id)
+        ->count();
+        if($validation_answer == 0){
+            $data = AnswerSupervisor::create([
+                'user_id'       => auth('sanctum')->user()->id,
+                'competency_id' => $attrs['idcompetency'],
+                'question_id'   => $attrs['questionid'],
+                'essay'         => $attrs['essay'],
+                'file'          => $path,
+                'status'        => 0
+            ]);
+        }else{
+            $data = AnswerSupervisor::where('question_id', $attrs['questionid'])
+            ->where('user_id', auth('sanctum')->user()->id)
+            ->update([
+                'essay'         => $attrs['essay'],
+                'file'          => $path,
+                'status'        => 0
+            ]);
+        }
 
         $competency = Competency::find($attrs['idcompetency']);
         $total_question = QuestionSupervisor::where('competency', $competency->name)->count();
@@ -108,56 +112,31 @@ class CompetencySupervisorController extends Controller
         }
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Answer has been submitted successfully.',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Publish answer and set status into 1
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function publishAnswer(Request $request): JsonResponse
     {
-        //
-    }
+        $data = AnswerSupervisor::where('question_id', 'LIKE', '%'.$request->questionid.'%')
+        ->where('user_id', auth('sanctum')->user()->id)
+        ->update(['status' => 1]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
     }
 
     /**
@@ -166,23 +145,20 @@ class CompetencySupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getCategoryByCompetency(Request $request): JsonResponse
+    public function getCategory(Request $request): JsonResponse
     {
         $competency = $request->competency;
 
-        $category = QuestionSupervisor::select('category')
-                    ->where('competency', 'LIKE','%'.$competency.'%')
-                    ->groupBy('category')
-                    ->orderBy('category', 'desc')
-                    ->get();
-
-        $response['data'] = $category;
+        $data = Competency::select('category')
+        ->where('name', 'LIKE','%'.$competency.'%')
+        ->groupBy('category')
+        ->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 
@@ -192,23 +168,19 @@ class CompetencySupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getSubCategoryByCategory(Request $request)
+    public function getSubCategory(Request $request): JsonResponse
     {
         $category = $request->category;
 
-        $category = QuestionSupervisor::select('sub_category')
-                    ->where('category', 'LIKE','%'.$category.'%')
-                    ->groupBy('sub_category')
-                    ->orderBy('sub_category', 'desc')
-                    ->get();
-
-        $response['data'] = $category;
+        $data = Competency::select('sub_category')
+        ->where('category', 'LIKE','%'.$category.'%')
+        ->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 
@@ -218,21 +190,44 @@ class CompetencySupervisorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getQuestionBySubCategory(Request $request)
+    public function getQuestion(Request $request): JsonResponse
     {
+        $category = $request->category;
         $subcategory = $request->subcategory;
 
-        $subcategory = QuestionSupervisor::select('*')
-                    ->where('sub_category', 'LIKE','%'.$subcategory.'%')
-                    ->get();
-
-        $response['data'] = $subcategory;
+        $data = QuestionSupervisor::where('category', 'LIKE', '%'.$category.'%')
+        ->where('sub_category', $subcategory)
+        ->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
+    }
+
+    /**
+     * Get all image questions by sub category
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getImage(Request $request): JsonResponse
+    {
+        $competency = $request->competency;
+        $subcategory = $request->subcategory;
+
+        $data = Competency::select('*')
+        ->where('name', 'LIKE', '%'.$competency.'%')
+        ->where('sub_category', 'LIKE','%'.$subcategory.'%')
+        ->get();
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 
@@ -242,18 +237,39 @@ class CompetencySupervisorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getIdCompetency(Request $request){
+    public function getIdCompetency(Request $request): JsonResponse
+    {
         $competency = $request->competency;
 
-        $id = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
-
-        $response['data'] = $id;
+        $data = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
+        ], 200);
+    }
+
+    /**
+     * Get all spesificied answer supervisor by questionid
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getAnswer(Request $request): JsonResponse
+    {
+        $questionid = $request->questionid;
+
+        $data = AnswerSupervisor::where('question_id', 'LIKE', '%'.$questionid.'%')
+        ->where('user_id',auth('sanctum')->user()->id)
+        ->get();
+
+        return response()->json([
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 }

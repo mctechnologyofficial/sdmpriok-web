@@ -16,94 +16,24 @@ class AssessmentChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getNameOp(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function team(): JsonResponse
-    {
-        $team = User::role('operator')
-        ->where('team_id', '=', auth('sanctum')->user()->team_id)
+        $team = User::selectRaw('users.id, users.name')
+        ->join('model_has_roles', function ($join) {
+            $join->on('users.id', '=', 'model_has_roles.model_id')
+                    ->where('model_has_roles.model_type', User::class);
+        })
+        ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->where('users.team_id', auth('sanctum')->user()->team_id)
+        ->where('roles.name', 'LIKE', '%Operator%')
         ->get();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $team
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $team
         ], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**
@@ -121,13 +51,11 @@ class AssessmentChartController extends Controller
         ->where('progress.team_id', auth('sanctum')->user()->team_id)
         ->get();
 
-        $response['team'] = $team;
-
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $team
         ], 200);
     }
 
@@ -138,11 +66,11 @@ class AssessmentChartController extends Controller
      */
     public function getDataRadarChartPersonal(){
         $competency = Competency::select('competencies.name', 'progress.progress')
-                                ->join('progress', 'progress.competency_id', '=', 'competencies.id')
-                                ->where('progress.user_id', auth('sanctum')->user()->id)
-                                ->groupBy('competencies.name', 'progress.progress')
-                                ->orderBy('competencies.id', 'ASC')
-                                ->pluck('competencies.name', 'progress.progress');
+        ->join('progress', 'progress.competency_id', '=', 'competencies.id')
+        ->where('progress.user_id', auth('sanctum')->user()->id)
+        ->groupBy('competencies.name', 'progress.progress')
+        ->orderBy('competencies.id', 'ASC')
+        ->pluck('competencies.name', 'progress.progress');
 
         $label = $competency->values();
         $data = $competency->keys();
@@ -151,10 +79,10 @@ class AssessmentChartController extends Controller
         $response['data'] = $data;
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $response
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $response
         ], 200);
     }
 }
