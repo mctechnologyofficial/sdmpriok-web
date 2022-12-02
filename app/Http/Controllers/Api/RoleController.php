@@ -72,19 +72,19 @@ class RoleController extends Controller
     public function Update(Request $request, $id): JsonResponse
     {
         $this->attributes = $request->validate([
-            'name' => ['nullable', 'string'],
-            'guard_name' => ['nullable', 'in:web,api']
+            'name'          => ['nullable', 'string'],
+            'guard_name'    => ['nullable', 'in:web,api']
         ]);
-        $data = Role::create([
-            'name' => $this->attributes['name'],
-            'guard_name' => $this->attributes['guard_name']
+        $data = Role::where('id', $id)->Update([
+            'name'          => $this->attributes['name'],
+            'guard_name'    => $this->attributes['guard_name']
         ]);
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Data Has Been Updated',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Data Has Been Updated',
+            'data'      => $data
         ], 200);
     }
 

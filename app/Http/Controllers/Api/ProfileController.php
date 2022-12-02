@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     /**
      * @param Request $request
-     * @return Json 
+     * @return Json
      */
     public function index(Request $request)
     {
@@ -24,8 +24,6 @@ class ProfileController extends Controller
             'data' => $user
         ], 200);
     }
-
-    // Todo others function 
 
     /**
      * @param Request $request
@@ -43,20 +41,26 @@ class ProfileController extends Controller
         );
         $user = $request->user('sanctum');
 
-        if ($request->hasFile('image')) {
+        if($request->hasFile('image')){
             $request->validate([
                 'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
             ]);
-            if (Storage::exists($user->image) || !Storage::exists($user->image)) {
+            if(Storage::exists($user->image)){
                 Storage::delete($user->image);
-                $path = $request->file('image')->store('public/images/users');
-            } else {
-                $path = $request->file('image')->store('public/images/users');
+                // $image_path = $request->file('image')->store('public/images/users');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $image_path = $file->move('storage/images/users', $filename);
+            }else{
+                // $image_path = $request->file('image')->store('public/images/users');
+                $file = $request->file('image');
+                $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+                $image_path = $file->move('storage/images/users', $filename);
             }
-        } else {
-            $path = $user->image;
+        }else{
+            $image_path = $user->image;
         }
-        $user->image = $path;
+        $user->image = $image_path;
 
         if ($request->password == null) {
             $user->password = $user->password;

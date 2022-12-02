@@ -39,13 +39,13 @@ class CompetencyController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->hasFile('image')) {
+            return redirect()->route('competency.create')->with(['error' => "Save data failed. Make sure you've filled all fields!"]);
+        }
+
         $file = $request->image;
         $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
         $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
-
-        if(!$request->hasFile('image')) {
-            return redirect()->route('competency.index')->with(['error' => "Save data failed. Make sure you've filled all fields!"]);
-        }
 
         Competency::create([
             'role'          => $request->role,

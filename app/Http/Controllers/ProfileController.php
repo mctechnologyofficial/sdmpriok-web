@@ -23,49 +23,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -76,15 +33,6 @@ class ProfileController extends Controller
     {
         $user = User::find($id);
 
-        // $attrs = $request->validate([
-        //     'name'      => 'required|string',
-        //     'phone'     => 'required',
-        //     'email'     => 'required|email',
-        //     'password'  => 'required|string'
-        // ]);
-
-        // dd($request);
-        
         if($request->hasFile('image')){
             $request->validate([
                 'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'

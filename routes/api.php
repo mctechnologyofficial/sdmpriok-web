@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Api\AssessmentChartController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CoachingMentoringAdminController;
 use App\Http\Controllers\Api\CompetencyOperatorController;
 use App\Http\Controllers\Api\CompetencySupervisorController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\MonitoringProgressController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\TeamController;
@@ -52,7 +54,7 @@ Route::prefix('employee')->group(function () {
         Route::get('/show/{user_hash}', 'show');
         Route::post('/store', 'store');
         Route::post('update/{user_hash}', 'update');
-        Route::post('delete/{user_hash}', 'destroy');
+        Route::post('delete/{user_hash}', 'delete');
     });
 });
 
@@ -63,7 +65,7 @@ Route::prefix('role')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'destroy');
+        Route::post('/delete/{id}', 'delete');
     });
 });
 
@@ -74,7 +76,40 @@ Route::prefix('team')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'destroy');
+        Route::post('/delete/{id}', 'delete');
+    });
+});
+
+// Coaching Mentoring Admin Routes
+Route::prefix('coachingmentoring-admin')->group(function () {
+    Route::controller(CoachingMentoringAdminController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/show/{id}', 'show');
+        Route::get('/getquestionspv', 'getQuestionSpv');
+        Route::get('/getanswerspv', 'getAnswerSpv');
+        Route::get('/getquestionop', 'getQuestionOp');
+        Route::get('/getanswerop', 'getAnswerOp');
+        Route::get('/getevaluation', 'getEvaluation');
+        Route::get('/getcomment', 'getComment');
+        Route::post('/postcomment', 'postComment');
+        Route::post('/saveevaluation', 'saveEvaluation');
+    });
+});
+
+// Organization Admin Routes
+Route::prefix('organization')->group(function () {
+    Route::controller(CoachingMentoringAdminController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/getteam', 'getTeam');
+        Route::get('/getradar', 'getRadar');
+        Route::post('/moveemployee', 'moveEmployee');
+    });
+});
+
+// Monitoring Progress Chart Admin Routes
+Route::prefix('monitoring-chart')->group(function () {
+    Route::controller(MonitoringProgressController::class)->group(function () {
+        Route::get('/', 'getDataProgress');
     });
 });
 
@@ -85,7 +120,7 @@ Route::prefix('slide')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'destroy');
+        Route::post('/delete/{id}', 'delete');
     });
 });
 
@@ -96,7 +131,14 @@ Route::prefix('competency')->group(function () {
         Route::post('/store', 'store');
         Route::get('/show/{id}', 'show');
         Route::post('/update/{id}', 'update');
-        Route::post('/delete/{id}', 'destroy');
+        Route::post('/delete/{id}', 'delete');
+    });
+});
+
+// Upload Question Admin Routes
+Route::prefix('upload-question')->group(function () {
+    Route::controller(CompetencyController::class)->group(function () {
+        Route::post('/', 'uploadQuestion');
     });
 });
 
@@ -129,12 +171,5 @@ Route::prefix('assessment-chart')->group(function () {
         Route::get('/team', 'team');
         Route::get('/getchartteam', 'getDataRadarChartTeam');
         Route::get('/getchartpersonal', 'getDataRadarChartPersonal');
-    });
-});
-
-// Monitoring Progress Chart Admin Routes
-Route::prefix('monitoring-chart')->group(function () {
-    Route::controller(AssessmentChartController::class)->group(function () {
-        Route::get('/getprogresschart', 'getDataProgress');
     });
 });

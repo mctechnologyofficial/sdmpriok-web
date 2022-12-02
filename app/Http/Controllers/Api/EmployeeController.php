@@ -34,7 +34,7 @@ class EmployeeController extends Controller
     public function store(Request $request): JsonResponse
     {
         $attrs = $request->validate([
-            'nip'      => 'required|string',
+            'nip'       => 'required|string',
             'name'      => 'required|string',
             'email'     => 'required|email',
             'phone'     => 'required|string',

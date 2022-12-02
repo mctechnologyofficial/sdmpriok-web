@@ -60,9 +60,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = [
-        'hash'
-    ];
+    // protected $appends = [
+    //     'hash'
+    // ];
 
     /**
      * Relation to teams model

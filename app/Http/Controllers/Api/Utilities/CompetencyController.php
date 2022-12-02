@@ -44,23 +44,38 @@ class CompetencyController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $request->validate(
-            [
-                'name' => ['required', 'string'],
-                'role' => ['required', Rule::in(Competency::getTypeRoles())]
-            ]);
+        $inputs = $request->validate([
+            'name'          => ['required', 'string'],
+            'role'          => ['required', Rule::in(Competency::getTypeRoles())],
+            'category'      => ['required', 'string'],
+            'sub_category'  => ['required', 'string']
+        ]);
+
+        if(!$request->hasFile('image')){
+            return response()->json([
+                'code'      => 401,
+                'status'    => false,
+                'message'   => "Save data failed. Make sure you've filled all fields!"
+            ], 401);
+        }
+        $file = $request->image;
+        $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+        $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
 
         $data = Competency::create([
-            'name' => $inputs['name'],
-            'role' => $inputs['role']
+            'name'          => $inputs['name'],
+            'role'          => $inputs['role'],
+            'category'      => $inputs['category'],
+            'sub_category'  => $inputs['sub_category'],
+            'image'         => $image_path
         ]);
 
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Create Competency Has Successfully',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Create Competency Has Successfully',
+            'data'      => $data
         ], 200);
     }
 
@@ -102,24 +117,35 @@ class CompetencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate(
-            [
-                'name' => ['nullable', 'string'],
-                'role' => ['nullable', Rule::in(Competency::getTypeRoles())]
-            ]);
+        $request->validate([
+            'name'          => ['nullable', 'string'],
+            'role'          => ['nullable', Rule::in(Competency::getTypeRoles())],
+            'category'      => ['required', 'string'],
+            'sub_category'  => ['required', 'string']
+        ]);
 
         $data = Competency::find($id);
+        if($request->file('image')){
+            $file = $request->image;
+            $filename = sprintf('%s_%s.%s', date('Y-m-d'), md5(microtime(true)), $file->extension());
+            $image_path = $file->move('storage/competency/'.$request->name.'/'.$request->sub_category, $filename);
+        }else{
+            $image_path = $data->image;
+        }
 
         $data->name = $request->name ?? $data->name;
         $data->role = $request->role ?? $data->role;
+        $data->category = $request->category ?? $data->category;
+        $data->sub_category = $request->sub_category ?? $data->sub_category;
+        $data->image = $image_path;
         $data->save();
 
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Update Competency Has Successfully',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Update Competency Has Successfully',
+            'data'      => $data
         ], 200);
     }
 

@@ -19,6 +19,14 @@
                             </button>
                         </div>
                     @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ $message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div>
                         <h6 class="main-content-label mb-1">Add Competency</h6>
                         {{-- <p class="text-muted card-sub-title">A form control layout using basic layout.</p> --}}

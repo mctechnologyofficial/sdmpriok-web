@@ -636,7 +636,7 @@ class MentoringController extends Controller
         $questionid = $request->questionid;
         $user = $request->userid;
 
-        $id = EvaluationOperator::where('user_id', $user)
+        $id = Evaluation::where('user_id', $user)
         ->where('competency_id', $competencyid)
         ->where('formevaluation_id', $questionid)
         ->get();

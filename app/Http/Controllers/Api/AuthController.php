@@ -14,7 +14,7 @@ class AuthController extends Controller
     /**
      * Create User
      * @param Request $request
-     * @return User 
+     * @return User
      */
     public function register(Request $request)
     {
@@ -104,10 +104,12 @@ class AuthController extends Controller
             $user = User::where('email', $request->email)->first();
 
             return response()->json([
-                'code' => 200,
-                'status' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'code'      => 200,
+                'status'    => true,
+                'name'      => auth('sanctum')->user()->name,
+                'role'      => auth('sanctum')->user()->roles->first()->name,
+                'message'   => 'User Logged In Successfully',
+                'token'     => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -119,9 +121,9 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout the user 
+     * Logout the user
      * @param Request $request
-     * @return Json Response 
+     * @return Json Response
      */
     public function logout()
     {

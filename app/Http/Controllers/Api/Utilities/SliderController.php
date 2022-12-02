@@ -98,10 +98,10 @@ class SliderController extends Controller
         $data = Slide::find($id);
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Success',
-            'data' => $data
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Success',
+            'data'      => $data
         ], 200);
     }
 
@@ -188,10 +188,10 @@ class SliderController extends Controller
         $slider->save();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Update Data Has Successfully',
-            'data' => $slider
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Update Data Has Successfully',
+            'data'      => $slider
         ], 200);
     }
 
@@ -207,9 +207,9 @@ class SliderController extends Controller
         $data->delete();
 
         return response()->json([
-            'code' => 200,
-            'status' => true,
-            'message' => 'Delete Success',
+            'code'      => 200,
+            'status'    => true,
+            'message'   => 'Delete Success',
         ], 200);
     }
 }
