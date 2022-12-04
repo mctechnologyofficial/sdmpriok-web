@@ -23,6 +23,7 @@ use App\Http\Controllers\SupervisorSenior\CoachingMentoringController as Supervi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -216,7 +217,8 @@ Route::group(['middleware' => ['role:supervisor']], function () {
     });
 });
 
-Route::group(['middleware' => ['role:Operator GT RSG|Supervisor Operator|Senior Operator|Ahli Muda Operator|Operator Senior Control Room']], function () {
+// Route::group(['middleware' => ['role:Operator GT RSG|Supervisor Operator|Senior Operator|Ahli Muda Operator|Operator Senior Control Room']], function () {
+    Route::group(['middleware' => ['role:'. Role::getOtherRolesByName()]], function () {
     // operator routes
     Route::prefix('operator')->group(function () {
         Route::get('/home', [HomeController::class, 'IndexOperator'])->name('op.index');

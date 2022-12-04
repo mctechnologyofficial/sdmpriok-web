@@ -36,18 +36,23 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('mentoring.index') }}"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-pencil-square-o sidemenu-icon"></i><span class="sidemenu-label">Mentoring</span></a>
+                    <a class="nav-link" href="{{ route('mentoring.index') }}"><span class="shape1"></span><span
+                            class="shape2"></span><i class="fas fa-pencil-square-o sidemenu-icon"></i><span
+                            class="sidemenu-label">Mentoring</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('organization.index') }}"><span class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-sitemap sidemenu-icon"></i><span class="sidemenu-label">Organization</span></a>
+                    <a class="nav-link" href="{{ route('organization.index') }}"><span class="shape1"></span><span
+                            class="shape2"></span><i class="fas fa-sitemap sidemenu-icon"></i><span
+                            class="sidemenu-label">Organization</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-desktop sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i class="angle fe fe-chevron-right"></i></a>
+                    <a class="nav-link with-sub" href="#"><span class="shape1"></span><span class="shape2"></span><i
+                            class="fas fa-desktop sidemenu-icon"></i><span class="sidemenu-label">Monitoring Chart</span><i
+                            class="angle fe fe-chevron-right"></i></a>
                     <ul class="nav-sub">
                         <li class="nav-sub-item">
-                            <a class="nav-sub-link" href="{{ route('progress-chart.index') }}">Monitoring Progress Chart</a>
+                            <a class="nav-sub-link" href="{{ route('progress-chart.index') }}">Monitoring Progress
+                                Chart</a>
                         </li>
                     </ul>
                 </li>
@@ -79,7 +84,7 @@
                             class="sidemenu-label">Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('spv.senior.coaching.list')}}"><span class="shape1"></span><span
+                    <a class="nav-link" href="{{ route('spv.senior.coaching.list') }}"><span class="shape1"></span><span
                             class="shape2"></span><i class="fas fa-pencil-square-o sidemenu-icon"></i><span
                             class="sidemenu-label">Coaching Mentoring</span></a>
                 </li>
@@ -93,7 +98,8 @@
                                 (Personal)</a>
                         </li> --}}
                         <li class="nav-sub-item">
-                            <a class="nav-sub-link" href="{{ route('chart-team-spvs.team') }}">Assessment Chart (Team)</a>
+                            <a class="nav-sub-link" href="{{ route('chart-team-spvs.team') }}">Assessment Chart
+                                (Team)</a>
                         </li>
                     </ul>
                 </li>
@@ -109,7 +115,7 @@
                             class="sidemenu-label">Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('spv.coaching.index')}}"><span class="shape1"></span><span
+                    <a class="nav-link" href="{{ route('spv.coaching.index') }}"><span class="shape1"></span><span
                             class="shape2"></span><i class="fas fa-pencil-square-o sidemenu-icon"></i><span
                             class="sidemenu-label">Coaching Mentoring</span></a>
                 </li>
@@ -119,7 +125,10 @@
                             class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-score-spv.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
+                    <a class="nav-link" href="{{ route('competency-score-spv.index') }}"><span
+                            class="shape1"></span><span class="shape2"></span><i
+                            class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency
+                            Score</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link with-sub" href="#"><span class="shape1"></span><span
@@ -138,100 +147,30 @@
             </ul>
         @endrole
 
-        @role('Supervisor Operator')
-            <ul class="nav">
-                {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
-                            class="sidemenu-label">Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
-                            class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
-                </li>
-            </ul>
-        @endrole
+        @php
+            $query = DB::table('roles')->whereNot('name', 'like', '%admin%')->whereNot('name', 'like', '%supervisor%')->pluck('name')->toArray();
+            $otherRoles = implode("|", $query);
+        @endphp
 
-        @role('Senior Operator')
-            <ul class="nav">
-                {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
-                            class="sidemenu-label">Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
-                            class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
-                </li>
-            </ul>
-        @endrole
-
-        @role('Ahli Muda Operator')
-            <ul class="nav">
-                {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
-                            class="sidemenu-label">Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
-                            class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
-                </li>
-            </ul>
-        @endrole
-
-        @role('Operator Senior Control Room')
-            <ul class="nav">
-                {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
-                            class="sidemenu-label">Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
-                            class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
-                </li>
-            </ul>
-        @endrole
-
-        @role('Operator GT RSG')
-            <ul class="nav">
-                {{-- <li class="nav-header"><span class="nav-label">Operator</span></li> --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
-                            class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
-                            class="sidemenu-label">Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
-                            class="shape1"></span><span class="shape2"></span><i
-                            class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span class="sidemenu-label">Competency Score</span></a>
-                </li>
-            </ul>
-        @endrole
+        @hasanyrole($otherRoles)
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('op.index') }}"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-home sidemenu-icon"></i><span
+                        class="sidemenu-label">Home</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('competency-tools-op.index') }}"><span
+                        class="shape1"></span><span class="shape2"></span><i
+                        class="fas fa-book sidemenu-icon"></i><span class="sidemenu-label">Competency Tools</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('competency-score.index') }}"><span class="shape1"></span><span
+                        class="shape2"></span><i class="fas fa-percent sidemenu-icon"></i><span
+                        class="sidemenu-label">Competency Score</span></a>
+            </li>
+        </ul>
+        @endhasanyrole
         {{-- </ul> --}}
     </div>
 </div>
