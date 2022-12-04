@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AssessmentChartController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CoachingMentoringAdminController;
 use App\Http\Controllers\Api\CoachingMentoringSupervisorSeniorController;
+use \App\Http\Controllers\Api\CoachingMentoringSupervisorController;
 use App\Http\Controllers\Api\CompetencyOperatorController;
 use App\Http\Controllers\Api\CompetencyScoreOperatorController;
 use App\Http\Controllers\Api\CompetencyScoreSupervisorController;
@@ -16,9 +17,9 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\QuestionUploadController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\Api\AssessmentChartSupervisorSeniorController;
 use App\Http\Controllers\Api\Utilities\CompetencyController;
 use App\Http\Controllers\Api\Utilities\SliderController;
-use App\Http\Controllers\CoachingMentoringSupervisorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -249,7 +250,7 @@ Route::prefix('home')->group(function () {
 // Role : Supervisor Senior
 
     // Coaching Mentoring Supervisor Routes
-    Route::prefix('coachingmentoring-spv')->group(function () {
+    Route::prefix('coachingmentoring-spvsenior')->group(function () {
         Route::controller(CoachingMentoringSupervisorSeniorController::class)->group(function () {
             Route::get('/', 'index');
             Route::post('/show/{id}', 'show');
@@ -258,15 +259,14 @@ Route::prefix('home')->group(function () {
             Route::get('/getanswer', 'getAnswer');
             Route::get('/getcomment', 'getComment');
             Route::get('/getEvaluation', 'getEvaluation');
-            Route::get('/getcompetencyid', 'getCompetencyId');
             Route::post('/postcomment', 'postComment');
             Route::post('/saveevaluation', 'saveEvaluation');
         });
     });
 
     // Assessment Chart Supervisor Routes
-    Route::prefix('assessment-chart-spvs')->group(function () {
-        Route::controller(AssessmentChartController::class)->group(function () {
+    Route::prefix('assessment-chart-spvsenior')->group(function () {
+        Route::controller(AssessmentChartSupervisorSeniorController::class)->group(function () {
             Route::get('/getsupervisor', 'getNameSpv');
             Route::get('/getchartteam', 'getDataRadarChartTeam');
         });

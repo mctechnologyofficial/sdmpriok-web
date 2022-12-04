@@ -1,14 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\AnswerOperator;
-use App\Models\Comment;
-use App\Models\Competency;
-use App\Models\Evaluation;
-use App\Models\QuestionOperator;
-use App\Models\User;
-use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CoachingMentoringSupervisorController extends Controller
