@@ -40,7 +40,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'spv home']);
         Permission::create(['name' => 'coaching mentoring']);
         Permission::create(['name' => 'competency tools spv']);
-        Permission::create(['name' => 'competency score']);
+        Permission::create(['name' => 'competency score spv']);
         Permission::create(['name' => 'assesment chart']);
 
         // create permission for operator

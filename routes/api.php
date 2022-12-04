@@ -169,7 +169,7 @@ Route::prefix('home')->group(function () {
         Route::controller(CompetencyOperatorController::class)->group(function () {
             Route::get('/', 'index');
             Route::post('/submitanswer', 'store');
-            Route::post('/publishanswer', 'store');
+            Route::post('/publishanswer', 'publish');
             Route::get('/getcategory', 'getCategory');
             Route::get('/getsubcategory', 'getSubCategory');
             Route::get('/getquestion', 'getQuestion');
@@ -183,7 +183,7 @@ Route::prefix('home')->group(function () {
     Route::prefix('competencyscore-op')->group(function () {
         Route::controller(CompetencyScoreOperatorController::class)->group(function () {
             Route::get('/', 'index');
-            Route::post('/show/{id}', 'show');
+            Route::get('/show/{id}', 'show');
             Route::get('/getevaluation', 'getEvaluation');
             Route::get('/getcomment', 'getComment');
             Route::post('/postcomment', 'postComment');
