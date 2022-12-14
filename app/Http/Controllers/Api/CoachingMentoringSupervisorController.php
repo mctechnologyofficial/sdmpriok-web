@@ -3,6 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AnswerOperator;
+use App\Models\Comment;
+use App\Models\Competency;
+use App\Models\Evaluation;
+use App\Models\QuestionOperator;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CoachingMentoringSupervisorController extends Controller

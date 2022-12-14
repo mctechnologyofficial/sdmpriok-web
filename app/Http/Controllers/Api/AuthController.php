@@ -108,6 +108,7 @@ class AuthController extends Controller
                 'status'    => true,
                 'name'      => auth('sanctum')->user()->name,
                 'role'      => auth('sanctum')->user()->roles->first()->name,
+                'image'     => auth('sanctum')->user()->image,
                 'message'   => 'User Logged In Successfully',
                 'token'     => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
