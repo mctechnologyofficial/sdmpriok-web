@@ -139,6 +139,7 @@ class CompetencyScoreSupervisorController extends Controller
         if ($user) {
             $userId = $user->id;
         }
+        
         $comments = Comment::find($request->commentid);
         $competencyid = $request->competencyid;
         $id = $request->questionid;

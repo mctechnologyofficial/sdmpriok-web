@@ -19,9 +19,14 @@ class CompetencyScoreOperatorController extends Controller
      */
     public function index(): JsonResponse
     {
+        $userId = null;
+        if (!is_null(auth('sanctum')->user())) {
+            $userId =  auth('sanctum')->user()->id;
+        }
+
         $evaluation = Evaluation::selectRaw('competencies.id, competencies.name, competencies.sub_category, FORMAT(AVG(evaluations.result), 1) as avg_evaluation')
         ->join('competencies', 'competencies.id', '=', 'evaluations.competency_id')
-        ->where('evaluations.user_id', auth('sanctum')->user()->id)
+        ->where('evaluations.user_id', $userId)
         ->groupBy('evaluations.competency_id')
         ->get();
 
@@ -65,9 +70,15 @@ class CompetencyScoreOperatorController extends Controller
      */
     public function getEvaluation(Request $request): JsonResponse
     {
+        $userId = null;
+        $user = auth('sanctum')->user();
+        if ($user) {
+            $userId = auth('sanctum')->user()->id;
+        }
+
         $questionid = $request->questionid;
 
-        $data = Evaluation::where('user_id', auth('sanctum')->user()->id)->where('formevaluation_id', $questionid)->get();
+        $data = Evaluation::where('user_id', $userId)->where('formevaluation_id', $questionid)->get();
 
         return response()->json([
             'code'      => 200,
@@ -85,6 +96,11 @@ class CompetencyScoreOperatorController extends Controller
      */
     public function getComment(Request $request): JsonResponse
     {
+        $userId = null;
+        if (auth('sanctum')->user()) {
+            $userId = auth('sanctum')->user()->id;
+        }
+
         $competencyid = $request->competencyid;
         $id = $request->questionid;
 
@@ -94,10 +110,10 @@ class CompetencyScoreOperatorController extends Controller
         })
         ->where('competency_id', $competencyid)
         ->where('question_id', $id)
-        ->where(function($query){
+        ->where(function($query) use ($userId){
             return $query
-            ->where('from', auth('sanctum')->user()->id)
-            ->orWhere('to', auth('sanctum')->user()->id);
+            ->where('from', $userId)
+            ->orWhere('to', $userId);
         })
         ->orderBy('comments.created_at', 'DESC')
         ->get();
@@ -118,6 +134,12 @@ class CompetencyScoreOperatorController extends Controller
      */
     public function postComment(Request $request): JsonResponse
     {
+        $userId = null;
+        $user = auth('sanctum')->user();
+        if ($user) {
+            $userId = $user->id;
+        }
+
         $comments = Comment::find($request->commentid);
         $competencyid = $request->competencyid;
         $id = $request->questionid;
