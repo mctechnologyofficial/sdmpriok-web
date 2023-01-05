@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Evaluation extends Model
 {
     use HasFactory;
+
+    protected $table = 'evaluations';
+    
     protected $fillable = [
         'user_id',
         'competency_id',

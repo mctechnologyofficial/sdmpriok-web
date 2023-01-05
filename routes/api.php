@@ -229,7 +229,7 @@ Route::prefix('home')->group(function () {
     Route::prefix('competencyscore-spv')->group(function () {
         Route::controller(CompetencyScoreSupervisorController::class)->group(function () {
             Route::get('/', 'index');
-            Route::post('/show/{id}', 'show');
+            Route::get('/show/{id}', 'show');
             Route::get('/getevaluation', 'getEvaluation');
             Route::get('/getcomment', 'getComment');
             Route::post('/postcomment', 'postComment');
