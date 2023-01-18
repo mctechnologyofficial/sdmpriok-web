@@ -41,12 +41,15 @@ class HomeController extends Controller
         ->where('progress.team_id', auth('sanctum')->user()->team_id)
         ->pluck('total');
 
-        $total = $teams->values();
-        $result_total = str_replace(str_split('[]'), '', $total);
-
+        // $total = $teams->values();
+        // $result_total = str_replace(str_split('[]'), '', $total);
+        $total = $teams->toArray();
+        $result = implode("", $total);
+        $totalProgress = strval($total_progress);
+        
         $response['slide'] = $slide;
-        $response['personal_progress'] = $total_progress;
-        $response['team_progress'] = $result_total;
+        $response['personal_progress'] = $totalProgress;
+        $response['team_progress'] = $result;
 
         return response()->json([
             'code'      => 200,
@@ -123,11 +126,13 @@ class HomeController extends Controller
         ->where('progress.team_id', auth('sanctum')->user()->team_id)
         ->pluck('total');
 
-        $total = $teams->values();
-        $result_total = str_replace(str_split('[]'), '', $total);
+        // $total = $teams->values();
+        // $result_total = str_replace(str_split('[]'), '', $total);
+        $total = $teams->toArray();
+        $result = implode("", $total);
 
         $response['slide'] = $slide;
-        $response['progress_team'] = $result_total;
+        $response['progress_team'] = $result;
 
         return response()->json([
             'code'      => 200,
