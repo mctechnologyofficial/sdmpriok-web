@@ -77,7 +77,6 @@ class CompetencyScoreSupervisorController extends Controller
             $userId = auth('sanctum')->user()->id;
         }
         $questionid = $request->questionid;
-
         $data = Evaluation::where('user_id', $userId)->where('formevaluation_id', $questionid)->get();
 
         return response()->json([

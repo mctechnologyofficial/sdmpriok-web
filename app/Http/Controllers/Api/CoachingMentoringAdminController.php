@@ -21,21 +21,21 @@ class CoachingMentoringAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() : JsonResponse
+    public function index(): JsonResponse
     {
         $user = User::selectRaw('users.id as userid, users.nip, users.name, SUM(progress.progress) as data, roles.name as role, teams.name as team')
-        ->join('model_has_roles', function ($join) {
-            $join->on('users.id', '=', 'model_has_roles.model_id')
+            ->join('model_has_roles', function ($join) {
+                $join->on('users.id', '=', 'model_has_roles.model_id')
                     ->where('model_has_roles.model_type', User::class);
-        })
-        ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-        ->leftJoin('progress', 'progress.user_id', '=', 'users.id')
-        ->leftJoin('teams', 'teams.id', '=', 'users.team_id')
-        ->where('roles.name', 'NOT LIKE', '%Admin%')
-        ->where('roles.name', 'NOT LIKE', '%Supervisor Senior%')
-        ->groupBy('users.name')
-        ->get();
-
+            })
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->leftJoin('progress', 'progress.user_id', '=', 'users.id')
+            ->leftJoin('teams', 'teams.id', '=', 'users.team_id')
+            ->where('roles.name', 'NOT LIKE', '%Admin%')
+            ->where('roles.name', 'NOT LIKE', '%Supervisor Senior%')
+            ->groupBy('users.name')
+            ->get();
+            
         return response()->json([
             'code'      => 200,
             'status'    => true,
@@ -53,9 +53,9 @@ class CoachingMentoringAdminController extends Controller
     public function show($id): JsonResponse
     {
         $user = User::find($id);
-        if($user->roles->first()->name == "supervisor"){
+        if ($user->roles->first()->name == "supervisor") {
             $competency = Competency::where('role', 'LIKE', '%Supervisor%')->groupBy('name')->get();
-        }else{
+        } else {
             $competency = Competency::where('role', 'LIKE', '%Operator%')->groupBy('name')->get();
         }
 
@@ -81,9 +81,9 @@ class CoachingMentoringAdminController extends Controller
         $category = $request->category;
         $sub_category = $request->sub_category;
 
-        $data = QuestionSupervisor::where('category', 'LIKE', '%'.$category.'%')
-        ->where('sub_category', $sub_category)
-        ->get();
+        $data = QuestionSupervisor::where('category', 'LIKE', '%' . $category . '%')
+            ->where('sub_category', $sub_category)
+            ->get();
 
         return response()->json([
             'code'      => 200,
@@ -167,18 +167,18 @@ class CoachingMentoringAdminController extends Controller
         $id = $request->questionid;
 
         $data = Comment::selectRaw('users.name, comments.comment, DATE_FORMAT(comments.created_at, "%d %M %Y %T") AS time')
-        ->join('users', function($join){
-            $join->on('users.id', '=', 'comments.from');
-        })
-        ->where('competency_id', $competencyid)
-        ->where('question_id', '=', $id)
-        ->where(function($query){
-            return $query
-            ->where('from', auth('sanctum')->user()->id)
-            ->orWhere('to', auth('sanctum')->user()->id);
-        })
-        ->orderBy('comments.created_at', 'DESC')
-        ->get();
+            ->join('users', function ($join) {
+                $join->on('users.id', '=', 'comments.from');
+            })
+            ->where('competency_id', $competencyid)
+            ->where('question_id', '=', $id)
+            ->where(function ($query) {
+                return $query
+                    ->where('from', auth('sanctum')->user()->id)
+                    ->orWhere('to', auth('sanctum')->user()->id);
+            })
+            ->orderBy('comments.created_at', 'DESC')
+            ->get();
 
         return response()->json([
             'code'      => 200,
@@ -200,9 +200,9 @@ class CoachingMentoringAdminController extends Controller
         $user = $request->userid;
 
         $id = Evaluation::where('user_id', $user)
-        ->where('competency_id', $competencyid)
-        ->where('formevaluation_id', $questionid)
-        ->get();
+            ->where('competency_id', $competencyid)
+            ->where('formevaluation_id', $questionid)
+            ->get();
 
         return response()->json([
             'code'      => 200,
@@ -256,11 +256,11 @@ class CoachingMentoringAdminController extends Controller
         $area = $request->area;
 
         $validation = Evaluation::where('user_id', $user)
-        ->where('competency_id', $competencyid)
-        ->where('formevaluation_id', $questionid)
-        ->count();
+            ->where('competency_id', $competencyid)
+            ->where('formevaluation_id', $questionid)
+            ->count();
 
-        if($validation == 0){
+        if ($validation == 0) {
             $data = Evaluation::create([
                 'user_id'               => $user,
                 'competency_id'         => $competencyid,
@@ -268,17 +268,17 @@ class CoachingMentoringAdminController extends Controller
                 'result'                => $result,
                 'description'           => $area,
             ]);
-        }else{
+        } else {
             $data = Evaluation::where('user_id', $user)
-            ->where('competency_id', $competencyid)
-            ->where('formevaluation_id', $questionid)
-            ->update([
-                'user_id'               => $user,
-                'competency_id'         => $competencyid,
-                'formevaluation_id'     => $questionid,
-                'result'                => $result,
-                'description'           => $area,
-            ]);
+                ->where('competency_id', $competencyid)
+                ->where('formevaluation_id', $questionid)
+                ->update([
+                    'user_id'               => $user,
+                    'competency_id'         => $competencyid,
+                    'formevaluation_id'     => $questionid,
+                    'result'                => $result,
+                    'description'           => $area,
+                ]);
         }
 
         return response()->json([

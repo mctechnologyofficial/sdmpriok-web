@@ -48,17 +48,16 @@ class CompetencyScoreOperatorController extends Controller
     {
         $competency = Competency::find($id);
         $competencyid = $competency->id;
-
+        
         $question = QuestionOperator::where('competency', $competency->name)->where('lesson', $competency->sub_category)->get();
-
         $response['competencyid'] = $competencyid;
-        $response['question'] = $question;
+        // $response['question'] = $question;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $question
         ], 200);
     }
 

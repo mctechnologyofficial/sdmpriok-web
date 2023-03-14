@@ -158,6 +158,7 @@ class CompetencyController extends Controller
     public function delete($id)
     {
         $data = Competency::find($id);
+        $data->progress()->delete();
         $data->delete();
 
         return response()->json([

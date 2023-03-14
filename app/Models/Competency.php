@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Competency extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    protected $table = 'competencies';
 
     // declare const of role
     public const TYPE_SUPERVISOR = 'Supervisor';
@@ -21,5 +24,10 @@ class Competency extends Model
             self::TYPE_SUPERVISOR,
             self::TYPE_OPERATOR
         ];
+    }
+
+    public function progress(): HasMany
+    {
+        return $this->hasMany(Progress::class, 'competency_id', 'id');
     }
 }

@@ -154,13 +154,13 @@ class CompetencyOperatorController extends Controller
                     ->groupBy('category')
                     ->get();
 
-        $response['data'] = $category;
+        // $response['data'] = $category;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $category
         ], 200);
     }
 
@@ -178,13 +178,13 @@ class CompetencyOperatorController extends Controller
                     ->where('category', 'LIKE', '%'.$category.'%')
                     ->get();
 
-        $response['data'] = $subcategory;
+        // $response['data'] = $subcategory;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $subcategory
         ], 200);
     }
 
@@ -200,13 +200,13 @@ class CompetencyOperatorController extends Controller
 
         $question = QuestionOperator::select('*')->where('lesson', 'LIKE', '%'.$subcategory.'%')->get();
 
-        $response['data'] = $question;
+        // $response['data'] = $question;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $question
         ], 200);
     }
 
@@ -222,13 +222,13 @@ class CompetencyOperatorController extends Controller
 
         $id = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
 
-        $response['data'] = $id;
+        // $response['data'] = $id;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $id
         ], 200);
     }
 
@@ -246,13 +246,13 @@ class CompetencyOperatorController extends Controller
         ->where('user_id', auth('sanctum')->user()->id)
         ->get();
 
-        $response['data'] = $answer;
+        // $response['data'] = $answer;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $answer
         ], 200);
     }
 
@@ -268,13 +268,13 @@ class CompetencyOperatorController extends Controller
 
         $image = Competency::select('*')->where('sub_category', 'LIKE', '%'.$subcategory.'%')->get();
 
-        $response['data'] = $image;
+        // $response['data'] = $image;
 
         return response()->json([
             'code'      => 200,
             'status'    => true,
             'message'   => 'Success',
-            'data'      => $response
+            'data'      => $image
         ], 200);
     }
 }

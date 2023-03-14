@@ -210,6 +210,7 @@ class SliderController extends Controller
             'code'      => 200,
             'status'    => true,
             'message'   => 'Delete Success',
+            'data' => []
         ], 200);
     }
 }
