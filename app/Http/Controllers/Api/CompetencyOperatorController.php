@@ -53,7 +53,8 @@ class CompetencyOperatorController extends Controller
             $path = null;
         }
 
-        $validation_answer = AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')->count();
+        // $validation_answer = AnswerOperator::where('question_id', 'LIKE', '%'.$attrs['questionid'].'%')->count();
+        $validation_answer = AnswerOperator::where('question_id', $attrs['questionid'])->count();
         if($validation_answer == 0){
             $data = AnswerOperator::create([
                 'user_id'       => auth('sanctum')->user()->id,
