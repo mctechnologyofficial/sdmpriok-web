@@ -149,7 +149,7 @@ class CompetencySupervisorController extends Controller
     {
         $competency = $request->competency;
 
-        $data = Competency::select('category')
+        $data = Competency::select('id', 'category')
         ->where('name', 'LIKE','%'.$competency.'%')
         ->groupBy('category')
         ->get();
@@ -172,7 +172,7 @@ class CompetencySupervisorController extends Controller
     {
         $category = $request->category;
 
-        $data = Competency::select('sub_category')
+        $data = Competency::select('id', 'sub_category')
         ->where('category', 'LIKE','%'.$category.'%')
         ->get();
 
@@ -241,7 +241,7 @@ class CompetencySupervisorController extends Controller
     {
         $competency = $request->competency;
 
-        $data = Competency::select('id')->where('name', 'LIKE', '%'.$competency.'%')->get();
+        $data = Competency::select('*')->where('name', 'LIKE', '%'.$competency.'%')->get();
 
         return response()->json([
             'code'      => 200,

@@ -150,7 +150,7 @@ class CompetencyOperatorController extends Controller
     {
         $competency = $request->competency;
 
-        $category = Competency::select('category')
+        $category = Competency::select('id', 'category')
                     ->where('name', 'LIKE', '%'.$competency.'%')
                     ->groupBy('category')
                     ->get();
@@ -175,7 +175,7 @@ class CompetencyOperatorController extends Controller
     {
         $category = $request->category;
 
-        $subcategory = Competency::select('sub_category')
+        $subcategory = Competency::select('id','sub_category')
                     ->where('category', 'LIKE', '%'.$category.'%')
                     ->get();
 
